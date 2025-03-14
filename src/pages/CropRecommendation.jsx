@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../styles/CropRecommendation.css";
+import Papa from "papaparse"; 
 
 const YOUR_OPENCAGE_API_KEY = import.meta.env.VITE_OPENCAGE_API_KEY
 const YOUR_OPENWEATHERMAP_API_KEY = import.meta.env.VITE_OPENWEATHERMAP_API_KEY
@@ -21,6 +22,10 @@ const CropRecommendation = () => {
   const [citiesList, setCitiesList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [locationError, setLocationError] = useState("");
+  const [rainfallData, setRainfallData] = useState([]);
+  const [districtOptions, setDistrictOptions] = useState([]);
+  const [currentSeason, setCurrentSeason] = useState("");
+  const [rainfallInfo, setRainfallInfo] = useState(null);
 
   // This useEffect will run once when component mounts to load the states data
   useEffect(() => {
@@ -39,11 +44,97 @@ const CropRecommendation = () => {
     };
     document.body.appendChild(script);
 
+    loadRainfallData();
+    determineCurrentSeason();
+
     // Clean up
     return () => {
       document.body.removeChild(script);
     };
   }, []);
+
+  // Function to determine current season based on month
+const determineCurrentSeason = () => {
+  const currentMonth = new Date().getMonth(); // 0-11 (Jan-Dec)
+  
+  if (currentMonth >= 2 && currentMonth <= 4) {
+    setCurrentSeason("Mar-May"); // Spring season
+  } else if (currentMonth >= 5 && currentMonth <= 8) {
+    setCurrentSeason("Jun-Sep"); // Monsoon season
+  } else {
+    setCurrentSeason("Oct-Dec"); // Winter season
+  }
+};
+
+// Function to load rainfall data from CSV
+const loadRainfallData = async () => {
+  try {
+    const response = await fetch('/rainFallData.csv'); // Adjust path as needed
+    const csvText = await response.text();
+    
+    Papa.parse(csvText, {
+      header: true,
+      complete: (results) => {
+        setRainfallData(results.data);
+        console.log("Rainfall data loaded successfully", results.data.slice(0, 5));
+      },
+      error: (error) => {
+        console.error("Error parsing CSV:", error);
+      }
+    });
+  } catch (error) {
+    console.error("Error loading rainfall data:", error);
+  }
+};
+
+// Function to update rainfall data from selected district
+const updateRainfallFromDistrict = (districtData) => {
+  if (!districtData) return;
+  
+  // Get rainfall for current season or month
+  let rainfallValue;
+  
+  if (currentSeason) {
+    rainfallValue = districtData[currentSeason];
+  } else {
+    // Fallback to current month
+    const currentMonth = new Date().toLocaleString('default', { month: 'short' }).toUpperCase();
+    rainfallValue = districtData[currentMonth];
+  }
+  
+  if (rainfallValue) {
+    setFormData(prev => ({ ...prev, rainfall: parseFloat(rainfallValue) }));
+    
+    // Set rainfall info for display
+    setRainfallInfo({
+      district: districtData.DISTRICT,
+      state: districtData.STATE_UT_NAME,
+      current: rainfallValue,
+      annual: calculateAnnualRainfall(districtData),
+      seasonal: {
+        spring: districtData["Mar-May"],
+        monsoon: districtData["Jun-Sep"],
+        winter: districtData["Oct-Dec"]
+      }
+    });
+  }
+};
+
+// Calculate annual rainfall
+const calculateAnnualRainfall = (districtData) => {
+  if (!districtData) return 0;
+  
+  // Sum the seasonal data
+  const spring = parseFloat(districtData["Mar-May"] || 0);
+  const monsoon = parseFloat(districtData["Jun-Sep"] || 0);
+  const winter = parseFloat(districtData["Oct-Dec"] || 0);
+  
+  // Add January and February if available
+  const jan = parseFloat(districtData["JAN"] || 0);
+  const feb = parseFloat(districtData["FEB"] || 0);
+  
+  return (spring + monsoon + winter + jan + feb).toFixed(1);
+};
 
   // Function to get user's location
   const getUserLocation = () => {
@@ -194,8 +285,23 @@ const CropRecommendation = () => {
     if (name === "city" && value && formData.state) {
       getWeatherDataByCity(value, formData.state);
     }
-  };
 
+    // For district selection
+    if (name === "district" && value) {
+      const districtData = rainfallData.find(
+        item => 
+          item.STATE_UT_NAME.toLowerCase() === formData.state.toLowerCase() && 
+          item.DISTRICT === value
+      );
+  
+    if (districtData) {
+      updateRainfallFromDistrict(districtData);
+      // Also update city if possible
+      setFormData(prev => ({ ...prev, city: value }));
+    }
+  }
+  };
+  
   // Function to update cities based on selected state
   const updateCities = (selectedState) => {
     if (typeof window.s_a !== 'undefined') {
@@ -211,6 +317,16 @@ const CropRecommendation = () => {
       }
     }
   };
+
+  useEffect(() => {
+    if (formData.state && rainfallData.length > 0) {
+      const districts = rainfallData
+        .filter(item => item.STATE_UT_NAME.toLowerCase() === formData.state.toLowerCase())
+        .map(item => item.DISTRICT);
+    
+      setDistrictOptions([...new Set(districts)]); // Remove duplicates
+    }
+  }, [formData.state, rainfallData]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -331,6 +447,21 @@ const CropRecommendation = () => {
           ))}
         </select>
 
+        <label>District:</label>
+        <select
+          name="district"
+          value={formData.district || ""}
+          onChange={handleChange}
+          disabled={!formData.state}
+        >
+          <option value="">Select District</option>
+          {districtOptions.map((district, index) => (
+            <option key={index} value={district}>
+              {district}
+            </option>
+          ))}
+        </select>
+
         <div className="weather-info">
           <div className="weather-field">
             <label>Temperature (°C):</label>
@@ -357,6 +488,20 @@ const CropRecommendation = () => {
             />
           </div>
         </div>
+
+        {rainfallInfo && (
+          <div className="rainfall-info">
+            <h3>Rainfall Data for {rainfallInfo.district}</h3>
+            <div className="rainfall-details">
+              <p><strong>Current Season:</strong> {currentSeason}</p>
+              <p><strong>Season Rainfall:</strong> {rainfallInfo.current} mm</p>
+              <p><strong>Annual Avg Rainfall:</strong> {rainfallInfo.annual} mm</p>
+              <p><strong>Spring (Mar-May):</strong> {rainfallInfo.seasonal.spring} mm</p>
+              <p><strong>Monsoon (Jun-Sep):</strong> {rainfallInfo.seasonal.monsoon} mm</p>
+              <p><strong>Winter (Oct-Dec):</strong> {rainfallInfo.seasonal.winter} mm</p>
+            </div>
+          </div>
+        )}
 
         <button type="submit">Predict</button>
       </form>
