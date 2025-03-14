@@ -1,9 +1,16 @@
+import React from 'react';
+import Header from './Header';
+import ContentSection from './ContentSection'
+import './App.css';
+
 const App = () => {
   return (
-    <div>
-      <p>Welcome to Aggrow !</p>
+    <div className="app">
+      <Header />
+      <ContentSection />
     </div>
-  )
-}
+  );
+};
 
-export default App
+export default App;
+
