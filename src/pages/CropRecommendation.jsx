@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../styles/CropRecommendation.css";
 
 const CropRecommendation = () => {
@@ -11,15 +11,49 @@ const CropRecommendation = () => {
     state: "",
     city: "",
   });
+  
+  const [statesList, setStatesList] = useState([]);
+  const [citiesList, setCitiesList] = useState([]);
+
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.src = 'public/cities.js';
+    script.async = true;
+    script.onload = () => {
+      if (typeof window.state_arr !== 'undefined') {
+        setStatesList(window.state_arr);
+      }
+    };
+    document.body.appendChild(script);
+
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+    if (name === "state") {
+      updateCities(value);
+    }
+  };
+
+  const updateCities = (selectedState) => {
+    if (typeof window.s_a !== 'undefined') {
+      const stateIndex = window.state_arr.findIndex(state => state === selectedState);
+      
+      if (stateIndex !== -1) {
+        const citiesString = window.s_a[stateIndex + 1];
+        const cities = citiesString.split("|").slice(1); 
+        setCitiesList(cities);
+        setFormData(prev => ({ ...prev, city: "" }));
+      }
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // Simulate API call (replace with actual API request)
     const response = await fetch("https://your-api-endpoint/crop-prediction", {
       method: "POST",
       headers: {
@@ -98,10 +132,11 @@ const CropRecommendation = () => {
           required
         >
           <option value="">Select State</option>
-          <option value="Kerala">Kerala</option>
-          <option value="Tamil Nadu">Tamil Nadu</option>
-          <option value="Maharashtra">Maharashtra</option>
-          {/* Add more states here */}
+          {statesList.map((state, index) => (
+            <option key={index} value={state}>
+              {state}
+            </option>
+          ))}
         </select>
 
         <label>City:</label>
@@ -110,12 +145,14 @@ const CropRecommendation = () => {
           value={formData.city}
           onChange={handleChange}
           required
+          disabled={!formData.state}
         >
           <option value="">Select City</option>
-          <option value="Kochi">Kochi</option>
-          <option value="Chennai">Chennai</option>
-          <option value="Mumbai">Mumbai</option>
-          {/* Add more cities dynamically based on selected state */}
+          {citiesList.map((city, index) => (
+            <option key={index} value={city}>
+              {city}
+            </option>
+          ))}
         </select>
 
         <button type="submit">Predict</button>
