@@ -52,3 +52,49 @@ button {
 button:hover {
   background-color: #2d6a4f;
 }
+
+/* Add these styles to your CropRecommendation.css file */
+
+.loading-message {
+  color: #2196F3;
+  font-weight: bold;
+  margin: 10px 0;
+}
+
+.error-message {
+  color: #f44336;
+  margin: 10px 0;
+}
+
+.location-controls {
+  margin-bottom: 20px;
+}
+
+.location-button {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.location-button:hover {
+  background-color: #45a049;
+}
+
+.location-button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.weather-info {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 10px;
+}
+
+.weather-field {
+  flex: 1;
+}
