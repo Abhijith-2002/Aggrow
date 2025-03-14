@@ -1,10 +1,14 @@
-const App = () => {
-  const friends = ['Peter', 'Maya']
-  return (
-    <div>
-      <p>Welcome to Aggrow !</p>
-    </div>
-  )
-}
+import React from 'react';
+import Header from './Header';
+import './App.css';
 
-export default App
+const App = () => {
+  return (
+    <div className="app">
+      <Header />
+      {/* Rest of your app content */}
+    </div>
+  );
+};
+
+export default App;
