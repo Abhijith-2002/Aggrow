@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import "../styles/CropRecommendation.css";
+import "./CropRecommendation.css";
 
 const YOUR_OPENCAGE_API_KEY = import.meta.env.VITE_OPENCAGE_API_KEY
 const YOUR_OPENWEATHERMAP_API_KEY = import.meta.env.VITE_OPENWEATHERMAP_API_KEY
+console.log(YOUR_OPENCAGE_API_KEY)
 
 const CropRecommendation = () => {
   const [formData, setFormData] = useState({

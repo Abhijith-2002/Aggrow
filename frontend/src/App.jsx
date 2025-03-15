@@ -1,10 +1,10 @@
 
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import Dashboard from "./pages/Dashboard";
-import CropRecommendation from "./pages/CropRecommendation";
-import FertilizerRecommendation from "./pages/FertilizerRecommendation";
-import DiseaseDetection from "./pages/DiseaseDetection";
+import Dashboard from "./pages/Dashboard/Dashboard.jsx";
+import CropRecommendation from "./pages/CropRecommendation/CropRecommendation.jsx";
+import FertilizerRecommendation from "./pages/FertilizerRecommendation/FertilizerRecommendation.jsx";
+import DiseaseDetection from "./pages/DiseaseDetection/DiseaseDetection.jsx";
 
 function App() {
   return (
