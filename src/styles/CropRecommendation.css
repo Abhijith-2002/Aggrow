@@ -98,3 +98,89 @@ button:hover {
 .weather-field {
   flex: 1;
 }
+
+/* Add these to your existing CropRecommendation.css file */
+
+.prediction-result {
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 20px;
+  margin-top: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.prediction-result h2 {
+  color: #2c3e50;
+  margin-bottom: 15px;
+}
+
+.crop-name {
+  font-size: 32px;
+  font-weight: bold;
+  color: #27ae60;
+  margin: 15px 0;
+  padding: 10px;
+  background-color: rgba(39, 174, 96, 0.1);
+  border-radius: 4px;
+}
+
+.crop-details {
+  margin: 20px 0;
+  text-align: left;
+}
+
+.crop-details ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.crop-details li {
+  padding: 5px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.new-prediction-button {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s;
+}
+
+.new-prediction-button:hover {
+  background-color: #2980b9;
+}
+
+.prediction-loading {
+  text-align: center;
+  padding: 20px;
+  font-style: italic;
+  color: #7f8c8d;
+}
+
+.prediction-error {
+  background-color: #ffecec;
+  color: #e74c3c;
+  padding: 15px;
+  border-radius: 4px;
+  margin: 20px 0;
+  text-align: center;
+}
+
+.prediction-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  z-index: 1000;
+}
