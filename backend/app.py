@@ -8,7 +8,7 @@ app = Flask(__name__)
 CORS(app)  # Enable CORS for all routes
 
 # Load the model
-model_path = os.path.join(os.path.dirname(__file__), '/home/abhijith/aggrow/backend/crop/models/cropRecommendationModel/CropRecommendation.pkl')
+model_path = os.path.join(os.path.dirname(__file__), 'models/cropRecommendationModel/CropRecommendation.pkl')
 with open(model_path, 'rb') as file:
     model = pickle.load(file)
 
