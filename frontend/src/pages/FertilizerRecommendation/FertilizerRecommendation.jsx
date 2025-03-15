@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../styles/FertilizerRecommendation.css";
+import "./FertilizerRecommendation.css";
 
 const FertilizerRecommendation = () => {
   const [formData, setFormData] = useState({

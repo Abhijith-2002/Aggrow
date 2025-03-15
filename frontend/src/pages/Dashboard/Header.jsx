@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import "../styles/Header.css";
-import logo from "../assets/aggrow-logo.png";
+import "./Header.css";
+import logo from "../../assets/aggrow-logo.png";
 
 const Header = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
