@@ -270,7 +270,7 @@ const CropRecommendation = () => {
       return (
         <div className="prediction-result">
           <h2>{t("cropRecommendation.prediction.recommendedCrop")}</h2>
-          <div className="crop-name">{prediction}</div>
+          <div className="crop-name">{t(`crops.${prediction.toLowerCase()}`)}</div>
           
           <div className="crop-details">
             <p>{t("cropRecommendation.prediction.inputDetails")}:</p>
@@ -387,7 +387,7 @@ const CropRecommendation = () => {
                       {state}
                     </option>
                 ))}
-                </select>
+              </select>
 
     <label>{t("cropRecommendation.form.city")}</label>
     <select
