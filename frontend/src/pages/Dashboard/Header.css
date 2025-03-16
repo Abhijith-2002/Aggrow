@@ -134,3 +134,44 @@
     left: 0;
   }
 }
+
+/* Language Selector Container */
+.language-selector {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+  padding: 0 15px;
+}
+
+/* Language Selector Label */
+.language-selector label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #fff;
+}
+
+/* Language Selector Dropdown */
+.language-selector select {
+  padding: 5px 10px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.3s ease-in-out;
+}
+
+/* Hover Effect */
+.language-selector select:hover {
+  border-color: #007bff;
+}
+
+/* Focus Effect */
+.language-selector select:focus {
+  border-color: #0056b3;
+  box-shadow: 0 0 5px rgba(0, 91, 187, 0.5);
+}

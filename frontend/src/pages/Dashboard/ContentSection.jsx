@@ -1,55 +1,44 @@
 import React from "react";
 import "./ContentSection.css";
+import { useTranslation } from "react-i18next";
 
 const ContentSection = () => {
+  const { t } = useTranslation();
   return (
     <div className="content-section">
       <div className="about-section">
-        <h2>About Aggrow</h2>
+        <h2>{t("dashboard.about.title")}</h2>
         <p>
-          Aggrow is an innovative agricultural technology platform designed to
-          help farmers optimize their crop yields through data-driven insights
-          and AI-powered recommendations.
+          {t("dashboard.about.description1")}
         </p>
         <p>
-          Our mission is to empower farmers with cutting-edge technology that
-          simplifies decision-making, reduces resource wastage, and maximizes
-          productivity while promoting sustainable farming practices.
+          {t("dashboard.about.description2")}
         </p>
         <p>
-          Founded by a team of agricultural experts and technology enthusiasts,
-          Aggrow combines traditional farming wisdom with modern machine
-          learning algorithms to provide practical solutions to everyday farming
-          challenges.
+          {t("dashboard.about.description3")}
         </p>
       </div>
 
       <div className="services-section">
-        <h2>Our Services</h2>
+        <h2>{t("dashboard.services.title")}</h2>
         <div className="service-card">
-          <h3>Disease Detection</h3>
+          <h3>{t("dashboard.services.diseaseDetection.title")}</h3>
           <p>
-            Identify plant diseases early through image recognition technology.
-            Simply upload a photo of your affected plant, and our AI will
-            diagnose the issue and suggest treatment options.
+            {t("dashboard.services.diseaseDetection.description")}
           </p>
         </div>
 
         <div className="service-card">
-          <h3>Crop Recommendation</h3>
+          <h3>{t("dashboard.services.cropRecommendation.title")}</h3>
           <p>
-            Get personalized crop suggestions based on your soil composition,
-            local climate data, and market trends to maximize your yield and
-            profitability.
+            {t("dashboard.services.cropRecommendation.description")}
           </p>
         </div>
 
         <div className="service-card">
-          <h3>Fertilizer Recommendation</h3>
+          <h3>{t("dashboard.services.fertilizerRecommendation.title")}</h3>
           <p>
-            Receive tailored fertilizer recommendations based on soil tests and
-            crop requirements to ensure optimal plant nutrition while minimizing
-            environmental impact.
+            {t("dashboard.services.fertilizerRecommendation.description")}
           </p>
         </div>
       </div>

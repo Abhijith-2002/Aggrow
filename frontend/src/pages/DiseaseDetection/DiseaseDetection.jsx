@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import "./DiseaseDetection.css";
+import { useTranslation } from "react-i18next"; // Add this import
 
 const DiseaseDetection = () => {
+  const { t } = useTranslation(); // Add translation hook
   const [selectedFile, setSelectedFile] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
 
@@ -17,7 +19,7 @@ const DiseaseDetection = () => {
     event.preventDefault();
 
     if (!selectedFile) {
-      alert("Please upload an image before submitting.");
+      alert(t("diseaseDetection.noFileError"));
       return;
     }
 
@@ -34,12 +36,12 @@ const DiseaseDetection = () => {
     );
 
     const data = await response.json();
-    alert(`Prediction Result: ${data.prediction}`);
+    alert(`${t("diseaseDetection.result")} ${data.prediction}`);
   };
 
   return (
     <div className="disease-detection-container">
-      <h2>Please Upload The Image</h2>
+      <h2>{t("diseaseDetection.title")}</h2>
 
       <form onSubmit={handleSubmit} className="disease-form">
         <input
@@ -56,12 +58,12 @@ const DiseaseDetection = () => {
           <img
             id="output-image"
             src={imagePreview}
-            alt="Preview"
+            alt={t("diseaseDetection.form.preview")}
             className="image-preview"
           />
         )}
 
-        <button type="submit">Predict</button>
+        <button type="submit">{t("common.predict")}</button>
       </form>
     </div>
   );

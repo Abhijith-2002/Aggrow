@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import "./CropRecommendation.css";
+import { useTranslation } from "react-i18next";
 
 const YOUR_OPENCAGE_API_KEY = import.meta.env.VITE_OPENCAGE_API_KEY
 const YOUR_OPENWEATHERMAP_API_KEY = import.meta.env.VITE_OPENWEATHERMAP_API_KEY
-console.log(YOUR_OPENCAGE_API_KEY)
 
 const CropRecommendation = () => {
+  const { t } = useTranslation();
   const [formData, setFormData] = useState({
     nitrogen: "",
     phosphorous: "",
@@ -65,12 +66,12 @@ const CropRecommendation = () => {
         },
         (error) => {
           console.error("Error obtaining location", error);
-          setLocationError("Unable to get your location. Please select state and city manually.");
+          setLocationError(t("cropRecommendation.locationError"));
           setIsLoading(false);
         }
       );
     } else {
-      setLocationError("Geolocation is not supported by your browser. Please select state and city manually.");
+      setLocationError(t("cropRecommendation.geolocationNotSupported"));
       setIsLoading(false);
     }
   };
@@ -128,7 +129,7 @@ const CropRecommendation = () => {
       }
     } catch (error) {
       console.error("Error getting location details", error);
-      setLocationError("Error determining your location. Please select state and city manually.");
+      setLocationError(t("cropRecommendation.locationDeterminingError"));
       setIsLoading(false);
     }
   };
@@ -264,17 +265,17 @@ const CropRecommendation = () => {
     if (prediction) {
       return (
         <div className="prediction-result">
-          <h2>Recommended Crop</h2>
+          <h2>{t("cropRecommendation.prediction.recommendedCrop")}</h2>
           <div className="crop-name">{prediction}</div>
           
           <div className="crop-details">
-            <p>Based on your inputs:</p>
+            <p>{t("cropRecommendation.prediction.inputDetails")}:</p>
             <ul>
-              <li>N-P-K: {formData.nitrogen} - {formData.phosphorous} - {formData.pottasium}</li>
-              <li>pH: {formData.ph}</li>
-              <li>Rainfall: {formData.rainfall} mm</li>
-              <li>Temperature: {formData.temperature}°C</li>
-              <li>Humidity: {formData.humidity}%</li>
+              <li>{t("cropRecommendation.prediction.npk")}: {formData.nitrogen} - {formData.phosphorous} - {formData.pottasium}</li>
+              <li>{t("cropRecommendation.prediction.ph")}: {formData.ph}</li>
+              <li>{t("cropRecommendation.prediction.rainfall")}: {formData.rainfall} mm</li>
+              <li>{t("cropRecommendation.prediction.temperature")}: {formData.temperature}°C</li>
+              <li>{t("cropRecommendation.prediction.humidity")}: {formData.humidity}%</li>
             </ul>
           </div>
           
@@ -282,7 +283,7 @@ const CropRecommendation = () => {
             className="new-prediction-button" 
             onClick={() => setPrediction(null)}
           >
-            Make New Prediction
+            {t("cropRecommendation.prediction.newPrediction")}
           </button>
         </div>
       );
@@ -293,10 +294,10 @@ const CropRecommendation = () => {
 
   return (
     <div className="crop-recommendation-container">
-      <h1>Crop Recommendation</h1>
-      <p>Enter the soil and climate details to get a recommended crop.</p>
+      <h1>{t("cropRecommendation.title")}</h1>
+      <p>{t("cropRecommendation.subtitle")}</p>
 
-      {isLoading && <p className="loading-message">Loading location and weather data...</p>}
+      {isLoading && <p className="loading-message">{t("cropRecommendation.loadingMessage")}</p>}
       {locationError && <p className="error-message">{locationError}</p>}
 
       {prediction ? (
@@ -310,71 +311,71 @@ const CropRecommendation = () => {
               disabled={isLoading}
               className="location-button"
             >
-              Use My Location
+              {t("cropRecommendation.locationButton")}
             </button>
           </div>
 
           <form onSubmit={handleSubmit} className="crop-form">
-            <label>Nitrogen:</label>
+            <label>{t("cropRecommendation.form.nitrogen")}</label>
             <input
               type="number"
               name="nitrogen"
               value={formData.nitrogen}
               onChange={handleChange}
-              placeholder="Enter value (e.g., 50)"
+              placeholder={t("cropRecommendation.form.nitrogenPlaceholder")}
               required
             />
 
-            <label>Phosphorous:</label>
+            <label>{t("cropRecommendation.form.phosphorous")}</label>
             <input
               type="number"
               name="phosphorous"
               value={formData.phosphorous}
               onChange={handleChange}
-              placeholder="Enter value (e.g., 50)"
+              placeholder={t("cropRecommendation.form.phosphorousPlaceholder")}
               required
             />
 
-            <label>Pottasium:</label>
+            <label>{t("cropRecommendation.form.pottasium")}</label>
             <input
               type="number"
               name="pottasium"
               value={formData.pottasium}
               onChange={handleChange}
-              placeholder="Enter value (e.g., 50)"
+              placeholder={t("cropRecommendation.form.pottasiumPlaceholder")}
               required
             />
 
-            <label>pH Level:</label>
+            <label>{t("cropRecommendation.form.ph")}</label>
             <input
               type="number"
               step="0.01"
               name="ph"
               value={formData.ph}
               onChange={handleChange}
-              placeholder="Enter value"
+              placeholder={t("cropRecommendation.form.phPlaceholder")}
               required
             />
 
-            <label>Rainfall (in mm):</label>
+            <label>{t("cropRecommendation.form.rainfall")}</label>
             <input
               type="number"
               step="0.01"
               name="rainfall"
               value={formData.rainfall}
               onChange={handleChange}
-              placeholder="Enter value"
+              placeholder={t("cropRecommendation.form.rainfallPlaceholder")}
               required
             />
 
-            <label>State:</label>
+            <label>{t("cropRecommendation.form.state")}</label>
             <select
               name="state"
               value={formData.state}
               onChange={handleChange}
               required
             >
-              <option value="">Select State</option>
+              <option value="">{t("cropRecommendation.form.selectState")}</option>
               {statesList.map((state, index) => (
                 <option key={index} value={state}>
                   {state}
@@ -382,7 +383,7 @@ const CropRecommendation = () => {
               ))}
             </select>
 
-            <label>City:</label>
+            <label>{t("cropRecommendation.form.city")}</label>
             <select
               name="city"
               value={formData.city}
@@ -390,7 +391,7 @@ const CropRecommendation = () => {
               required
               disabled={!formData.state}
             >
-              <option value="">Select City</option>
+              <option value="">{t("cropRecommendation.form.selectCity")}</option>
               {citiesList.map((city, index) => (
                 <option key={index} value={city}>
                   {city}
@@ -400,14 +401,14 @@ const CropRecommendation = () => {
 
             <div className="weather-info">
               <div className="weather-field">
-                <label>Temperature (°C):</label>
+                <label>{t("cropRecommendation.form.temperature")}:</label>
                 <input
                   type="number"
                   step="0.1"
                   name="temperature"
                   value={formData.temperature}
                   onChange={handleChange}
-                  placeholder="Auto-filled from location"
+                  placeholder={t("cropRecommendation.form.temperaturePlaceholder")}
                   required
                 />
               </div>
@@ -419,14 +420,14 @@ const CropRecommendation = () => {
                   name="humidity"
                   value={formData.humidity}
                   onChange={handleChange}
-                  placeholder="Auto-filled from location"
+                  placeholder={t("cropRecommendation.form.humidityPlaceholder")}
                   required
                 />
               </div>
             </div>
 
             <button type="submit" disabled={predictionLoading}>
-              {predictionLoading ? "Predicting..." : "Predict"}
+              {predictionLoading ? t("common.predicting") : t("common.predict")}
             </button>
           </form>
         </>
