@@ -19,6 +19,7 @@ const CropRecommendation = () => {
     humidity: "",
   });
 
+  const [isLocationFetched, setIsLocationFetched] = useState(false);
   const [statesList, setStatesList] = useState([]);
   const [citiesList, setCitiesList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -92,31 +93,34 @@ const CropRecommendation = () => {
         // Extract state and city from response
         // Note: field names might vary depending on the country
         const state = result.state;
-        const city = result.city || result.town || result.village;
+        const city = result.state_district;
+        console.log(city)
 
         if (state && city) {
+          setIsLocationFetched(true); // Mark location as fetched
+        
           // Find the state in our list
           const stateIndex = window.state_arr.findIndex(
-            s => s.toLowerCase() === state.toLowerCase()
+            (s) => s.toLowerCase() === state.toLowerCase()
           );
-
+        
           if (stateIndex !== -1) {
             const selectedState = window.state_arr[stateIndex];
-            setFormData(prev => ({ ...prev, state: selectedState }));
-
+            setFormData((prev) => ({ ...prev, state: selectedState }));
+        
             // Update cities for the selected state
             updateCities(selectedState);
-
+        
             // Then set the city if it's in our list
             setTimeout(() => {
               const cityMatch = citiesList.find(
-                c => c.toLowerCase() === city.toLowerCase()
+                (c) => c.toLowerCase() === city.toLowerCase()
               );
-
+        
               if (cityMatch) {
-                setFormData(prev => ({ ...prev, city: cityMatch }));
+                setFormData((prev) => ({ ...prev, city: cityMatch }));
               }
-
+        
               // Get weather data for the location
               getWeatherData(latitude, longitude);
             }, 500);
@@ -125,7 +129,7 @@ const CropRecommendation = () => {
           }
         } else {
           getWeatherData(latitude, longitude);
-        }
+        }        
       }
     } catch (error) {
       console.error("Error getting location details", error);
@@ -368,36 +372,41 @@ const CropRecommendation = () => {
               required
             />
 
-            <label>{t("cropRecommendation.form.state")}</label>
-            <select
-              name="state"
-              value={formData.state}
-              onChange={handleChange}
-              required
-            >
-              <option value="">{t("cropRecommendation.form.selectState")}</option>
-              {statesList.map((state, index) => (
-                <option key={index} value={state}>
-                  {state}
-                </option>
-              ))}
-            </select>
+            {!isLocationFetched && (
+              <>
+                <label>{t("cropRecommendation.form.state")}</label>
+                <select
+                  name="state"
+                  value={formData.state}
+                  onChange={handleChange}
+                  required
+                >
+                  <option value="">{t("cropRecommendation.form.selectState")}</option>
+                  {statesList.map((state, index) => (
+                    <option key={index} value={state}>
+                      {state}
+                    </option>
+                ))}
+                </select>
 
-            <label>{t("cropRecommendation.form.city")}</label>
-            <select
-              name="city"
-              value={formData.city}
-              onChange={handleChange}
-              required
-              disabled={!formData.state}
-            >
-              <option value="">{t("cropRecommendation.form.selectCity")}</option>
-              {citiesList.map((city, index) => (
-                <option key={index} value={city}>
-                  {city}
-                </option>
-              ))}
-            </select>
+    <label>{t("cropRecommendation.form.city")}</label>
+    <select
+      name="city"
+      value={formData.city}
+      onChange={handleChange}
+      required
+      disabled={!formData.state}
+    >
+      <option value="">{t("cropRecommendation.form.selectCity")}</option>
+      {citiesList.map((city, index) => (
+        <option key={index} value={city}>
+          {city}
+        </option>
+      ))}
+    </select>
+  </>
+)}
+
 
             <div className="weather-info">
               <div className="weather-field">
