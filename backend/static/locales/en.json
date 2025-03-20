@@ -1,0 +1,146 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "submit": "Submit",
+    "predict": "Predict",
+    "predicting": "Predicting...",
+    "processing": "Processing...",
+    "required": "required",
+    "back": "Back",
+    "new": "New",
+    "cancel": "Cancel",
+    "save": "Save"
+  },
+  "header": {
+    "home": "Home",
+    "about": "About",
+    "services": "Services"
+  },
+  "navigation": {
+    "diseaseDetection": "Disease Detection",
+    "cropRecommendation": "Crop Recommendation",
+    "fertilizerRecommendation": "Fertilizer Recommendation"
+  },
+  "dashboard": {
+    "about": {
+      "title": "About Aggrow",
+      "description1": "Aggrow is an innovative agricultural technology platform designed to help farmers optimize their crop yields through data-driven insights and AI-powered recommendations.",
+      "description2": "Our mission is to empower farmers with cutting-edge technology that simplifies decision-making, reduces resource wastage, and maximizes productivity while promoting sustainable farming practices.",
+      "description3": "Founded by a team of agricultural experts and technology enthusiasts, Aggrow combines traditional farming wisdom with modern machine learning algorithms to provide practical solutions to everyday farming challenges."
+    },
+    "services": {
+      "title": "Our Services",
+      "diseaseDetection": {
+        "title": "Disease Detection",
+        "description": "Identify plant diseases early through image recognition technology. Simply upload a photo of your affected plant, and our AI will diagnose the issue and suggest treatment options."
+      },
+      "cropRecommendation": {
+        "title": "Crop Recommendation",
+        "description": "Get personalized crop suggestions based on your soil composition, local climate data, and market trends to maximize your yield and profitability."
+      },
+      "fertilizerRecommendation": {
+        "title": "Fertilizer Recommendation",
+        "description": "Receive tailored fertilizer recommendations based on soil tests and crop requirements to ensure optimal plant nutrition while minimizing environmental impact."
+      }
+    }
+  },
+  "cropRecommendation": {
+    "title": "Crop Recommendation",
+    "subtitle": "Enter the soil and climate details to get a recommended crop.",
+    "locationButton": "Use My Location",
+    "loadingMessage": "Loading location and weather data...",
+    "locationError": "Unable to get your location. Please select state and city manually.",
+    "geolocationNotSupported": "Geolocation is not supported by your browser. Please select state and city manually.",
+    "locationDeterminingError": "Error determining your location. Please select state and city manually.",
+    "form": {
+      "nitrogen": "Nitrogen:",
+      "phosphorous": "Phosphorous:",
+      "pottasium": "Pottasium:",
+      "ph": "pH Level:",
+      "rainfall": "Rainfall (in mm):",
+      "state": "State:",
+      "selectState": "Select State",
+      "city": "City:",
+      "selectCity": "Select City",
+      "temperature": "Temperature (°C):",
+      "humidity": "Humidity (%):",
+      "nitrogenPlaceholder": "Enter value (e.g., 50)",
+      "phosphorousPlaceholder": "Enter value (e.g., 50)",
+      "pottasiumPlaceholder": "Enter value (e.g., 50)",
+      "phPlaceholder": "Enter value",
+      "rainfallPlaceholder": "Enter value",
+      "temperaturePlaceholder": "Auto-filled from location",
+      "humidityPlaceholder": "Auto-filled from location"
+    },
+    "prediction": {
+      "analyzing": "Analyzing soil and climate data...",
+      "errorPrefix": "Error:",
+      "recommendedCrop": "Recommended Crop",
+      "inputDetails": "Based on your inputs:",
+      "npk": "N-P-K:",
+      "ph": "pH:",
+      "rainfall": "Rainfall:",
+      "temperature": "Temperature:",
+      "humidity": "Humidity:",
+      "newPrediction": "Make New Prediction"
+    }
+  },
+  "diseaseDetection": {
+    "title": "Please Upload The Image",
+    "noFileError": "Please upload an image before submitting.",
+    "result": "Prediction Result:",
+    "form": {
+      "fileInput": "Choose file",
+      "preview": "Preview"
+    }
+  },
+  "fertilizerRecommendation": {
+    "title": "Get informed advice on fertilizer based on soil",
+    "noCropError": "Please select a crop before submitting.",
+    "result": "Recommended Fertilizer:",
+    "form": {
+      "nitrogen": "Nitrogen",
+      "phosphorous": "Phosphorous",
+      "pottasium": "Pottasium",
+      "cropLabel": "Crop you want to grow",
+      "selectCrop": "Select crop",
+      "nitrogenPlaceholder": "Enter value (example: 50)",
+      "phosphorousPlaceholder": "Enter value (example: 50)",
+      "pottasiumPlaceholder": "Enter value (example: 50)"
+    }
+  },
+  "crops": {
+    "rice": "Rice",
+    "maize": "Maize",
+    "chickpea": "Chickpea",
+    "kidneybeans": "Kidney Beans",
+    "pigeonpeas": "Pigeon Peas",
+    "mothbeans": "Moth Beans",
+    "mungbean": "Mung Bean",
+    "blackgram": "Black Gram",
+    "lentil": "Lentil",
+    "pomegranate": "Pomegranate",
+    "banana": "Banana",
+    "mango": "Mango",
+    "grapes": "Grapes",
+    "watermelon": "Watermelon",
+    "muskmelon": "Muskmelon",
+    "apple": "Apple",
+    "orange": "Orange",
+    "papaya": "Papaya", 
+    "coconut": "Coconut",
+    "cotton": "Cotton",
+    "jute": "Jute",
+    "coffee": "Coffee"
+  },
+  "errors": {
+    "connectionFailed": "Failed to connect to prediction service. Please try again later.",
+    "predictionFailed": "Failed to get recommendation"
+  },
+  "units": {
+    "celsius": "°C",
+    "percentage": "%",
+    "millimeter": "mm"
+  }
+}

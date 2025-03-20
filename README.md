@@ -1,9 +1,11 @@
 # Aggrow
 
 ## Overview
+
 Aggrow is an AI powered crop disease detection and management system developed as part of Mini Project S6 - Model Engineering College Thrikkakkara
 
 ## Table of Contents
+
 - [Prerequisites](#prerequisites)
 - [Installation](#installation)
 - [Running the Application](#running-the-application)
@@ -15,22 +17,26 @@ Aggrow is an AI powered crop disease detection and management system developed a
 - [Troubleshooting](#troubleshooting)
 
 ## Prerequisites
+
 Before you begin, ensure you have the following installed:
+
 - [Node.js](https://nodejs.org/) (v18.x or higher recommended)
 - [npm](https://www.npmjs.com/) (v9.x or higher) or [yarn](https://yarnpkg.com/) (v1.22.x or higher)
 
 ## Installation
 
 1. Clone the repository:
+
 ```bash
 git clone https://github.com/Abhijith-2002/Aggrow.git
 cd Aggrow
 ```
 
 2. Install dependencies:
+
 ```bash
-# Using npm
-npm install
+# Using pip
+pip install Aggrow/requirements.txt
 
 # Using yarn
 yarn
@@ -39,11 +45,12 @@ yarn
 ## Running the Application
 
 ### Development Mode
+
 This starts the development server with hot-reload enabled:
 
 ```bash
-# Using npm
-npm run dev
+# Using python
+python backend/app.py
 
 # Using yarn
 yarn dev
@@ -52,6 +59,7 @@ yarn dev
 The application will be available at `http://localhost:5173` by default.
 
 ### Development with API Mocking
+
 If you want to use mock API data during development:
 
 ```bash
@@ -63,6 +71,7 @@ yarn dev:mock
 ```
 
 ## Project Structure
+
 ```
 Aggrow/
 ├── public/            # Static assets that will be served as-is
@@ -90,6 +99,7 @@ Aggrow/
 ## Development Workflow
 
 ### Code Style and Linting
+
 We use ESLint and Prettier to maintain code quality:
 
 ```bash
@@ -104,7 +114,9 @@ npm run format
 ```
 
 ### Environment Variables
+
 Environment variables can be set in the following files:
+
 - `.env` - Loaded in all environments
 - `.env.development` - Development-specific variables
 - `.env.production` - Production-specific variables
@@ -112,12 +124,14 @@ Environment variables can be set in the following files:
 **Important:** Never commit sensitive information in these files.
 
 Example `.env` file:
+
 ```
 VITE_API_URL=https://api.example.com
 VITE_APP_TITLE=My Vite React App
 ```
 
 Access environment variables in your code using `import.meta.env.VITE_*`:
+
 ```javascript
 console.log(import.meta.env.VITE_API_URL);
 ```
@@ -125,6 +139,7 @@ console.log(import.meta.env.VITE_API_URL);
 ## Testing
 
 ### Running Tests
+
 ```bash
 # Run all tests
 npm run test
@@ -137,18 +152,20 @@ npm run test:coverage
 ```
 
 ### Writing Tests
+
 Place your test files in the `tests` directory or alongside the components with a `.test.jsx` or `.spec.jsx` extension.
 
 Example test for a component:
-```jsx
-import { render, screen } from '@testing-library/react';
-import { describe, it, expect } from 'vitest';
-import Button from './Button';
 
-describe('Button Component', () => {
-  it('renders correctly', () => {
+```jsx
+import { render, screen } from "@testing-library/react";
+import { describe, it, expect } from "vitest";
+import Button from "./Button";
+
+describe("Button Component", () => {
+  it("renders correctly", () => {
     render(<Button>Click me</Button>);
-    expect(screen.getByText('Click me')).toBeInTheDocument();
+    expect(screen.getByText("Click me")).toBeInTheDocument();
   });
 });
 ```
@@ -190,6 +207,7 @@ Currently only the collaborators aka project members would be allowed to contrib
 6. **Open a Pull Request** against the main repository
 
 ### Commit Message Guidelines
+
 We follow the [Conventional Commits](https://www.conventionalcommits.org/) standard:
 
 - `feat:` for new features
@@ -203,6 +221,7 @@ We follow the [Conventional Commits](https://www.conventionalcommits.org/) stand
 Example: `feat: add user authentication system`
 
 ### Pull Request Process
+
 1. Ensure your code passes all tests
 2. Update documentation if necessary
 3. Your PR should be reviewed by at least one maintainer
@@ -213,22 +232,28 @@ Example: `feat: add user authentication system`
 ### Common Issues
 
 #### "Module not found" errors
+
 ```
 npm install
 ```
 
 #### Vite dev server not starting
+
 Check if the port is already in use. You can change the port in `vite.config.js`.
 
 #### Hot reloading not working
+
 Make sure you're not using `React.memo`, `useMemo`, or `useCallback` unnecessarily.
 
 #### Environment variables not loading
+
 - Ensure variables are prefixed with `VITE_`
 - Restart the development server after changing environment files
 
 ### Getting Help
+
 If you encounter any issues, please:
+
 1. Check the existing issues on GitHub
 2. Search through the documentation
 3. Open a new issue with a detailed description of the problem
@@ -236,4 +261,5 @@ If you encounter any issues, please:
 ---
 
 ## License
+
 This project is licensed under the MIT License - see the LICENSE file for details.
