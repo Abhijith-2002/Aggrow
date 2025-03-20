@@ -1,127 +1,196 @@
 import React, { useState } from "react";
+import axios from "axios";
 import "./FertilizerRecommendation.css";
-import { useTranslation } from "react-i18next"; // Import the translation hook
 
 const FertilizerRecommendation = () => {
-  const { t } = useTranslation(); // Initialize the translation hook
   const [formData, setFormData] = useState({
+    temperature: "",
+    humidity: "",
+    moisture: "",
+    soil_type: "",
+    crop_type: "",
     nitrogen: "",
     phosphorous: "",
-    pottasium: "",
-    cropname: "",
+    potassium: "",
+    ph: "",
   });
 
-  const crops = [
-    "rice",
-    "maize",
-    "chickpea",
-    "kidneybeans",
-    "pigeonpeas",
-    "mothbeans",
-    "mungbean",
-    "blackgram",
-    "lentil",
-    "pomegranate",
-    "banana",
-    "mango",
-    "grapes",
-    "watermelon",
-    "muskmelon",
-    "apple",
-    "orange",
-    "papaya",
-    "coconut",
-    "cotton",
-    "jute",
-    "coffee",
-  ];
+  const [prediction, setPrediction] = useState({
+    organic_fertilizer: "",
+    inorganic_fertilizer: "",
+  });
 
+  const [loading, setLoading] = useState(false);
+
+  // Handle Input Change
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    if (!formData.cropname) {
-      alert(t("fertilizerRecommendation.noCropError")); // Use translation for error message
+  // 📍 Fetch GPS & Autofill Data
+  const handleAutofill = async () => {
+    if (!navigator.geolocation) {
+      alert("Geolocation is not supported by your browser");
       return;
     }
 
-    try {
-      const response = await fetch("https://your-api-endpoint/fert-recommend", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
+    setLoading(true);
+    navigator.geolocation.getCurrentPosition(
+      async (position) => {
+        const { latitude, longitude } = position.coords;
+        console.log("User Location:", latitude, longitude);
 
-      const data = await response.json();
-      alert(`${t("fertilizerRecommendation.result")} ${data.recommendation}`); // Use translation for result message
+        try {
+          const response = await axios.get(
+            `http://127.0.0.1:5000/fertilizer/autofill?lat=${latitude}&lon=${longitude}`
+          );
+
+          if (response.data) {
+            setFormData((prev) => ({
+              ...prev,
+              temperature: response.data.temperature || prev.temperature,
+              humidity: response.data.humidity || prev.humidity,
+              moisture: response.data.moisture || prev.moisture,
+              soil_type: response.data.soil_type || prev.soil_type,
+              nitrogen: response.data.nitrogen || prev.nitrogen,
+              phosphorous: response.data.phosphorous || prev.phosphorous,
+              potassium: response.data.potassium || prev.potassium,
+              ph: response.data.ph || prev.ph,
+            }));
+          }
+        } catch (error) {
+          console.error("Autofill Error:", error);
+        } finally {
+          setLoading(false);
+        }
+      },
+      (error) => {
+        console.error("Geolocation Error:", error);
+        setLoading(false);
+      }
+    );
+  };
+
+  // Submit Form & Get Prediction
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+      const response = await axios.post(
+        "http://127.0.0.1:5000/fertilizer/predict",
+        formData
+      );
+      setPrediction(response.data);
     } catch (error) {
-      alert(t("errors.connectionFailed")); // Use translation for connection error
+      console.error("Error fetching prediction:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <div className="fertilizer-container">
-      <h2>{t("fertilizerRecommendation.title")}</h2> {/* Use translation for title */}
+      <h2>Fertilizer Recommendation</h2>
+
+      <button
+        className="autofill-btn"
+        onClick={handleAutofill}
+        disabled={loading}
+      >
+        {loading ? "Fetching..." : "Autofill Data 📍"}
+      </button>
 
       <form onSubmit={handleSubmit} className="fertilizer-form">
-        <label>
-          <b>{t("fertilizerRecommendation.form.nitrogen")}</b> {/* Use translation for label */}
-        </label>
+        <input
+          type="number"
+          name="temperature"
+          placeholder="Temperature"
+          onChange={handleChange}
+          required
+          value={formData.temperature}
+        />
+        <input
+          type="number"
+          name="humidity"
+          placeholder="Humidity"
+          onChange={handleChange}
+          required
+          value={formData.humidity}
+        />
+        <input
+          type="number"
+          name="moisture"
+          placeholder="Moisture"
+          onChange={handleChange}
+          required
+          value={formData.moisture}
+        />
+        <input
+          type="text"
+          name="soil_type"
+          placeholder="Soil Type"
+          onChange={handleChange}
+          value={formData.soil_type}
+        />
+        <input
+          type="text"
+          name="crop_type"
+          placeholder="Crop Type"
+          onChange={handleChange}
+          required
+          value={formData.crop_type}
+        />
         <input
           type="number"
           name="nitrogen"
-          placeholder={t("fertilizerRecommendation.form.nitrogenPlaceholder")}
-          value={formData.nitrogen}
+          placeholder="Nitrogen (N)"
           onChange={handleChange}
           required
+          value={formData.nitrogen}
         />
-
-        <label>
-          <b>{t("fertilizerRecommendation.form.phosphorous")}</b> {/* Use translation for label */}
-        </label>
         <input
           type="number"
           name="phosphorous"
-          placeholder={t("fertilizerRecommendation.form.phosphorousPlaceholder")}
-          value={formData.phosphorous}
+          placeholder="Phosphorous (P)"
           onChange={handleChange}
           required
+          value={formData.phosphorous}
         />
-
-        <label>
-          <b>{t("fertilizerRecommendation.form.pottasium")}</b> {/* Use translation for label */}
-        </label>
         <input
           type="number"
-          name="pottasium"
-          placeholder={t("fertilizerRecommendation.form.pottasiumPlaceholder")}
-          value={formData.pottasium}
+          name="potassium"
+          placeholder="Potassium (K)"
           onChange={handleChange}
           required
+          value={formData.potassium}
+        />
+        <input
+          type="number"
+          name="ph"
+          placeholder="pH Level"
+          onChange={handleChange}
+          value={formData.ph}
         />
 
-        <label>
-          <b>{t("fertilizerRecommendation.form.cropLabel")}</b> {/* Use translation for label */}
-        </label>
-        <select
-          name="cropname"
-          value={formData.cropname}
-          onChange={handleChange}
-          required
-        >
-          <option value="">{t("fertilizerRecommendation.form.selectCrop")}</option> {/* Use translation for placeholder */}
-          {crops.map((crop) => (
-            <option key={crop} value={crop}>
-              {t(`crops.${crop}`)} {/* Use translation for crop names */}
-            </option>
-          ))}
-        </select>
-
-        <button type="submit">{t("common.predict")}</button> {/* Use translation for button text */}
+        <button type="submit" disabled={loading}>
+          {loading ? "Predicting..." : "Predict"}
+        </button>
       </form>
+
+      {prediction && (
+        <div className="prediction-result">
+          <h3>Organic Fertilizer Recommendation</h3>
+          <p>{prediction.organic_fertilizer}</p>
+
+          {prediction.inorganic_fertilizer && (
+            <div>
+              <h3>Inorganic Fertilizer Option</h3>
+              <p>{prediction.inorganic_fertilizer}</p>
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 };
