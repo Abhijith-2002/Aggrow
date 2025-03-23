@@ -1,5 +1,6 @@
+/* 🌱 Fertilizer Form Container */
 .fertilizer-container {
-  max-width: 400px;
+  max-width: 75%;
   margin: 40px auto;
   padding: 20px;
   background: white;
@@ -8,26 +9,23 @@
   text-align: center;
 }
 
+/* 🌿 Heading Styling */
 h2 {
   font-size: 22px;
   font-weight: bold;
   color: #2d6a4f;
 }
 
+/* ✅ Fertilizer Form Styling */
 .fertilizer-form {
   display: flex;
   flex-direction: column;
   gap: 15px;
   margin-top: 20px;
+  align-items: center; /* Centers all elements horizontally */
 }
 
-label {
-  font-size: 17px;
-  font-weight: bold;
-  text-align: left;
-  display: block;
-}
-
+/* 📌 Input & Select Box Styling */
 input,
 select {
   padding: 10px;
@@ -35,8 +33,12 @@ select {
   font-weight: bold;
   border: 1px solid #ccc;
   border-radius: 5px;
+  width: 90%; /* Ensures consistency in width */
+  max-width: 800px; /* Keeps the fields from being too wide */
+  text-align: center;
 }
 
+/* 🚀 Button Styling */
 button {
   padding: 12px;
   background-color: #40916c;
@@ -49,4 +51,58 @@ button {
 
 button:hover {
   background-color: #2d6a4f;
+}
+
+/* 🌱 Recommendation Box Styling */
+.recommendation-box {
+  width: 70%;
+  max-width: 700px;
+  background-color: #fff;
+  border-left: 8px solid #4caf50;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+  margin: 20px auto;
+}
+
+/* 🔠 Recommendation Box Title */
+.recommendation-box h2 {
+  color: #2c5e1a;
+  font-weight: bold;
+}
+
+/* 📋 Bullet Point List */
+.recommendation-box ul {
+  list-style-type: disc;
+  padding-left: 20px;
+}
+
+/* 📌 List Items */
+.recommendation-box li {
+  margin-bottom: 10px;
+}
+
+/* 🔴 High/Low Highlighted Text */
+.highlight {
+  font-weight: bold;
+  color: red;
+}
+
+/* ✅ Fertilizer Details Styling */
+.fertilizer-details {
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+/* 🔥 Bold Text for Emphasis */
+.bold-line {
+  font-weight: bold;
+  margin: 8px 0;
+}
+
+/* 🌿 Normal Text */
+.normal-text {
+  font-size: 17px;
+  margin: 6px 0;
 }

@@ -1,110 +1,143 @@
 from flask import Blueprint, request, jsonify
-import joblib
 import os
-import numpy as np
-from example import recommend_organic_fertilizer
 import pandas as pd
+import requests
+from example import recommend_organic_fertilizer  # Import organic fertilizer logic
+import json
+
 
 fertilizer_bp = Blueprint("fertilizer", __name__)
 
-# Load Inorganic Fertilizer Model
+# API URL & Headers
+SOIL_API_URL = "https://soilhealth4.dac.gov.in/"
+HEADERS = {
+    "User-Agent": "Mozilla/5.0",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+}
+
+# Load predefined NPK & pH ranges from Fertilizer.csv
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-MODEL_PATH = os.path.join(BASE_DIR, "models", "fertilizer_model.pkl")
-ml_model = joblib.load(MODEL_PATH)
+CSV_PATH = os.path.join(BASE_DIR, "Data", "Fertilizer.csv")
+
+fertilizer_data = pd.read_csv(CSV_PATH)
+nitrogen_range = {
+    "low": fertilizer_data["N"].quantile(0.33),
+    "medium": fertilizer_data["N"].quantile(0.66),
+    "high": fertilizer_data["N"].max(),
+}
+phosphorous_range = {
+    "low": fertilizer_data["P"].quantile(0.33),
+    "medium": fertilizer_data["P"].quantile(0.66),
+    "high": fertilizer_data["P"].max(),
+}
+potassium_range = {
+    "low": fertilizer_data["K"].quantile(0.33),
+    "medium": fertilizer_data["K"].quantile(0.66),
+    "high": fertilizer_data["K"].max(),
+}
+ph_values = {
+    "acidic": 5.5,
+    "neutral": 6.5,
+    "alkaline": 7.5,
+}
 
 
-@fertilizer_bp.route("/predict", methods=["POST"])
-def predict_fertilizer():
+def get_state_from_coords(lat, lon):
+    """Fetch state and district from coordinates using OpenStreetMap API."""
     try:
-        # print("🔹 API /predict Called!")
+        url = f"https://nominatim.openstreetmap.org/reverse?format=json&lat={lat}&lon={lon}"
+        response = requests.get(url, headers={"User-Agent": "Mozilla/5.0"}, timeout=10)
+        if response.status_code != 200:
+            return None
+        data = response.json()
+        return {
+            "state": data.get("address", {}).get("state", "Unknown State"),
+            "district": data.get("address", {}).get(
+                "state_district", "Unknown District"
+            ),
+        }
+    except Exception:
+        return None
+
+
+def get_state_id(state_name):
+    """Fetch state ID from soil API."""
+    payload = {"query": "query { getNutrientDashboardForPortal }"}
+    try:
+        response = requests.post(SOIL_API_URL, json=payload, headers=HEADERS)
+        data = response.json()
+        for state in data["data"]["getNutrientDashboardForPortal"]:
+            if state["state"]["name"].lower() == state_name.lower():
+                return state["state"]["_id"]
+    except Exception:
+        return None
+
+
+def get_district_soil_details(state_id, district_name):
+    """Fetch soil details for a specific district."""
+    payload = {
+        "query": f'query {{ getNutrientDashboardForPortal(state:"{state_id}") }}'
+    }
+    try:
+        response = requests.post(SOIL_API_URL, json=payload, headers=HEADERS)
+        data = response.json().get("data", {}).get("getNutrientDashboardForPortal", [])
+        for entry in data:
+            if (
+                entry["district"]["name"].strip().lower()
+                == district_name.strip().lower()
+            ):
+                return entry["results"]
+    except Exception:
+        return None
+    return None
+
+
+@fertilizer_bp.route("/autofill", methods=["GET"])
+def autofill_data():
+    print(request.args.get("lat"))
+    """Autofill fertilizer form based on user's GPS coordinates."""
+    lat, lon = request.args.get("lat"), request.args.get("lon")
+    print(lat, lon)
+    if not lat or not lon:
+        return jsonify({"error": "Latitude and longitude are required"}), 400
+    print(lat, lon)
+    location = get_state_from_coords(lat, lon)
+    if not location:
+        return jsonify({"error": "Failed to determine state"}), 500
+
+    state, district = location["state"], location["district"]
+    state_id = get_state_id(state)
+    if not state_id:
+        return jsonify({"error": "State not found in soil database"}), 404
+
+    soil_data = get_district_soil_details(state_id, district)
+    print(soil_data)
+    if not soil_data:
+        return jsonify({"error": "Soil data not available"}), 404
+
+    # Determine dominant NPK & pH levels
+    n_dominant = max(soil_data["n"], key=soil_data["n"].get)
+    p_dominant = max(soil_data["p"], key=soil_data["p"].get)
+    k_dominant = max(soil_data["k"], key=soil_data["k"].get)
+    pH_dominant = max(soil_data["pH"], key=soil_data["pH"].get)
+
+    autofill_data = {
+        "nitrogen": nitrogen_range[n_dominant.lower()],
+        "phosphorous": phosphorous_range[p_dominant.lower()],
+        "potassium": potassium_range[k_dominant.lower()],
+        "ph": ph_values[pH_dominant.lower()],
+    }
+    print(autofill_data)
+    return json.loads(json.dumps(autofill_data, default=int))
+
+
+@fertilizer_bp.route("/recommend", methods=["POST"])
+def predict_fertilizer():
+    """Predicts organic fertilizers."""
+    try:
         data = request.get_json()
         crop_name = data["crop_type"]
-        # print("Received Data:", data)
-
-        # Convert Inputs to Numeric Values
-        for key in [
-            "temperature",
-            "humidity",
-            "moisture",
-            "nitrogen",
-            "phosphorous",
-            "potassium",
-            "ph",
-        ]:
-            if key in data and data[key] != "":
-                data[key] = float(data[key])
-
-        # Handle Missing Soil Type
-        data["soil_type"] = float(data["soil_type"]) if data["soil_type"] else 0
-
-        # Convert Crop Type to Numeric ID
-        CROP_TYPE_MAPPING = {
-            "Rice": 0,
-            "Wheat": 1,
-            "Maize": 2,
-            "Cotton": 3,
-            "Sugarcane": 4,
-        }
-        FERTILIZER_MAPPING = {
-            0: "Urea",
-            1: "DAP",
-            2: "MOP",
-            3: "NPK",
-            4: "Super Phosphate",
-            5: "Ammonium Sulphate",
-            6: "Magnesium Sulphate",
-            7: "Calcium Nitrate",
-            8: "Zinc Sulphate",
-            9: "Potash",
-        }
-        if data["crop_type"] in CROP_TYPE_MAPPING:
-            data["crop_type"] = CROP_TYPE_MAPPING[data["crop_type"]]
-        else:
-            return jsonify({"error": f"Invalid crop type: {data['crop_type']}"}), 400
-
-        # Prepare Features
-        feature_order = [
-            "Temparature",
-            "Humidity",
-            "Moisture",
-            "Soil_Type",
-            "Crop_Type",
-            "Nitrogen",
-            "Potassium",
-            "Phosphorous",
-            "NPK_Ratio",
-        ]
-
-        formatted_data = {
-            "Temparature": data["temperature"],
-            "Humidity": data["humidity"],
-            "Moisture": data["moisture"],
-            "Soil_Type": data["soil_type"],
-            "Crop_Type": data["crop_type"],
-            "Nitrogen": data["nitrogen"],
-            "Potassium": data["potassium"],
-            "Phosphorous": data["phosphorous"],
-            "NPK_Ratio": (data["nitrogen"] + data["phosphorous"] + data["potassium"])
-            / 3,
-        }
-
-        # Convert to DataFrame
-        features_df = pd.DataFrame(
-            [[formatted_data[col] for col in feature_order]], columns=feature_order
-        )
-        # print("✅ Fixed Feature DataFrame:\n", features_df)
-
-        # **Make Prediction**
-        prediction = ml_model.predict(features_df)
-        # print("✅ Model Prediction (Number):", prediction[0])  # Debugging log
-
-        # **Convert Prediction to Fertilizer Name**
-        predicted_fertilizer = FERTILIZER_MAPPING.get(
-            int(prediction[0]), "Unknown Fertilizer"
-        )
-        # print("✅ Mapped Fertilizer Name:", predicted_fertilizer)  # Debugging log
-
-        # **Generate Organic Fertilizer Recommendation**
         organic_fertilizer = recommend_organic_fertilizer(
             data["nitrogen"],
             data["phosphorous"],
@@ -112,37 +145,7 @@ def predict_fertilizer():
             data.get("ph"),
             crop_name,
         )
-        # print("✅ Organic Fertilizer Recommendation:", organic_fertilizer)  # Debugging log
-        return jsonify(
-            {
-                "inorganic_fertilizer": predicted_fertilizer,  # Return fertilizer name instead of number
-                "organic_fertilizer": organic_fertilizer,
-            }
-        )
-
+        print(organic_fertilizer)
+        return jsonify({"organic_fertilizer": organic_fertilizer})
     except Exception as e:
-        print("❌ Error:", str(e))
         return jsonify({"error": str(e)}), 500
-
-
-@fertilizer_bp.route("/autofill", methods=["GET"])
-def autofill_data():
-    lat = request.args.get("lat")
-    lon = request.args.get("lon")
-
-    if not lat or not lon:
-        return jsonify({"error": "Latitude and longitude are required"}), 400
-
-    # Simulate fetching soil and NPK data from a database based on location
-    autofill_data = {
-        "temperature": 30.5,
-        "humidity": 65.2,
-        "moisture": 50.1,
-        "soil_type": "Loamy",
-        "nitrogen": 45,
-        "phosphorous": 30,
-        "potassium": 20,
-        "ph": 6.5,
-    }
-
-    return jsonify(autofill_data)

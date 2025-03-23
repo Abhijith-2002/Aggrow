@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import axios from "axios";
+import cropList from "./crops.json"; // 🆕 Import Crop List
 import "./FertilizerRecommendation.css";
+import { useTranslation } from "react-i18next";
 
 const FertilizerRecommendation = () => {
+  const { t } = useTranslation();
   const [formData, setFormData] = useState({
-    temperature: "",
-    humidity: "",
-    moisture: "",
-    soil_type: "",
     crop_type: "",
     nitrogen: "",
     phosphorous: "",
@@ -15,75 +14,71 @@ const FertilizerRecommendation = () => {
     ph: "",
   });
 
-  const [prediction, setPrediction] = useState({
-    organic_fertilizer: "",
-    inorganic_fertilizer: "",
-  });
-
+  const [recommendation, setRecommendation] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [autoFillLoading, setAutoFillLoading] = useState(false);
 
-  // Handle Input Change
+  // 📌 Handle Input Change
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // 📍 Fetch GPS & Autofill Data
+  // 📍 Autofill Data Based on GPS
   const handleAutofill = async () => {
     if (!navigator.geolocation) {
-      alert("Geolocation is not supported by your browser");
+      alert("Geolocation is not supported by your browser.");
       return;
     }
 
-    setLoading(true);
+    setAutoFillLoading(true);
     navigator.geolocation.getCurrentPosition(
       async (position) => {
         const { latitude, longitude } = position.coords;
-        console.log("User Location:", latitude, longitude);
+        console.log("📍 GPS Coordinates:", latitude, longitude);
 
         try {
-          const response = await axios.get(
+          const res = await axios.get(
             `http://127.0.0.1:5000/fertilizer/autofill?lat=${latitude}&lon=${longitude}`
           );
 
-          if (response.data) {
+          if (res.data) {
             setFormData((prev) => ({
               ...prev,
-              temperature: response.data.temperature || prev.temperature,
-              humidity: response.data.humidity || prev.humidity,
-              moisture: response.data.moisture || prev.moisture,
-              soil_type: response.data.soil_type || prev.soil_type,
-              nitrogen: response.data.nitrogen || prev.nitrogen,
-              phosphorous: response.data.phosphorous || prev.phosphorous,
-              potassium: response.data.potassium || prev.potassium,
-              ph: response.data.ph || prev.ph,
+              nitrogen: res.data.nitrogen || prev.nitrogen,
+              phosphorous: res.data.phosphorous || prev.phosphorous,
+              potassium: res.data.potassium || prev.potassium,
+              ph: res.data.ph || prev.ph,
             }));
           }
-        } catch (error) {
-          console.error("Autofill Error:", error);
+        } catch (err) {
+          alert("❌ Failed to autofill soil data.");
+          console.error("Autofill Error:", err);
         } finally {
-          setLoading(false);
+          setAutoFillLoading(false);
         }
       },
       (error) => {
+        alert("❌ Unable to retrieve location. Please enable GPS.");
         console.error("Geolocation Error:", error);
-        setLoading(false);
+        setAutoFillLoading(false);
       }
     );
   };
 
-  // Submit Form & Get Prediction
+  // 📌 Submit & Get Fertilizer Recommendation
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
     try {
       const response = await axios.post(
-        "http://127.0.0.1:5000/fertilizer/predict",
+        "http://127.0.0.1:5000/fertilizer/recommend",
         formData
       );
-      setPrediction(response.data);
+      setRecommendation(response.data);
     } catch (error) {
-      console.error("Error fetching prediction:", error);
+      alert("❌ Error fetching recommendation.");
+      console.error("Recommendation Error:", error);
     } finally {
       setLoading(false);
     }
@@ -91,60 +86,42 @@ const FertilizerRecommendation = () => {
 
   return (
     <div className="fertilizer-container">
-      <h2>Fertilizer Recommendation</h2>
+      <h2>{t("🌱 Fertilizer Recommendation")}</h2>
 
+      {/* 📍 Autofill Button */}
       <button
         className="autofill-btn"
         onClick={handleAutofill}
-        disabled={loading}
+        disabled={autoFillLoading}
       >
-        {loading ? "Fetching..." : "Autofill Data 📍"}
+        {autoFillLoading ? "Fetching..." : "📍 Autofill Data"}
       </button>
 
+      {/* 📝 Form */}
       <form onSubmit={handleSubmit} className="fertilizer-form">
-        <input
-          type="number"
-          name="temperature"
-          placeholder="Temperature"
-          onChange={handleChange}
-          required
-          value={formData.temperature}
-        />
-        <input
-          type="number"
-          name="humidity"
-          placeholder="Humidity"
-          onChange={handleChange}
-          required
-          value={formData.humidity}
-        />
-        <input
-          type="number"
-          name="moisture"
-          placeholder="Moisture"
-          onChange={handleChange}
-          required
-          value={formData.moisture}
-        />
-        <input
-          type="text"
-          name="soil_type"
-          placeholder="Soil Type"
-          onChange={handleChange}
-          value={formData.soil_type}
-        />
-        <input
-          type="text"
+        {/* 🔽 Crop Selection */}
+        <select
           name="crop_type"
-          placeholder="Crop Type"
           onChange={handleChange}
-          required
           value={formData.crop_type}
-        />
+          required
+        >
+          <option value="">Select Crop</option>
+          {cropList.length > 0 ? (
+            cropList.map((crop, index) => (
+              <option key={index} value={crop}>
+                {crop}
+              </option>
+            ))
+          ) : (
+            <option disabled>Loading crops...</option>
+          )}
+        </select>
+
         <input
           type="number"
           name="nitrogen"
-          placeholder="Nitrogen (N)"
+          placeholder="Nitrogen (kg/ha)"
           onChange={handleChange}
           required
           value={formData.nitrogen}
@@ -152,7 +129,7 @@ const FertilizerRecommendation = () => {
         <input
           type="number"
           name="phosphorous"
-          placeholder="Phosphorous (P)"
+          placeholder="Phosphorous (kg/ha)"
           onChange={handleChange}
           required
           value={formData.phosphorous}
@@ -160,7 +137,7 @@ const FertilizerRecommendation = () => {
         <input
           type="number"
           name="potassium"
-          placeholder="Potassium (K)"
+          placeholder="Potassium (kg/ha)"
           onChange={handleChange}
           required
           value={formData.potassium}
@@ -170,25 +147,152 @@ const FertilizerRecommendation = () => {
           name="ph"
           placeholder="pH Level"
           onChange={handleChange}
+          required
           value={formData.ph}
         />
 
         <button type="submit" disabled={loading}>
-          {loading ? "Predicting..." : "Predict"}
+          {loading ? "Recommending..." : "🔍 Recommend Fertilizer"}
         </button>
       </form>
 
-      {prediction && (
-        <div className="prediction-result">
-          <h3>Organic Fertilizer Recommendation</h3>
-          <p>{prediction.organic_fertilizer}</p>
+      {/* 🌱 Styled Recommendation Box */}
+      {recommendation && recommendation.organic_fertilizer && (
+        <div className="fertilizer-container recommendation-box">
+          <h3>Fertilizer Recommendation</h3>
+          <div className="fertilizer-details">
+            {(() => {
+              let highlighted = {
+                nitrogen_high: false,
+                nitrogen_low: false,
+                phosphorous_high: false,
+                phosphorous_low: false,
+                potassium_high: false,
+                potassium_low: false,
+              };
 
-          {prediction.inorganic_fertilizer && (
-            <div>
-              <h3>Inorganic Fertilizer Option</h3>
-              <p>{prediction.inorganic_fertilizer}</p>
-            </div>
-          )}
+              return recommendation.organic_fertilizer
+                .split("\n")
+                .map((line, index) => {
+                  let lowerLine = line.toLowerCase();
+
+                  const makeBoldWithRed = (text) =>
+                    text.replace(
+                      /\b(HIGH|LOW)\b/gi,
+                      (match) => `<span class="red-highlight">${match}</span>`
+                    );
+
+                  // 🔴 Nitrogen Highlight
+                  if (
+                    !highlighted.nitrogen_high &&
+                    lowerLine.includes("nitrogen is high")
+                  ) {
+                    highlighted.nitrogen_high = true;
+                    return (
+                      <p key={index} className="bold-line">
+                        •{" "}
+                        <span
+                          dangerouslySetInnerHTML={{
+                            __html: makeBoldWithRed(line),
+                          }}
+                        />
+                      </p>
+                    );
+                  }
+                  if (
+                    !highlighted.nitrogen_low &&
+                    lowerLine.includes("nitrogen is low")
+                  ) {
+                    highlighted.nitrogen_low = true;
+                    return (
+                      <p key={index} className="bold-line">
+                        •{" "}
+                        <span
+                          dangerouslySetInnerHTML={{
+                            __html: makeBoldWithRed(line),
+                          }}
+                        />
+                      </p>
+                    );
+                  }
+
+                  // 🟡 Phosphorous Highlight
+                  if (
+                    !highlighted.phosphorous_high &&
+                    lowerLine.includes("phosphorous is high")
+                  ) {
+                    highlighted.phosphorous_high = true;
+                    return (
+                      <p key={index} className="bold-line">
+                        •{" "}
+                        <span
+                          dangerouslySetInnerHTML={{
+                            __html: makeBoldWithRed(line),
+                          }}
+                        />
+                      </p>
+                    );
+                  }
+                  if (
+                    !highlighted.phosphorous_low &&
+                    lowerLine.includes("phosphorous is low")
+                  ) {
+                    highlighted.phosphorous_low = true;
+                    return (
+                      <p key={index} className="bold-line">
+                        •{" "}
+                        <span
+                          dangerouslySetInnerHTML={{
+                            __html: makeBoldWithRed(line),
+                          }}
+                        />
+                      </p>
+                    );
+                  }
+
+                  // 🟢 Potassium Highlight
+                  if (
+                    !highlighted.potassium_high &&
+                    lowerLine.includes("potassium is high")
+                  ) {
+                    highlighted.potassium_high = true;
+                    return (
+                      <p key={index} className="bold-line">
+                        •{" "}
+                        <span
+                          dangerouslySetInnerHTML={{
+                            __html: makeBoldWithRed(line),
+                          }}
+                        />
+                      </p>
+                    );
+                  }
+                  if (
+                    !highlighted.potassium_low &&
+                    lowerLine.includes("potassium is low")
+                  ) {
+                    highlighted.potassium_low = true;
+                    return (
+                      <p key={index} className="bold-line">
+                        •{" "}
+                        <span
+                          dangerouslySetInnerHTML={{
+                            __html: makeBoldWithRed(line),
+                          }}
+                        />
+                      </p>
+                    );
+                  }
+
+                  // Default text without highlight
+                  return (
+                    <p key={index} className="normal-text">
+                      {line}
+                    </p>
+                  );
+                });
+            })()}
+          </div>
         </div>
       )}
     </div>

@@ -43,7 +43,7 @@ def recommend_organic_fertilizer(nitrogen, phosphorus, potassium, pH, crop):
 
     if nitrogen < crop_thresholds["N_min"]:
         recommendations.append(
-            f"Nitrogen content is LOW:\n"
+            f"<b>Nitrogen content is LOW<b>:\n"
             + "\n".join(random.sample(fertilizer_strategy["N"]["low"], 4))
         )
     elif nitrogen > crop_thresholds["N_max"]:

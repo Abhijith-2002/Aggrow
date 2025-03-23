@@ -25,3 +25,7 @@ frontend/.env
 *.sln
 *.sw?
 __pycache__
+agg.json
+district.json
+state.js
+state.json
