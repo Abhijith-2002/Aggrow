@@ -34,8 +34,6 @@ const FertilizerRecommendation = () => {
     navigator.geolocation.getCurrentPosition(
       async (position) => {
         const { latitude, longitude } = position.coords;
-        console.log("📍 GPS Coordinates:", latitude, longitude);
-
         try {
           const res = await axios.get(
             `http://127.0.0.1:5000/fertilizer/autofill?lat=${latitude}&lon=${longitude}`
@@ -83,10 +81,9 @@ const FertilizerRecommendation = () => {
       setLoading(false);
     }
   };
-
   return (
     <div className="fertilizer-container">
-      <h2>{t("🌱 Fertilizer Recommendation")}</h2>
+      <h2>{t("fertilizerRecommendation.title")}</h2>
 
       {/* 📍 Autofill Button */}
       <button
@@ -94,7 +91,9 @@ const FertilizerRecommendation = () => {
         onClick={handleAutofill}
         disabled={autoFillLoading}
       >
-        {autoFillLoading ? "Fetching..." : "📍 Autofill Data"}
+        {autoFillLoading
+          ? t("fertilizerRecommendation.loading")
+          : t("fertilizerRecommendation.autofill")}
       </button>
 
       {/* 📝 Form */}
@@ -106,22 +105,24 @@ const FertilizerRecommendation = () => {
           value={formData.crop_type}
           required
         >
-          <option value="">Select Crop</option>
+          <option value="">{t("fertilizerRecommendation.select")}</option>
           {cropList.length > 0 ? (
             cropList.map((crop, index) => (
               <option key={index} value={crop}>
-                {crop}
+                {t(`crops.${crop.toLowerCase()}`)}
               </option>
             ))
           ) : (
-            <option disabled>Loading crops...</option>
+            <option disabled>
+              {t("fertilizerRecommendation.loadingCrops")}
+            </option>
           )}
         </select>
 
         <input
           type="number"
           name="nitrogen"
-          placeholder="Nitrogen (kg/ha)"
+          placeholder={t("fertilizerRecommendation.form.nitrogen")}
           onChange={handleChange}
           required
           value={formData.nitrogen}
@@ -129,7 +130,7 @@ const FertilizerRecommendation = () => {
         <input
           type="number"
           name="phosphorous"
-          placeholder="Phosphorous (kg/ha)"
+          placeholder={t("fertilizerRecommendation.form.phosphorous")}
           onChange={handleChange}
           required
           value={formData.phosphorous}
@@ -137,7 +138,7 @@ const FertilizerRecommendation = () => {
         <input
           type="number"
           name="potassium"
-          placeholder="Potassium (kg/ha)"
+          placeholder={t("fertilizerRecommendation.form.pottasium")}
           onChange={handleChange}
           required
           value={formData.potassium}
@@ -145,21 +146,23 @@ const FertilizerRecommendation = () => {
         <input
           type="number"
           name="ph"
-          placeholder="pH Level"
+          placeholder={t("fertilizerRecommendation.form.phLevel")}
           onChange={handleChange}
           required
           value={formData.ph}
         />
 
         <button type="submit" disabled={loading}>
-          {loading ? "Recommending..." : "🔍 Recommend Fertilizer"}
+          {loading
+            ? t("fertilizerRecommendation.recommending")
+            : t("fertilizerRecommendation.recommend")}
         </button>
       </form>
 
       {/* 🌱 Styled Recommendation Box */}
       {recommendation && recommendation.organic_fertilizer && (
         <div className="fertilizer-container recommendation-box">
-          <h3>Fertilizer Recommendation</h3>
+          <h3>{t("fertilizerRecommendation.title")}</h3>
           <div className="fertilizer-details">
             {(() => {
               let highlighted = {
