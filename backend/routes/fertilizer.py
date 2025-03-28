@@ -145,7 +145,6 @@ def predict_fertilizer():
             data.get("ph"),
             crop_name,
         )
-        print(organic_fertilizer)
         return jsonify({"organic_fertilizer": organic_fertilizer})
     except Exception as e:
         return jsonify({"error": str(e)}), 500

@@ -20,12 +20,15 @@ def serve_react():
     return send_from_directory(app.static_folder, "index.html")
 
 
+"""
 # Load the model
 model_path = os.path.join(
     os.path.dirname(__file__), "models/cropRecommendationModel/CropRecommendation.pkl"
 )
 with open(model_path, "rb") as file:
     model = pickle.load(file)
+
+"""
 
 
 @app.route("/api/crop-recommendation", methods=["POST"])
