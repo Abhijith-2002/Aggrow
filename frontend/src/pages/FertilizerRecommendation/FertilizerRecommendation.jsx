@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
-import cropList from "./crops.json"; // 🆕 Import Crop List
+import cropList from "./crops.json";
 import "./FertilizerRecommendation.css";
 import { useTranslation } from "react-i18next";
-
 const FertilizerRecommendation = () => {
   const { t } = useTranslation();
   const [formData, setFormData] = useState({
@@ -18,12 +17,10 @@ const FertilizerRecommendation = () => {
   const [loading, setLoading] = useState(false);
   const [autoFillLoading, setAutoFillLoading] = useState(false);
 
-  // 📌 Handle Input Change
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // 📍 Autofill Data Based on GPS
   const handleAutofill = async () => {
     if (!navigator.geolocation) {
       alert("Geolocation is not supported by your browser.");
@@ -50,20 +47,17 @@ const FertilizerRecommendation = () => {
           }
         } catch (err) {
           alert("❌ Failed to autofill soil data.");
-          console.error("Autofill Error:", err);
         } finally {
           setAutoFillLoading(false);
         }
       },
       (error) => {
         alert("❌ Unable to retrieve location. Please enable GPS.");
-        console.error("Geolocation Error:", error);
         setAutoFillLoading(false);
       }
     );
   };
 
-  // 📌 Submit & Get Fertilizer Recommendation
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -76,16 +70,14 @@ const FertilizerRecommendation = () => {
       setRecommendation(response.data);
     } catch (error) {
       alert("❌ Error fetching recommendation.");
-      console.error("Recommendation Error:", error);
     } finally {
       setLoading(false);
     }
   };
+
   return (
     <div className="fertilizer-container">
       <h2>{t("fertilizerRecommendation.title")}</h2>
-
-      {/* 📍 Autofill Button */}
       <button
         className="autofill-btn"
         onClick={handleAutofill}
@@ -95,10 +87,7 @@ const FertilizerRecommendation = () => {
           ? t("fertilizerRecommendation.loading")
           : t("fertilizerRecommendation.autofill")}
       </button>
-
-      {/* 📝 Form */}
       <form onSubmit={handleSubmit} className="fertilizer-form">
-        {/* 🔽 Crop Selection */}
         <select
           name="crop_type"
           onChange={handleChange}
@@ -118,7 +107,6 @@ const FertilizerRecommendation = () => {
             </option>
           )}
         </select>
-
         <input
           type="number"
           name="nitrogen"
@@ -151,150 +139,84 @@ const FertilizerRecommendation = () => {
           required
           value={formData.ph}
         />
-
         <button type="submit" disabled={loading}>
           {loading
             ? t("fertilizerRecommendation.recommending")
             : t("fertilizerRecommendation.recommend")}
         </button>
       </form>
-
-      {/* 🌱 Styled Recommendation Box */}
       {recommendation && recommendation.organic_fertilizer && (
         <div className="fertilizer-container recommendation-box">
           <h3>{t("fertilizerRecommendation.title")}</h3>
           <div className="fertilizer-details">
-            {(() => {
-              let highlighted = {
-                nitrogen_high: false,
-                nitrogen_low: false,
-                phosphorous_high: false,
-                phosphorous_low: false,
-                potassium_high: false,
-                potassium_low: false,
-              };
-
-              return recommendation.organic_fertilizer
-                .split("\n")
-                .map((line, index) => {
-                  let lowerLine = line.toLowerCase();
-
-                  const makeBoldWithRed = (text) =>
-                    text.replace(
-                      /\b(HIGH|LOW)\b/gi,
-                      (match) => `<span class="red-highlight">${match}</span>`
-                    );
-
-                  // 🔴 Nitrogen Highlight
-                  if (
-                    !highlighted.nitrogen_high &&
-                    lowerLine.includes("nitrogen is high")
-                  ) {
-                    highlighted.nitrogen_high = true;
-                    return (
-                      <p key={index} className="bold-line">
-                        •{" "}
-                        <span
-                          dangerouslySetInnerHTML={{
-                            __html: makeBoldWithRed(line),
-                          }}
-                        />
-                      </p>
-                    );
+            {recommendation.organic_fertilizer
+              .split("\n")
+              .filter((line) => line.trim())
+              .map((line, index) => {
+                let size = 0;
+                function generateUniqueRandomNumbers(n, count) {
+                  if (count > n) {
+                    return "Error: Count cannot be greater than n.";
                   }
-                  if (
-                    !highlighted.nitrogen_low &&
-                    lowerLine.includes("nitrogen is low")
-                  ) {
-                    highlighted.nitrogen_low = true;
-                    return (
-                      <p key={index} className="bold-line">
-                        •{" "}
-                        <span
-                          dangerouslySetInnerHTML={{
-                            __html: makeBoldWithRed(line),
-                          }}
-                        />
-                      </p>
-                    );
+                  const numbers = [];
+                  for (let i = 1; i <= n; i++) {
+                    numbers.push(i);
                   }
-
-                  // 🟡 Phosphorous Highlight
-                  if (
-                    !highlighted.phosphorous_high &&
-                    lowerLine.includes("phosphorous is high")
-                  ) {
-                    highlighted.phosphorous_high = true;
-                    return (
-                      <p key={index} className="bold-line">
-                        •{" "}
-                        <span
-                          dangerouslySetInnerHTML={{
-                            __html: makeBoldWithRed(line),
-                          }}
-                        />
-                      </p>
+                  const result = [];
+                  for (let i = 0; i < count; i++) {
+                    const randomIndex = Math.floor(
+                      Math.random() * numbers.length
                     );
+                    result.push(numbers.splice(randomIndex, 1)[0]);
                   }
-                  if (
-                    !highlighted.phosphorous_low &&
-                    lowerLine.includes("phosphorous is low")
-                  ) {
-                    highlighted.phosphorous_low = true;
-                    return (
-                      <p key={index} className="bold-line">
-                        •{" "}
-                        <span
-                          dangerouslySetInnerHTML={{
-                            __html: makeBoldWithRed(line),
-                          }}
-                        />
-                      </p>
-                    );
-                  }
-
-                  // 🟢 Potassium Highlight
-                  if (
-                    !highlighted.potassium_high &&
-                    lowerLine.includes("potassium is high")
-                  ) {
-                    highlighted.potassium_high = true;
-                    return (
-                      <p key={index} className="bold-line">
-                        •{" "}
-                        <span
-                          dangerouslySetInnerHTML={{
-                            __html: makeBoldWithRed(line),
-                          }}
-                        />
-                      </p>
-                    );
-                  }
-                  if (
-                    !highlighted.potassium_low &&
-                    lowerLine.includes("potassium is low")
-                  ) {
-                    highlighted.potassium_low = true;
-                    return (
-                      <p key={index} className="bold-line">
-                        •{" "}
-                        <span
-                          dangerouslySetInnerHTML={{
-                            __html: makeBoldWithRed(line),
-                          }}
-                        />
-                      </p>
-                    );
-                  }
-
-                  // Default text without highlight
-                  return (
-                    <p key={index} className="normal-text">
-                      {line}
-                    </p>
+                  return result;
+                }
+                if (line == "N_max") {
+                  size = 5;
+                } else if (line == "N_min") {
+                  size = 7;
+                } else if (line == "P_max") {
+                  size = 6;
+                } else if (line == "P_min") {
+                  size = 7;
+                } else if (line == "K_max") {
+                  size = 4;
+                } else if (line == "K_min") {
+                  size = 7;
+                } else if (line == "pH_max") {
+                  size = 5;
+                } else if (line == "pH_min") {
+                  size = 5;
+                }
+                let n = generateUniqueRandomNumbers(size, 4);
+                const Strategies = [];
+                for (let i = 0; i < n.length; i++) {
+                  Strategies.push(
+                    t(
+                      "fertilizerRecommendation.recommendation." +
+                        line +
+                        ".result." +
+                        n[i]
+                    )
                   );
-                });
-            })()}
+                }
+                return (
+                  <React.Fragment key={index}>
+                    <p className="highlight">
+                      •{" "}
+                      {t(
+                        "fertilizerRecommendation.recommendation." +
+                          line +
+                          ".title"
+                      )}
+                    </p>
+                    <p className="normal-text">1. {Strategies[0]}</p>
+                    <p className="normal-text">2. {Strategies[1]}</p>
+                    <p className="normal-text">3. {Strategies[2]}</p>
+                    <p className="normal-text">4. {Strategies[3]}</p>
+                  </React.Fragment>
+                );
+              })}
           </div>
         </div>
       )}

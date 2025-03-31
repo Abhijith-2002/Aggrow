@@ -86,7 +86,8 @@ button:hover {
 /* 🔴 High/Low Highlighted Text */
 .highlight {
   font-weight: bold;
-  color: red;
+  color: rgb(177, 11, 11);
+  margin: 10px 0;
 }
 
 /* ✅ Fertilizer Details Styling */

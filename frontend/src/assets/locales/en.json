@@ -114,7 +114,95 @@
     "recommend": "Recommend",
     "recommending": "Recommending...",
     "autofill": "Autofill Data",
-    "loading": "Loading..."
+    "loading": "Loading...",
+    "recommendation": {
+      "N_max": {
+        "title": "Nitrogen content is HIGH",
+        "result": {
+          "1": "Reduce nitrogen inputs by avoiding nitrogen-rich fertilizers like composted manure, blood meal, urea, or ammonium nitrate.",
+          "2": "Add carbon-rich materials such as straw, sawdust, or wood chips to balance excess nitrogen.",
+          "3": "Plant nitrogen-scavenging crops like grasses or cereals to absorb excess nitrogen from the soil.",
+          "4": "Leach excess nitrogen by applying moderate irrigation to wash away soluble nitrogen compounds.",
+          "5": "Apply nitrification inhibitors to slow down the conversion of ammonium to nitrate, reducing nitrogen losses."
+        }
+      },
+      "N_min": {
+        "title": "Nitrogen content is LOW",
+        "result": {
+          "1": "Add nitrogen-rich organic fertilizers such as composted manure, blood meal, or fish emulsion.",
+          "2": "Apply nitrogen-rich inorganic fertilizers like urea (46% N) or ammonium sulfate (21% N).",
+          "3": "Grow legumes like beans, peas, or clover to fix atmospheric nitrogen into the soil.",
+          "4": "Use green manure by growing and tilling nitrogen-fixing cover crops like alfalfa or clover.",
+          "5": "Apply well-decomposed compost to slowly release nitrogen and improve soil structure.",
+          "6": "Use slow-release nitrogen fertilizers like sulfur-coated urea to provide a steady supply of nitrogen.",
+          "7": "Apply split doses of nitrogen fertilizers (e.g., urea) during the growing season to maximize uptake."
+        }
+      },
+      "P_max": {
+        "title": "Phosphorus content is HIGH",
+        "result": {
+          "1": "Avoid phosphorus-rich fertilizers like bone meal, rock phosphate, DAP, or TSP to prevent excess phosphorus.",
+          "2": "Add compost or microbial inoculants to enhance phosphorus absorption by plants.",
+          "3": "Grow phosphorus-absorbing crops like sunflowers or grains to reduce excess phosphorus in the soil.",
+          "4": "Optimize phosphorus availability by adjusting soil pH to 6.5–7 (add lime for acidic soil or sulfur for alkaline soil).",
+          "5": "Apply phosphorus-solubilizing bacteria to improve plant phosphorus uptake and reduce excess phosphorus.",
+          "6": "Use moderate irrigation to leach soluble phosphorus compounds."
+        }
+      },
+      "P_min": {
+        "title": "Phosphorus content is LOW",
+        "result": {
+          "1": "Add phosphorus-rich organic fertilizers such as bone meal, rock phosphate, or fish bone meal.",
+          "2": "Apply phosphorus-rich inorganic fertilizers like DAP (18:46:0) or TSP (0:46:0).",
+          "3": "Apply compost with balanced nutrient content to provide a slow release of phosphorus.",
+          "4": "Use mycorrhizal fungi by inoculating the soil with fungi that enhance phosphorus uptake by plant roots.",
+          "5": "Adjust soil pH to 6–7 by adding lime (if acidic) or sulfur (if alkaline) to improve phosphorus availability.",
+          "6": "Use water-soluble phosphorus fertilizers like monoammonium phosphate (MAP, 11:52:0) for quick availability.",
+          "7": "Apply phosphorus fertilizers in bands near the root zone to improve uptake efficiency."
+        }
+      },
+      "K_max": {
+        "title": "Potassium content is HIGH",
+        "result": {
+          "1": "Avoid potassium fertilizers like wood ash, kelp meal, MOP, or SOP to prevent excess potassium buildup.",
+          "2": "Leach excess potassium by applying moderate irrigation to wash away soluble potassium compounds.",
+          "3": "Plant potassium-absorbing crops like potatoes or tomatoes to reduce excess potassium in the soil.",
+          "4": "Add calcium or magnesium by applying gypsum or Epsom salt to balance excess potassium levels."
+        }
+      },
+      "K_min": {
+        "title": "Potassium content is LOW",
+        "result": {
+          "1": "Add potassium-rich organic fertilizers such as wood ash, kelp meal, or greensand.",
+          "2": "Apply potassium-rich inorganic fertilizers like muriate of potash (MOP, 0:0:60) or sulfate of potash (SOP, 0:0:50).",
+          "3": "Apply compost with balanced nutrient content to provide a slow release of potassium.",
+          "4": "Use cover crops like buckwheat or alfalfa to accumulate potassium in the soil.",
+          "5": "Adjust soil pH to 6–7 by adding lime (if acidic) or sulfur (if alkaline) to improve potassium availability.",
+          "6": "Use water-soluble potassium fertilizers like potassium nitrate (13:0:45) for quick availability.",
+          "7": "Apply potassium fertilizers in split doses during the growing season to maximize uptake."
+        }
+      },
+      "pH_max": {
+        "title": "pH Level is HIGH",
+        "result": {
+          "1": "Add acidifying organic materials like pine needles, peat moss, or composted oak leaves to lower soil pH.",
+          "2": "Apply acidifying inorganic materials like elemental sulfur or aluminum sulfate to lower soil pH.",
+          "3": "Use acid-forming fertilizers like ammonium sulfate (21% N) to gradually reduce soil pH.",
+          "4": "Leach excess alkalinity by applying moderate irrigation to wash away soluble salts.",
+          "5": "Plant alkaline-tolerant crops like asparagus, cabbage, or spinach to thrive in high-pH soils."
+        }
+      },
+      "pH_min": {
+        "title": "pH Level is LOW",
+        "result": {
+          "1": "Add agricultural lime or dolomite lime at a rate of 5–10 kg per 100 sq ft to raise soil pH.",
+          "2": "Apply alkaline-forming fertilizers like calcium nitrate (15.5% N) to gradually increase soil pH.",
+          "3": "Apply wood ash sparingly (1–2 kg per 100 sq ft) to increase soil pH and provide potassium.",
+          "4": "Use alkaline organic fertilizers like composted manure or bone meal to raise soil pH gradually.",
+          "5": "Plant acid-tolerant crops like blueberries, potatoes, or strawberries to thrive in low-pH soils."
+        }
+      }
+    }
   },
   "crops": {
     "rice": "Rice",
@@ -140,29 +228,29 @@
     "jute": "Jute",
     "coffee": "Coffee",
     "wheat": "Wheat",
-    "jowar": "Jowar (sorghum)",
-    "barley": "Barley (jav)",
-    "ragi": "Ragi (naachnnii)",
-    "chickpeas": "Chickpeas (channa)",
-    "french beans": "French beans (farasbi)",
-    "fava beans": "Fava beans (papdi - val)",
-    "lima beans": "Lima beans (pavta)",
-    "cluster beans": "Cluster beans (gavar)",
+    "jowar": "Jowar",
+    "barley": "Barley",
+    "ragi": "Ragi",
+    "chickpeas": "Chickpeas",
+    "french beans": "French beans",
+    "fava beans": "Fava beans",
+    "lima beans": "Lima beans",
+    "cluster beans": "Cluster beans",
     "soyabean": "Soyabean",
-    "black eyed beans": "Black eyed beans (chawli)",
+    "black eyed beans": "Black eyed beans",
     "kidney beans": "Kidney beans",
-    "pigeon peas": "Pigeon peas (toor dal)",
-    "moth bean": "Moth bean (matki)",
+    "pigeon peas": "Pigeon peas",
+    "moth bean": "Moth bean",
     "mung beans": "Mung beans",
     "green peas": "Green peas",
-    "horse gram": "Horse gram (kulthi)",
+    "horse gram": "Horse gram",
     "black gram": "Black gram",
-    "rapeseed": "Rapeseed (mohri)",
+    "rapeseed": "Rapeseed",
     "coriander seeds": "Coriander seeds",
     "mustard seeds": "Mustard seeds",
     "sesame seed": "Sesame seed",
     "cumin seeds": "Cumin seeds",
-    "lentils": "Lentils (masoor dal)",
+    "lentils": "Lentils",
     "brinjal": "Brinjal",
     "beetroot": "Beetroot",
     "bitter gourd": "Bitter gourd",
@@ -174,7 +262,7 @@
     "cucumber": "Cucumber",
     "coriander leaves": "Coriander leaves",
     "curry leaves": "Curry leaves",
-    "drumstick": "Drumstick (moringa)",
+    "drumstick": "Drumstick",
     "chili": "Chili",
     "lady finger": "Lady finger",
     "mushroom": "Mushroom",
@@ -187,12 +275,12 @@
     "fenugreek leaf": "Fenugreek leaf",
     "spinach": "Spinach",
     "ridgegourd": "Ridgegourd",
-    "gooseberry": "Gooseberry (amla)",
-    "jambun": "Jambun (syzygium cumini)",
-    "ziziphus mauritiana": "Ziziphus mauritiana (bor)",
-    "garcinia indica": "Garcinia indica (kokam)",
+    "gooseberry": "Gooseberry",
+    "jambun": "Jambun",
+    "ziziphus mauritiana": "Ziziphus mauritiana",
+    "garcinia indica": "Garcinia indica",
     "tamarind": "Tamarind",
-    "tapioca": "Tapioca (suran)",
+    "tapioca": "Tapioca",
     "garlic": "Garlic",
     "lemon": "Lemon",
     "tomato": "Tomato",
@@ -214,7 +302,7 @@
     "cardamom": "Cardamom",
     "cinnamon": "Cinnamon",
     "cloves": "Cloves",
-    "jaiphal": "Jaiphal (nutmeg)",
+    "jaiphal": "Jaiphal",
     "ginger": "Ginger",
     "turmeric": "Turmeric",
     "cashewnuts": "Cashewnuts",

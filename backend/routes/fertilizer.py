@@ -2,7 +2,9 @@ from flask import Blueprint, request, jsonify
 import os
 import pandas as pd
 import requests
-from example import recommend_organic_fertilizer  # Import organic fertilizer logic
+from utils.recommend import (
+    recommend_organic_fertilizer,
+)  # Import organic fertilizer logic
 import json
 
 
@@ -95,13 +97,9 @@ def get_district_soil_details(state_id, district_name):
 
 @fertilizer_bp.route("/autofill", methods=["GET"])
 def autofill_data():
-    print(request.args.get("lat"))
-    """Autofill fertilizer form based on user's GPS coordinates."""
     lat, lon = request.args.get("lat"), request.args.get("lon")
-    print(lat, lon)
     if not lat or not lon:
         return jsonify({"error": "Latitude and longitude are required"}), 400
-    print(lat, lon)
     location = get_state_from_coords(lat, lon)
     if not location:
         return jsonify({"error": "Failed to determine state"}), 500
@@ -112,7 +110,6 @@ def autofill_data():
         return jsonify({"error": "State not found in soil database"}), 404
 
     soil_data = get_district_soil_details(state_id, district)
-    print(soil_data)
     if not soil_data:
         return jsonify({"error": "Soil data not available"}), 404
 
@@ -123,18 +120,16 @@ def autofill_data():
     pH_dominant = max(soil_data["pH"], key=soil_data["pH"].get)
 
     autofill_data = {
-        "nitrogen": nitrogen_range[n_dominant.lower()],
-        "phosphorous": phosphorous_range[p_dominant.lower()],
-        "potassium": potassium_range[k_dominant.lower()],
-        "ph": ph_values[pH_dominant.lower()],
+        "nitrogen": float(nitrogen_range[n_dominant.lower()]),
+        "phosphorous": float(phosphorous_range[p_dominant.lower()]),
+        "potassium": float(potassium_range[k_dominant.lower()]),
+        "ph": float(ph_values[pH_dominant.lower()]),
     }
-    print(autofill_data)
     return json.loads(json.dumps(autofill_data, default=int))
 
 
 @fertilizer_bp.route("/recommend", methods=["POST"])
 def predict_fertilizer():
-    """Predicts organic fertilizers."""
     try:
         data = request.get_json()
         crop_name = data["crop_type"]

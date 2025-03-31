@@ -1,12 +1,13 @@
 flask
 flask_cors
-numpy
+numpy==2.2.4
 joblib
 pandas
-scikit-learn
+scikit-learn==1.6.1
 requests
 dotenv
 axios
 torch
 torchvision
 PIL
+google.generativeai

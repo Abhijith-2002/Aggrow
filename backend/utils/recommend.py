@@ -1,22 +1,19 @@
 import pandas as pd
 import os
 
-import random
-from Data.fertilizer_dict import fertilizer_strategy
-
 # Load Fertilizer Dataset for Crop-Specific NPK Ranges
 # Construct the absolute path to the CSV file
 # Get absolute path of the backend directory
-BASE_DIR = os.path.abspath(
-    os.path.join(os.path.dirname(__file__), "..")
-)  # Moves up from utils/
-CSV_PATH = os.path.join(BASE_DIR, "backend/Data", "Fertilizer.csv")
-# Load Fertilizer Dataset
+BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+CSV_PATH = os.path.join(BASE_DIR, "Data", "Fertilizer.csv")
 df_fertilizer = pd.read_csv(CSV_PATH)
 
 
 def get_crop_npk_thresholds(crop):
+    # print("Crop:", crop)
+    # print("Crop:", df_fertilizer[crop])
     crop_data = df_fertilizer[df_fertilizer["Crop"] == crop]
+    # print(crop_data)
     if crop_data.empty:
         return None
     return {
@@ -42,49 +39,26 @@ def recommend_organic_fertilizer(nitrogen, phosphorus, potassium, pH, crop):
     recommendations = []
 
     if nitrogen < crop_thresholds["N_min"]:
-        recommendations.append(
-            f"Nitrogen content is LOW:\n"
-            + "\n".join(random.sample(fertilizer_strategy["N"]["low"], 4))
-        )
+        recommendations.append("N_min")
     elif nitrogen > crop_thresholds["N_max"]:
-        recommendations.append(
-            f"Nitrogen content is HIGH:\n"
-            + "\n".join(random.sample(fertilizer_strategy["N"]["high"], 4))
-        )
+        recommendations.append("N_max")
 
     if phosphorus < crop_thresholds["P_min"]:
-        recommendations.append(
-            f"Phosphorus content is LOW:\n"
-            + "\n".join(random.sample(fertilizer_strategy["P"]["low"], 4))
-        )
+        recommendations.append("P_min")
     elif phosphorus > crop_thresholds["P_max"]:
-        recommendations.append(
-            f"Phosphorus content is HIGH:\n"
-            + "\n".join(random.sample(fertilizer_strategy["P"]["high"], 4))
-        )
+        recommendations.append("P_max")
 
     if potassium < crop_thresholds["K_min"]:
-        recommendations.append(
-            f"Potassium content is LOW:\n"
-            + "\n".join(random.sample(fertilizer_strategy["K"]["low"], 4))
-        )
+        recommendations.append("K_min")
     elif potassium > crop_thresholds["K_max"]:
-        recommendations.append(
-            f"Potassium content is HIGH:\n"
-            + "\n".join(random.sample(fertilizer_strategy["K"]["high"], 4))
-        )
+        recommendations.append("K_max")
 
     if pH < crop_thresholds["pH_min"]:
-        recommendations.append(
-            f"Soil pH is LOW:\n"
-            + "\n".join(random.sample(fertilizer_strategy["pH"]["low"], 4))
-        )
+        recommendations.append("pH_min")
     elif pH > crop_thresholds["pH_max"]:
-        recommendations.append(
-            f"Soil pH is HIGH:\n"
-            + "\n".join(random.sample(fertilizer_strategy["pH"]["high"], 4))
-        )
+        recommendations.append("pH_max")
 
+    print(recommendations)
     return (
         "\n\n".join(recommendations)
         if recommendations

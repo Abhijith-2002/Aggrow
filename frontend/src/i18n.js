@@ -6,7 +6,6 @@ import hi from "../src/assets/locales/hi.json";
 import ml from "../src/assets/locales/ml.json";
 
 const savedLanguage = localStorage.getItem("language") || "en";
-console.log("savedLanguage", savedLanguage);
 
 i18n.use(initReactI18next).init({
   resources: {
