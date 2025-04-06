@@ -98,8 +98,10 @@
   "fertilizerRecommendation": {
     "title": "🌱 Fertilizer Recommendation",
     "noCropError": "Please select a crop before proceeding.",
-    "result": "Recommended Fertilizer:",
+    "result": "Recommendation Results",
+    "description": "Enter soil parameters and crop type for customized recommendation.",
     "form": {
+      "cropType": "Crop Type",
       "nitrogen": "Nitrogen (kg/ha)",
       "phosphorous": "Phosphorus (kg/ha)",
       "pottasium": "Potassium (kg/ha)",
@@ -115,262 +117,294 @@
     "recommending": "Recommending...",
     "autofill": "Autofill Data",
     "loading": "Loading...",
-    "FertilizerTypes": {
-      "N_max": {
-        "1": "Composted Manure",
-        "2": "Blood Meal",
-        "3": "Urea",
-        "4": "Ammonium Nitrate"
-      },
-      "N_min": {
-        "1": "Fish Emulsion",
-        "2": "Ammonium Sulfate",
-        "3": "Sulfur-Coated Urea",
-        "4": "Alfalfa Meal",
-        "5": "Green Manure"
-      },
-      "P_max": {
-        "1": "Bone Meal",
-        "2": "Rock Phosphate",
-        "3": "Diammonium Phosphate (DAP)",
-        "4": "Triple Superphosphate (TSP)"
-      },
-      "P_min": {
-        "1": "Fish Bone Meal",
-        "2": "Monoammonium Phosphate (MAP)",
-        "3": "Compost with Balanced Nutrients",
-        "4": "Phosphorus-Solubilizing Bacteria"
-      },
-      "K_max": {
-        "1": "Wood Ash",
-        "2": "Kelp Meal",
-        "3": "Muriate of Potash (MOP)",
-        "4": "Sulfate of Potash (SOP)"
-      },
-      "K_min": {
-        "1": "Greensand",
-        "2": "Potassium Nitrate",
-        "3": "Sulfur-Coated Potassium",
-        "4": "Buckwheat Cover Crop"
-      },
-      "pH_max": {
-        "1": "Elemental Sulfur",
-        "2": "Aluminum Sulfate",
-        "3": "Ammonium Sulfate",
-        "4": "Peat Moss"
-      },
-      "pH_min": {
-        "1": "Agricultural Lime",
-        "2": "Dolomite Lime",
-        "3": "Calcium Nitrate",
-        "4": "Wood Ash"
-      }
-    },
     "recommendation": {
+      "Analysis": "Nutrient Analysis",
+      "Fertilizer": "Recommended Fertilizer",
+      "Organic": "Organic Treatment",
+      "Inorganic": "Inorganic Treatment",
       "N_max": {
         "title": "Nitrogen content is HIGH",
+        "Type": {
+          "1": "Straw",
+          "2": "SawDust"
+        },
         "result": {
-          "1": "Reduce nitrogen inputs by avoiding nitrogen-rich fertilizers like composted manure, blood meal, urea, or ammonium nitrate.",
-          "2": "Add carbon-rich materials such as straw, sawdust, or wood chips to balance excess nitrogen.",
-          "3": "Plant nitrogen-scavenging crops like grasses or cereals to absorb excess nitrogen from the soil.",
-          "4": "Leach excess nitrogen by applying moderate irrigation to wash away soluble nitrogen compounds.",
-          "5": "Apply nitrification inhibitors to slow down the conversion of ammonium to nitrate, reducing nitrogen losses."
+          "organicTreatment": {
+            "1": "Avoid N-rich fertilizers (composted manure, blood meal).",
+            "2": "Add carbon-rich materials (straw, sawdust) at 2–3 tons/ha.",
+            "3": "Grow N-scavenging crops (wheatgrass, sudangrass)."
+          },
+          "inorganicTreatment": {
+            "1": "Avoid nitrogen-rich inorganic fertilizers like urea or ammonium nitrate.",
+            "2": "Leach excess nitrogen by applying moderate irrigation to wash away soluble nitrogen compounds.",
+            "3": "Apply nitrification inhibitors to slow down the conversion of ammonium to nitrate, reducing nitrogen losses."
+          }
         }
       },
       "N_min": {
         "title": "Nitrogen content is LOW",
+        "Type": {
+          "1": "Fish Emulsion",
+          "2": "Ammonium Sulfate",
+          "3": "Sulfur-Coated Urea",
+          "4": "Blood Meal",
+          "5": "Green Manure"
+        },
         "result": {
-          "1": "Add nitrogen-rich organic fertilizers such as composted manure, blood meal, or fish emulsion.",
-          "2": "Apply nitrogen-rich inorganic fertilizers like urea (46% N) or ammonium sulfate (21% N).",
-          "3": "Grow legumes like beans, peas, or clover to fix atmospheric nitrogen into the soil.",
-          "4": "Use green manure by growing and tilling nitrogen-fixing cover crops like alfalfa or clover.",
-          "5": "Apply well-decomposed compost to slowly release nitrogen and improve soil structure.",
-          "6": "Use slow-release nitrogen fertilizers like sulfur-coated urea to provide a steady supply of nitrogen.",
-          "7": "Apply split doses of nitrogen fertilizers (e.g., urea) during the growing season to maximize uptake."
+          "organicTreatment": {
+            "1": "Add nitrogen-rich organic fertilizers such as composted manure, blood meal, or fish emulsion.",
+            "2": "Use green manure by growing and tilling nitrogen-fixing cover crops like alfalfa or clover.",
+            "3": "Apply well-decomposed compost to slowly release nitrogen and improve soil structure."
+          },
+          "inorganicTreatment": {
+            "1": "Apply nitrogen-rich inorganic fertilizers like urea (46% N) or ammonium sulfate (21% N).",
+            "2": "Grow legumes like beans, peas, or clover to fix atmospheric nitrogen into the soil."
+          }
         }
       },
       "P_max": {
         "title": "Phosphorus content is HIGH",
+        "Type": {
+          "1": "Rice Husk Ash",
+          "2": "Biochar",
+          "3": "Potassium Sulfate (SOP, 0:0:50)",
+          "4": "Gypsum"
+        },
         "result": {
-          "1": "Avoid phosphorus-rich fertilizers like bone meal, rock phosphate, DAP, or TSP to prevent excess phosphorus.",
-          "2": "Add compost or microbial inoculants to enhance phosphorus absorption by plants.",
-          "3": "Grow phosphorus-absorbing crops like sunflowers or grains to reduce excess phosphorus in the soil.",
-          "4": "Optimize phosphorus availability by adjusting soil pH to 6.5–7 (add lime for acidic soil or sulfur for alkaline soil).",
-          "5": "Apply phosphorus-solubilizing bacteria to improve plant phosphorus uptake and reduce excess phosphorus.",
-          "6": "Use moderate irrigation to leach soluble phosphorus compounds."
+          "organicTreatment": {
+            "1": "Avoid phosphorus-rich organic fertilizers like bone meal, rock phosphate, or fish bone meal.",
+            "2": "Apply compost with low phosphorus content to balance soil nutrients.",
+            "3": "Use mycorrhizal fungi inoculants to enhance plant phosphorus uptake and reduce excess soil phosphorus."
+          },
+          "inorganicTreatment": {
+            "1": "Apply gypsum (calcium sulfate) to bind excess phosphorus into insoluble calcium phosphate.",
+            "2": "Use potassium sulfate (0:0:50) instead of phosphorus-containing fertilizers to maintain crop nutrition.",
+            "3": "Adjust soil pH to 6.5–7 by adding lime (if acidic) or sulfur (if alkaline) to optimize phosphorus availability."
+          }
         }
       },
       "P_min": {
         "title": "Phosphorus content is LOW",
+        "Type": {
+          "1": "Fish Bone Meal",
+          "2": "Di-Ammonium Phosphate (DAP)",
+          "3": "Triple Superphosphate (TSP, 0:46:0)",
+          "4": "Rock Phosphate"
+        },
         "result": {
-          "1": "Add phosphorus-rich organic fertilizers such as bone meal, rock phosphate, or fish bone meal.",
-          "2": "Apply phosphorus-rich inorganic fertilizers like DAP (18:46:0) or TSP (0:46:0).",
-          "3": "Apply compost with balanced nutrient content to provide a slow release of phosphorus.",
-          "4": "Use mycorrhizal fungi by inoculating the soil with fungi that enhance phosphorus uptake by plant roots.",
-          "5": "Adjust soil pH to 6–7 by adding lime (if acidic) or sulfur (if alkaline) to improve phosphorus availability.",
-          "6": "Use water-soluble phosphorus fertilizers like monoammonium phosphate (MAP, 11:52:0) for quick availability.",
-          "7": "Apply phosphorus fertilizers in bands near the root zone to improve uptake efficiency."
+          "organicTreatment": {
+            "1": "Add phosphorus-rich organic fertilizers such as bone meal, rock phosphate, or fish bone meal.",
+            "3": "Apply compost with balanced nutrient content to provide a slow release of phosphorus.",
+            "4": "Use mycorrhizal fungi by inoculating the soil with fungi that enhance phosphorus uptake by plant roots."
+          },
+          "inorganicTreatment": {
+            "2": "Apply phosphorus-rich inorganic fertilizers like DAP (18:46:0) or TSP (0:46:0).",
+            "5": "Adjust soil pH to 6–7 by adding lime (if acidic) or sulfur (if alkaline) to improve phosphorus availability."
+          }
         }
       },
       "K_max": {
         "title": "Potassium content is HIGH",
+        "Type": {
+          "1": "Gypsum",
+          "2": "Epsom Salt (MgSO₄)",
+          "3": "Wood Chips"
+        },
         "result": {
-          "1": "Avoid potassium fertilizers like wood ash, kelp meal, MOP, or SOP to prevent excess potassium buildup.",
-          "2": "Leach excess potassium by applying moderate irrigation to wash away soluble potassium compounds.",
-          "3": "Plant potassium-absorbing crops like potatoes or tomatoes to reduce excess potassium in the soil.",
-          "4": "Add calcium or magnesium by applying gypsum or Epsom salt to balance excess potassium levels."
+          "organicTreatment": {
+            "1": "Stop applying potassium-rich organic fertilizers like wood ash, manure, or compost high in plant-based materials.",
+            "2": "Incorporate carbon-rich, low-potassium organic matter (straw, sawdust, shredded paper) to dilute the potassium concentration and improve soil structure.",
+            "3": "Grow potassium-demanding crops (e.g., potatoes, beets) to gradually remove excess potassium from the soil over time."
+          },
+          "inorganicTreatment": {
+            "1": "Avoid potassium-containing inorganic fertilizers such as potassium chloride (KCl) or potassium sulfate (K2SO4).",
+            "2": "Apply gypsum (calcium sulfate) to displace potassium ions and increase their leaching potential in well-drained soils, with careful monitoring.",
+            "3": "Leach the soil with large volumes of water (if drainage permits) to remove excess potassium, but be mindful of potential environmental impacts."
+          }
         }
       },
       "K_min": {
         "title": "Potassium content is LOW",
+        "Type": {
+          "1": "Greensand",
+          "2": "Muriate of potash (MOP, 0:0:60)",
+          "3": "sulfate of potash (SOP, 0:0:50)",
+          "4": "Buckwheat Cover Crop",
+          "5": "Banana Peel Fertilizer"
+        },
         "result": {
-          "1": "Add potassium-rich organic fertilizers such as wood ash, kelp meal, or greensand.",
-          "2": "Apply potassium-rich inorganic fertilizers like muriate of potash (MOP, 0:0:60) or sulfate of potash (SOP, 0:0:50).",
-          "3": "Apply compost with balanced nutrient content to provide a slow release of potassium.",
-          "4": "Use cover crops like buckwheat or alfalfa to accumulate potassium in the soil.",
-          "5": "Adjust soil pH to 6–7 by adding lime (if acidic) or sulfur (if alkaline) to improve potassium availability.",
-          "6": "Use water-soluble potassium fertilizers like potassium nitrate (13:0:45) for quick availability.",
-          "7": "Apply potassium fertilizers in split doses during the growing season to maximize uptake."
+          "organicTreatment": {
+            "1": "Add potassium-rich organic fertilizers such as wood ash, kelp meal, or greensand.",
+            "2": "Use cover crops like buckwheat or alfalfa to accumulate potassium in the soil.",
+            "3": "Apply banana peel fertilizer to improve potassium levels naturally."
+          },
+          "inorganicTreatment": {
+            "1": "Apply potassium-rich inorganic fertilizers like muriate of potash (MOP, 0:0:60) or sulfate of potash (SOP, 0:0:50).",
+            "2": "Use water-soluble potassium fertilizers like potassium nitrate (13:0:45) for quick availability."
+          }
         }
       },
       "pH_max": {
         "title": "pH Level is HIGH",
+        "Type": {
+          "1": "Elemental Sulfur",
+          "2": "Aluminum Sulfate",
+          "3": "Peat Moss",
+          "4": "Ammonium Sulfate",
+          "5": "Composted Pine Needles"
+        },
         "result": {
-          "1": "Add acidifying organic materials like pine needles, peat moss, or composted oak leaves to lower soil pH.",
-          "2": "Apply acidifying inorganic materials like elemental sulfur or aluminum sulfate to lower soil pH.",
-          "3": "Use acid-forming fertilizers like ammonium sulfate (21% N) to gradually reduce soil pH.",
-          "4": "Leach excess alkalinity by applying moderate irrigation to wash away soluble salts.",
-          "5": "Plant alkaline-tolerant crops like asparagus, cabbage, or spinach to thrive in high-pH soils."
+          "organicTreatment": {
+            "1": "Add acidifying organic materials like pine needles, peat moss, or composted oak leaves to lower soil pH.",
+            "2": "Incorporate organic matter such as compost or manure to improve soil structure and reduce alkalinity."
+          },
+          "inorganicTreatment": {
+            "1": "Apply acidifying inorganic materials like elemental sulfur or aluminum sulfate to lower soil pH.",
+            "2": "Use acid-forming fertilizers like ammonium sulfate (21% N) to gradually reduce soil pH.",
+            "3": "Leach excess alkalinity by applying moderate irrigation to wash away soluble salts."
+          }
         }
       },
       "pH_min": {
         "title": "pH Level is LOW",
+        "Type": {
+          "1": "Agricultural Lime",
+          "2": "Dolomite Lime",
+          "3": "Quick Lime",
+          "4": "Wood Ash",
+          "5": "Crushed Eggshells"
+        },
         "result": {
-          "1": "Add agricultural lime or dolomite lime at a rate of 5–10 kg per 100 sq ft to raise soil pH.",
-          "2": "Apply alkaline-forming fertilizers like calcium nitrate (15.5% N) to gradually increase soil pH.",
-          "3": "Apply wood ash sparingly (1–2 kg per 100 sq ft) to increase soil pH and provide potassium.",
-          "4": "Use alkaline organic fertilizers like composted manure or bone meal to raise soil pH gradually.",
-          "5": "Plant acid-tolerant crops like blueberries, potatoes, or strawberries to thrive in low-pH soils."
+          "organicTreatment": {
+            "1": "Apply agricultural lime (calcium carbonate) at 2-5 tons/ha to gradually raise pH.",
+            "2": "Add wood ash (1-2 tons/ha) for quick pH correction and potassium supply.",
+            "3": "Use composted eggshells or oyster shells (500-1000 kg/ha) for slow pH adjustment."
+          },
+          "inorganicTreatment": {
+            "1": "Apply dolomitic lime (CaMg(CO₃)₂) at 1-3 tons/ha to raise pH and add magnesium.",
+            "2": "Use hydrated lime (Ca(OH)₂) at 500-1000 kg/ha for rapid pH increase (caution: strong effect).",
+            "3": "Mix calcium oxide (quicklime, CaO) at 200-500 kg/ha for severe acidity (wear protective gear)."
+          }
         }
       }
+    },
+    "crops": {
+      "rice": "Rice",
+      "maize": "Maize",
+      "chickpea": "Chickpea",
+      "kidneybeans": "Kidney Beans",
+      "pigeonpeas": "Pigeon Peas",
+      "mothbeans": "Moth Beans",
+      "mungbean": "Mung Bean",
+      "blackgram": "Black Gram",
+      "lentil": "Lentil",
+      "pomegranate": "Pomegranate",
+      "banana": "Banana",
+      "mango": "Mango",
+      "grapes": "Grapes",
+      "watermelon": "Watermelon",
+      "muskmelon": "Muskmelon",
+      "apple": "Apple",
+      "orange": "Orange",
+      "papaya": "Papaya",
+      "coconut": "Coconut",
+      "cotton": "Cotton",
+      "jute": "Jute",
+      "coffee": "Coffee",
+      "wheat": "Wheat",
+      "jowar": "Jowar",
+      "barley": "Barley",
+      "ragi": "Ragi",
+      "chickpeas": "Chickpeas",
+      "french beans": "French beans",
+      "fava beans": "Fava beans",
+      "lima beans": "Lima beans",
+      "cluster beans": "Cluster beans",
+      "soyabean": "Soyabean",
+      "black eyed beans": "Black eyed beans",
+      "kidney beans": "Kidney beans",
+      "pigeon peas": "Pigeon peas",
+      "moth bean": "Moth bean",
+      "mung beans": "Mung beans",
+      "green peas": "Green peas",
+      "horse gram": "Horse gram",
+      "black gram": "Black gram",
+      "rapeseed": "Rapeseed",
+      "coriander seeds": "Coriander seeds",
+      "mustard seeds": "Mustard seeds",
+      "sesame seed": "Sesame seed",
+      "cumin seeds": "Cumin seeds",
+      "lentils": "Lentils",
+      "brinjal": "Brinjal",
+      "beetroot": "Beetroot",
+      "bitter gourd": "Bitter gourd",
+      "bottle gourd": "Bottle gourd",
+      "capsicum": "Capsicum",
+      "cabbage": "Cabbage",
+      "carrot": "Carrot",
+      "cauliflower": "Cauliflower",
+      "cucumber": "Cucumber",
+      "coriander leaves": "Coriander leaves",
+      "curry leaves": "Curry leaves",
+      "drumstick": "Drumstick",
+      "chili": "Chili",
+      "lady finger": "Lady finger",
+      "mushroom": "Mushroom",
+      "onion": "Onion",
+      "potato": "Potato",
+      "pumpkin": "Pumpkin",
+      "radish": "Radish",
+      "olive": "Olive",
+      "sweet potato": "Sweet potato",
+      "fenugreek leaf": "Fenugreek leaf",
+      "spinach": "Spinach",
+      "ridgegourd": "Ridgegourd",
+      "gooseberry": "Gooseberry",
+      "jambun": "Jambun",
+      "ziziphus mauritiana": "Ziziphus mauritiana",
+      "garcinia indica": "Garcinia indica",
+      "tamarind": "Tamarind",
+      "tapioca": "Tapioca",
+      "garlic": "Garlic",
+      "lemon": "Lemon",
+      "tomato": "Tomato",
+      "ash gourd": "Ash gourd",
+      "pineapple": "P",
+      "jackfruit": "Jackfruit",
+      "guava": "Guava",
+      "water melon": "Water melon",
+      "musk melon": "Musk melon",
+      "apricot": "Apricot",
+      "chickoo": "Chickoo",
+      "custard apple": "Custard apple",
+      "dates": "Dates",
+      "figs": "Figs",
+      "aniseed": "Aniseed",
+      "asafoetida": "Asafoetida",
+      "bay leaf": "Bay leaf",
+      "black pepper": "Black pepper",
+      "cardamom": "Cardamom",
+      "cinnamon": "Cinnamon",
+      "cloves": "Cloves",
+      "jaiphal": "Jaiphal",
+      "ginger": "Ginger",
+      "turmeric": "Turmeric",
+      "cashewnuts": "Cashewnuts",
+      "raisins": "Raisins",
+      "almond nut": "Almond nut",
+      "arecanut": "Arecanut",
+      "pistachio nut": "Pistachio nut",
+      "lemon grass": "Lemon grass",
+      "sunflower": "Sunflower"
+    },
+    "errors": {
+      "connectionFailed": "Failed to connect to prediction service. Please try again later.",
+      "predictionFailed": "Failed to get recommendation"
+    },
+    "units": {
+      "celsius": "°C",
+      "percentage": "%",
+      "millimeter": "mm"
     }
-  },
-  "crops": {
-    "rice": "Rice",
-    "maize": "Maize",
-    "chickpea": "Chickpea",
-    "kidneybeans": "Kidney Beans",
-    "pigeonpeas": "Pigeon Peas",
-    "mothbeans": "Moth Beans",
-    "mungbean": "Mung Bean",
-    "blackgram": "Black Gram",
-    "lentil": "Lentil",
-    "pomegranate": "Pomegranate",
-    "banana": "Banana",
-    "mango": "Mango",
-    "grapes": "Grapes",
-    "watermelon": "Watermelon",
-    "muskmelon": "Muskmelon",
-    "apple": "Apple",
-    "orange": "Orange",
-    "papaya": "Papaya",
-    "coconut": "Coconut",
-    "cotton": "Cotton",
-    "jute": "Jute",
-    "coffee": "Coffee",
-    "wheat": "Wheat",
-    "jowar": "Jowar",
-    "barley": "Barley",
-    "ragi": "Ragi",
-    "chickpeas": "Chickpeas",
-    "french beans": "French beans",
-    "fava beans": "Fava beans",
-    "lima beans": "Lima beans",
-    "cluster beans": "Cluster beans",
-    "soyabean": "Soyabean",
-    "black eyed beans": "Black eyed beans",
-    "kidney beans": "Kidney beans",
-    "pigeon peas": "Pigeon peas",
-    "moth bean": "Moth bean",
-    "mung beans": "Mung beans",
-    "green peas": "Green peas",
-    "horse gram": "Horse gram",
-    "black gram": "Black gram",
-    "rapeseed": "Rapeseed",
-    "coriander seeds": "Coriander seeds",
-    "mustard seeds": "Mustard seeds",
-    "sesame seed": "Sesame seed",
-    "cumin seeds": "Cumin seeds",
-    "lentils": "Lentils",
-    "brinjal": "Brinjal",
-    "beetroot": "Beetroot",
-    "bitter gourd": "Bitter gourd",
-    "bottle gourd": "Bottle gourd",
-    "capsicum": "Capsicum",
-    "cabbage": "Cabbage",
-    "carrot": "Carrot",
-    "cauliflower": "Cauliflower",
-    "cucumber": "Cucumber",
-    "coriander leaves": "Coriander leaves",
-    "curry leaves": "Curry leaves",
-    "drumstick": "Drumstick",
-    "chili": "Chili",
-    "lady finger": "Lady finger",
-    "mushroom": "Mushroom",
-    "onion": "Onion",
-    "potato": "Potato",
-    "pumpkin": "Pumpkin",
-    "radish": "Radish",
-    "olive": "Olive",
-    "sweet potato": "Sweet potato",
-    "fenugreek leaf": "Fenugreek leaf",
-    "spinach": "Spinach",
-    "ridgegourd": "Ridgegourd",
-    "gooseberry": "Gooseberry",
-    "jambun": "Jambun",
-    "ziziphus mauritiana": "Ziziphus mauritiana",
-    "garcinia indica": "Garcinia indica",
-    "tamarind": "Tamarind",
-    "tapioca": "Tapioca",
-    "garlic": "Garlic",
-    "lemon": "Lemon",
-    "tomato": "Tomato",
-    "ash gourd": "Ash gourd",
-    "pineapple": "P",
-    "jackfruit": "Jackfruit",
-    "guava": "Guava",
-    "water melon": "Water melon",
-    "musk melon": "Musk melon",
-    "apricot": "Apricot",
-    "chickoo": "Chickoo",
-    "custard apple": "Custard apple",
-    "dates": "Dates",
-    "figs": "Figs",
-    "aniseed": "Aniseed",
-    "asafoetida": "Asafoetida",
-    "bay leaf": "Bay leaf",
-    "black pepper": "Black pepper",
-    "cardamom": "Cardamom",
-    "cinnamon": "Cinnamon",
-    "cloves": "Cloves",
-    "jaiphal": "Jaiphal",
-    "ginger": "Ginger",
-    "turmeric": "Turmeric",
-    "cashewnuts": "Cashewnuts",
-    "raisins": "Raisins",
-    "almond nut": "Almond nut",
-    "arecanut": "Arecanut",
-    "pistachio nut": "Pistachio nut",
-    "lemon grass": "Lemon grass",
-    "sunflower": "Sunflower"
-  },
-  "errors": {
-    "connectionFailed": "Failed to connect to prediction service. Please try again later.",
-    "predictionFailed": "Failed to get recommendation"
-  },
-  "units": {
-    "celsius": "°C",
-    "percentage": "%",
-    "millimeter": "mm"
   }
 }

@@ -139,48 +139,74 @@ const FertilizerRecommendation = () => {
     result = result.split("\n").filter((line) => line.trim() !== "");
     console.log("Parsed recommendation bla:", result);
 
-    return [
+    // Define the sections dynamically
+    const sections = [
       {
-        title: "Recommended Fertilizer",
+        title: t("fertilizerRecommendation.recommendation.Analysis"),
+        icon: <FaBalanceScale />,
+        contentGenerator: (key) =>
+          t(`fertilizerRecommendation.recommendation.${key}.title`) ||
+          "No specific recommendation",
+      },
+      {
+        title: t("fertilizerRecommendation.recommendation.Fertilizer"),
         icon: <FaFlask />,
-        content: result.map((key) => {
-          // Generate a random number between 1 and 5 (adjust range based on your data)
-          const randomIndex = Math.floor(Math.random() * 5) + 1;
+        contentGenerator: (key) => {
+          const typeObject = t(
+            `fertilizerRecommendation.recommendation.${key}.Type`,
+            { returnObjects: true }
+          );
+          const length = Object.keys(typeObject || {}).length; // Get the length of the JSON object
+          const randomIndex = Math.floor(Math.random() * length) + 1; // Generate a random number based on the length
           return (
             t(
-              `fertilizerRecommendation.FertilizerTypes.${key}.${randomIndex}`
+              `fertilizerRecommendation.recommendation.${key}.Type.${randomIndex}`
             ) || "No specific recommendation"
           );
-        }),
+        },
       },
       {
-        title: "Organic Treatment",
+        title: t("fertilizerRecommendation.recommendation.Organic"),
         icon: <FaLeaf />,
-        content: Array.isArray(data.organic)
-          ? data.organic
-          : typeof data.organic === "string"
-          ? [data.organic]
-          : ["No organic recommendations available"],
+        contentGenerator: (key) => {
+          const organicObject = t(
+            `fertilizerRecommendation.recommendation.${key}.result.organicTreatment`,
+            { returnObjects: true }
+          );
+          const length = Object.keys(organicObject || {}).length; // Get the length of the JSON object
+          const randomIndex = Math.floor(Math.random() * length) + 1; // Generate a random number based on the length
+          return (
+            t(
+              `fertilizerRecommendation.recommendation.${key}.result.organicTreatment.${randomIndex}`
+            ) || "No specific recommendation"
+          );
+        },
       },
       {
-        title: "Chemical Treatment",
+        title: t("fertilizerRecommendation.recommendation.Inorganic"),
         icon: <FaFlask />,
-        content: Array.isArray(data.chemical)
-          ? data.chemical
-          : typeof data.chemical === "string"
-          ? [data.chemical]
-          : ["No chemical recommendations available"],
-      },
-      {
-        title: "Nutrient Analysis",
-        icon: <FaBalanceScale />,
-        content: Array.isArray(data.analysis)
-          ? data.analysis
-          : typeof data.analysis === "string"
-          ? [data.analysis]
-          : ["No nutrient analysis available"],
+        contentGenerator: (key) => {
+          const inorganicObject = t(
+            `fertilizerRecommendation.recommendation.${key}.result.inorganicTreatment`,
+            { returnObjects: true }
+          );
+          const length = Object.keys(inorganicObject || {}).length; // Get the length of the JSON object
+          const randomIndex = Math.floor(Math.random() * length) + 1; // Generate a random number based on the length
+          return (
+            t(
+              `fertilizerRecommendation.recommendation.${key}.result.inorganicTreatment.${randomIndex}`
+            ) || "No specific recommendation"
+          );
+        },
       },
     ];
+
+    // Generate sections dynamically
+    return sections.map((section) => ({
+      title: section.title,
+      icon: section.icon,
+      content: result.map((key) => section.contentGenerator(key)),
+    }));
   };
 
   const recommendationSections = recommendation
@@ -190,13 +216,9 @@ const FertilizerRecommendation = () => {
   return (
     <div className="fertilizer-container">
       <h2>
-        <FaLeaf /> {t("Fertilizer Recommendation")}
+        <FaLeaf /> {t("fertilizerRecommendation.title")}
       </h2>
-      <p className="subtitle">
-        {t(
-          "Enter soil parameters and crop type for customized recommendations"
-        )}
-      </p>
+      <p className="subtitle">{t("fertilizerRecommendation.description")}</p>
 
       <div className="autofill-container">
         <button
@@ -206,11 +228,12 @@ const FertilizerRecommendation = () => {
         >
           {autoFillLoading ? (
             <>
-              <FaSpinner className="spinner-icon" /> {t("Fetching...")}
+              <FaSpinner className="spinner-icon" />{" "}
+              {t("fertilizerRecommendation.loading")}
             </>
           ) : (
             <>
-              <FaMapMarkerAlt /> {t("Autofill Soil Data")}
+              <FaMapMarkerAlt /> {t("fertilizerRecommendation.autofill")}
             </>
           )}
         </button>
@@ -225,7 +248,7 @@ const FertilizerRecommendation = () => {
       <form onSubmit={handleSubmit} className="fertilizer-form">
         <div className="form-group">
           <label htmlFor="crop_type">
-            <FaSeedling /> {t("Crop Type")}
+            <FaSeedling /> {t("fertilizerRecommendation.form.cropType")}
           </label>
           <select
             id="crop_type"
@@ -234,10 +257,12 @@ const FertilizerRecommendation = () => {
             value={formData.crop_type}
             required
           >
-            <option value="">{t("Select a crop")}</option>
+            <option value="">
+              {t("fertilizerRecommendation.form.selectCrop")}
+            </option>
             {cropList.map((crop, index) => (
               <option key={index} value={crop}>
-                {crop}
+                {t(`crops.${crop.toLowerCase()}`) || crop}
               </option>
             ))}
           </select>
@@ -245,7 +270,7 @@ const FertilizerRecommendation = () => {
 
         <div className="form-group">
           <label htmlFor="nitrogen">
-            <FaFlask /> {t("Nitrogen (kg/ha)")}
+            <FaFlask /> {t("fertilizerRecommendation.form.nitrogen")}
           </label>
           <input
             type="number"
@@ -262,7 +287,7 @@ const FertilizerRecommendation = () => {
 
         <div className="form-group">
           <label htmlFor="phosphorous">
-            <FaFlask /> {t("Phosphorous (kg/ha)")}
+            <FaFlask /> {t("fertilizerRecommendation.form.phosphorous")}
           </label>
           <input
             type="number"
@@ -279,7 +304,7 @@ const FertilizerRecommendation = () => {
 
         <div className="form-group">
           <label htmlFor="potassium">
-            <FaFlask /> {t("Potassium (kg/ha)")}
+            <FaFlask /> {t("fertilizerRecommendation.form.pottasium")}
           </label>
           <input
             type="number"
@@ -296,7 +321,7 @@ const FertilizerRecommendation = () => {
 
         <div className="form-group">
           <label htmlFor="ph">
-            <FaBalanceScale /> {t("Soil pH")}
+            <FaBalanceScale /> {t("fertilizerRecommendation.form.phLevel")}
           </label>
           <input
             type="number"
@@ -315,11 +340,12 @@ const FertilizerRecommendation = () => {
         <button type="submit" className="predict-btn" disabled={loading}>
           {loading ? (
             <>
-              <FaSpinner className="spinner-icon" /> {t("Processing...")}
+              <FaSpinner className="spinner-icon" />{" "}
+              {t("fertilizerRecommendation.recommending")}
             </>
           ) : (
             <>
-              <FaCheck /> {t("Get Recommendation")}
+              <FaCheck /> {t("fertilizerRecommendation.recommend")}
             </>
           )}
         </button>
@@ -335,7 +361,7 @@ const FertilizerRecommendation = () => {
       {recommendationSections.length > 0 && (
         <div className="recommendation-box">
           <h3>
-            <FaLeaf /> {t("Recommendation Results")}
+            <FaLeaf /> {t("fertilizerRecommendation.result")}
           </h3>
 
           {recommendationSections.map((section, index) => (
