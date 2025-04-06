@@ -1,26 +1,168 @@
-.dashboard-container {
+/* ===== Modern Dashboard Styles ===== */
+:root {
+  --primary-green: #2d6a4f;
+  --secondary-green: #40916c;
+  --light-green: #d8f3dc;
+  --dark-green: #1b4332;
+  --white: #ffffff;
+  --text-dark: #333333;
+  --shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.dashboard-app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #f8fbf8;
+}
+
+.dashboard-main {
+  flex: 1;
+  padding: 2rem 5%;
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.dashboard-hero {
   text-align: center;
-  padding: 20px;
+  margin: 2rem 0 4rem;
+  animation: fadeIn 1s ease-out;
+}
+
+.dashboard-title {
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 1rem;
+  font-family: 'Poppins', sans-serif;
+}
+
+.dashboard-title span {
+  background: linear-gradient(to right, #2d6a4f, #40916c);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.dashboard-subtitle {
+  font-size: 1.25rem;
+  color: var(--text-dark);
+  opacity: 0.8;
+  max-width: 600px;
+  margin: 0 auto;
 }
 
 .dashboard-options {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin: 3rem 0;
 }
 
 .dashboard-card {
-  padding: 15px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-decoration: none;
-  color: white;
-  background-color: #007bff;
-  border-radius: 8px;
-  font-size: 18px;
-  font-weight: bold;
-  transition: 0.3s;
+  padding: 2.5rem 2rem;
+  border-radius: 16px;
+  transition: var(--transition);
+  box-shadow: var(--shadow);
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  color: var(--white);
+  min-height: 250px;
+}
+
+.dashboard-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, var(--primary-green), var(--secondary-green));
+  z-index: -1;
+  transition: var(--transition);
 }
 
 .dashboard-card:hover {
-  background-color: #0056b3;
+  transform: translateY(-10px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+}
+
+.dashboard-card:hover::before {
+  opacity: 0.9;
+}
+
+.disease-card::before {
+  background: linear-gradient(135deg, #e74c3c, #e67e22);
+}
+
+.crop-card::before {
+  background: linear-gradient(135deg, #3498db, #2ecc71);
+}
+
+.fertilizer-card::before {
+  background: linear-gradient(135deg, #9b59b6, #3498db);
+}
+
+.dashboard-icon {
+  font-size: 3rem;
+  margin-bottom: 1.5rem;
+  color: var(--white);
+  transition: var(--transition);
+}
+
+.dashboard-card:hover .dashboard-icon {
+  transform: scale(1.1);
+}
+
+.dashboard-card h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.dashboard-card p {
+  font-size: 1rem;
+  opacity: 0.9;
+  text-align: center;
+  line-height: 1.6;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .dashboard-title {
+    font-size: 2.2rem;
+  }
+  
+  .dashboard-subtitle {
+    font-size: 1.1rem;
+  }
+  
+  .dashboard-options {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .dashboard-card {
+    padding: 2rem 1.5rem;
+    min-height: 200px;
+  }
 }

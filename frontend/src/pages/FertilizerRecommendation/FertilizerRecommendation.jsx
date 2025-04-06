@@ -3,6 +3,19 @@ import axios from "axios";
 import cropList from "./crops.json";
 import "./FertilizerRecommendation.css";
 import { useTranslation } from "react-i18next";
+import {
+  FaLeaf,
+  FaMapMarkerAlt,
+  FaSpinner,
+  FaFlask,
+  FaSeedling,
+  FaBalanceScale,
+  FaChevronDown,
+  FaChevronUp,
+  FaExclamationTriangle,
+  FaCheck
+} from "react-icons/fa";
+
 const FertilizerRecommendation = () => {
   const { t } = useTranslation();
   const [formData, setFormData] = useState({
@@ -16,6 +29,15 @@ const FertilizerRecommendation = () => {
   const [recommendation, setRecommendation] = useState(null);
   const [loading, setLoading] = useState(false);
   const [autoFillLoading, setAutoFillLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [expandedSections, setExpandedSections] = useState({});
+
+  const toggleSection = (section) => {
+    setExpandedSections(prev => ({
+      ...prev,
+      [section]: !prev[section]
+    }));
+  };
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -23,36 +45,42 @@ const FertilizerRecommendation = () => {
 
   const handleAutofill = async () => {
     if (!navigator.geolocation) {
-      alert("Geolocation is not supported by your browser.");
+      setError("Geolocation is not supported by your browser");
       return;
     }
 
     setAutoFillLoading(true);
+    setError("");
+
     navigator.geolocation.getCurrentPosition(
       async (position) => {
         const { latitude, longitude } = position.coords;
         try {
           const res = await axios.get(
-            `http://127.0.0.1:5000/fertilizer/autofill?lat=${latitude}&lon=${longitude}`
+            `http://localhost:5000/fertilizer/autofill?lat=${latitude}&lon=${longitude}`
           );
 
-          if (res.data) {
-            setFormData((prev) => ({
+          if (res.data?.success) {
+            setFormData(prev => ({
               ...prev,
               nitrogen: res.data.nitrogen || prev.nitrogen,
               phosphorous: res.data.phosphorous || prev.phosphorous,
               potassium: res.data.potassium || prev.potassium,
               ph: res.data.ph || prev.ph,
             }));
+          } else {
+            setError(res.data?.error || "Failed to autofill soil data");
           }
         } catch (err) {
-          alert("❌ Failed to autofill soil data.");
+          setError(err.response?.data?.error || "Failed to fetch soil data");
+          console.error("Autofill Error:", err);
         } finally {
           setAutoFillLoading(false);
         }
       },
       (error) => {
-        alert("❌ Unable to retrieve location. Please enable GPS.");
+        setError("Unable to retrieve location. Please enable GPS.");
+        console.error("Geolocation Error:", error);
         setAutoFillLoading(false);
       }
     );
@@ -60,164 +88,249 @@ const FertilizerRecommendation = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    // Validate form
+    if (!formData.crop_type || !formData.nitrogen || !formData.phosphorous || !formData.potassium || !formData.ph) {
+      setError("Please fill all fields");
+      return;
+    }
+
     setLoading(true);
+    setError("");
+    setRecommendation(null);
 
     try {
       const response = await axios.post(
-        "http://127.0.0.1:5000/fertilizer/recommend",
-        formData
+        "http://localhost:5000/fertilizer/recommend",
+        {
+          crop_type: formData.crop_type,
+          nitrogen: parseFloat(formData.nitrogen),
+          phosphorous: parseFloat(formData.phosphorous),
+          potassium: parseFloat(formData.potassium),
+          ph: parseFloat(formData.ph)
+        }
       );
-      setRecommendation(response.data);
+
+      if (response.data?.success) {
+        setRecommendation(response.data);
+      } else {
+        throw new Error(response.data?.error || "Failed to get recommendation");
+      }
     } catch (error) {
-      alert("❌ Error fetching recommendation.");
+      setError(error.response?.data?.error || error.message || "Recommendation failed");
+      console.error("API Error:", error);
     } finally {
       setLoading(false);
     }
   };
 
+  const parseRecommendation = (data) => {
+    if (!data) return [];
+    
+    return [
+      {
+        title: "Recommended Fertilizer",
+        icon: <FaFlask />,
+        content: [data.recommended_fertilizer || "No specific recommendation"]
+      },
+      {
+        title: "Organic Treatment",
+        icon: <FaLeaf />,
+        content: Array.isArray(data.organic) ? data.organic : 
+               (typeof data.organic === 'string' ? [data.organic] : 
+               ["No organic recommendations available"])
+      },
+      {
+        title: "Chemical Treatment",
+        icon: <FaFlask />,
+        content: Array.isArray(data.chemical) ? data.chemical : 
+               (typeof data.chemical === 'string' ? [data.chemical] : 
+               ["No chemical recommendations available"])
+      },
+      {
+        title: "Nutrient Analysis",
+        icon: <FaBalanceScale />,
+        content: Array.isArray(data.analysis) ? data.analysis : 
+               (typeof data.analysis === 'string' ? [data.analysis] : 
+               ["No nutrient analysis available"])
+      }
+    ];
+  };
+
+  const recommendationSections = recommendation ? parseRecommendation(recommendation) : [];
+
   return (
     <div className="fertilizer-container">
-      <h2>{t("fertilizerRecommendation.title")}</h2>
-      <button
-        className="autofill-btn"
-        onClick={handleAutofill}
-        disabled={autoFillLoading}
-      >
-        {autoFillLoading
-          ? t("fertilizerRecommendation.loading")
-          : t("fertilizerRecommendation.autofill")}
-      </button>
-      <form onSubmit={handleSubmit} className="fertilizer-form">
-        <select
-          name="crop_type"
-          onChange={handleChange}
-          value={formData.crop_type}
-          required
+      <h2>
+        <FaLeaf /> {t("Fertilizer Recommendation")}
+      </h2>
+      <p className="subtitle">
+        {t("Enter soil parameters and crop type for customized recommendations")}
+      </p>
+
+      <div className="autofill-container">
+        <button
+          className="autofill-btn"
+          onClick={handleAutofill}
+          disabled={autoFillLoading}
         >
-          <option value="">{t("fertilizerRecommendation.select")}</option>
-          {cropList.length > 0 ? (
-            cropList.map((crop, index) => (
-              <option key={index} value={crop}>
-                {t(`crops.${crop.toLowerCase()}`)}
-              </option>
-            ))
+          {autoFillLoading ? (
+            <>
+              <FaSpinner className="spinner-icon" /> {t("Fetching...")}
+            </>
           ) : (
-            <option disabled>
-              {t("fertilizerRecommendation.loadingCrops")}
-            </option>
+            <>
+              <FaMapMarkerAlt /> {t("Autofill Soil Data")}
+            </>
           )}
-        </select>
-        <input
-          type="number"
-          name="nitrogen"
-          placeholder={t("fertilizerRecommendation.form.nitrogen")}
-          onChange={handleChange}
-          required
-          value={formData.nitrogen}
-        />
-        <input
-          type="number"
-          name="phosphorous"
-          placeholder={t("fertilizerRecommendation.form.phosphorous")}
-          onChange={handleChange}
-          required
-          value={formData.phosphorous}
-        />
-        <input
-          type="number"
-          name="potassium"
-          placeholder={t("fertilizerRecommendation.form.pottasium")}
-          onChange={handleChange}
-          required
-          value={formData.potassium}
-        />
-        <input
-          type="number"
-          name="ph"
-          placeholder={t("fertilizerRecommendation.form.phLevel")}
-          onChange={handleChange}
-          required
-          value={formData.ph}
-        />
-        <button type="submit" disabled={loading}>
-          {loading
-            ? t("fertilizerRecommendation.recommending")
-            : t("fertilizerRecommendation.recommend")}
+        </button>
+      </div>
+
+      {error && (
+        <div className="error-message">
+          <FaExclamationTriangle /> {error}
+        </div>
+      )}
+
+      <form onSubmit={handleSubmit} className="fertilizer-form">
+        <div className="form-group">
+          <label htmlFor="crop_type">
+            <FaSeedling /> {t("Crop Type")}
+          </label>
+          <select
+            id="crop_type"
+            name="crop_type"
+            onChange={handleChange}
+            value={formData.crop_type}
+            required
+          >
+            <option value="">{t("Select a crop")}</option>
+            {cropList.map((crop, index) => (
+              <option key={index} value={crop}>
+                {crop}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="nitrogen">
+            <FaFlask /> {t("Nitrogen (kg/ha)")}
+          </label>
+          <input
+            type="number"
+            id="nitrogen"
+            name="nitrogen"
+            min="0"
+            step="1"
+            placeholder="40"
+            onChange={handleChange}
+            required
+            value={formData.nitrogen}
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="phosphorous">
+            <FaFlask /> {t("Phosphorous (kg/ha)")}
+          </label>
+          <input
+            type="number"
+            id="phosphorous"
+            name="phosphorous"
+            min="0"
+            step="1"
+            placeholder="125"
+            onChange={handleChange}
+            required
+            value={formData.phosphorous}
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="potassium">
+            <FaFlask /> {t("Potassium (kg/ha)")}
+          </label>
+          <input
+            type="number"
+            id="potassium"
+            name="potassium"
+            min="0"
+            step="1"
+            placeholder="50"
+            onChange={handleChange}
+            required
+            value={formData.potassium}
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="ph">
+            <FaBalanceScale /> {t("Soil pH")}
+          </label>
+          <input
+            type="number"
+            id="ph"
+            name="ph"
+            min="0"
+            max="14"
+            step="0.1"
+            placeholder="6.5"
+            onChange={handleChange}
+            required
+            value={formData.ph}
+          />
+        </div>
+
+        <button type="submit" className="predict-btn" disabled={loading}>
+          {loading ? (
+            <>
+              <FaSpinner className="spinner-icon" /> {t("Processing...")}
+            </>
+          ) : (
+            <>
+              <FaCheck /> {t("Get Recommendation")}
+            </>
+          )}
         </button>
       </form>
-      {recommendation && recommendation.organic_fertilizer && (
-        <div className="fertilizer-container recommendation-box">
-          <h3>{t("fertilizerRecommendation.title")}</h3>
-          <div className="fertilizer-details">
-            {recommendation.organic_fertilizer
-              .split("\n")
-              .filter((line) => line.trim())
-              .map((line, index) => {
-                let size = 0;
-                function generateUniqueRandomNumbers(n, count) {
-                  if (count > n) {
-                    return "Error: Count cannot be greater than n.";
-                  }
-                  const numbers = [];
-                  for (let i = 1; i <= n; i++) {
-                    numbers.push(i);
-                  }
-                  const result = [];
-                  for (let i = 0; i < count; i++) {
-                    const randomIndex = Math.floor(
-                      Math.random() * numbers.length
-                    );
-                    result.push(numbers.splice(randomIndex, 1)[0]);
-                  }
-                  return result;
-                }
-                if (line == "N_max") {
-                  size = 5;
-                } else if (line == "N_min") {
-                  size = 7;
-                } else if (line == "P_max") {
-                  size = 6;
-                } else if (line == "P_min") {
-                  size = 7;
-                } else if (line == "K_max") {
-                  size = 4;
-                } else if (line == "K_min") {
-                  size = 7;
-                } else if (line == "pH_max") {
-                  size = 5;
-                } else if (line == "pH_min") {
-                  size = 5;
-                }
-                let n = generateUniqueRandomNumbers(size, 4);
-                const Strategies = [];
-                for (let i = 0; i < n.length; i++) {
-                  Strategies.push(
-                    t(
-                      "fertilizerRecommendation.recommendation." +
-                        line +
-                        ".result." +
-                        n[i]
-                    )
-                  );
-                }
-                return (
-                  <React.Fragment key={index}>
-                    <p className="highlight">
-                      •{" "}
-                      {t(
-                        "fertilizerRecommendation.recommendation." +
-                          line +
-                          ".title"
-                      )}
-                    </p>
-                    <p className="normal-text">1. {Strategies[0]}</p>
-                    <p className="normal-text">2. {Strategies[1]}</p>
-                    <p className="normal-text">3. {Strategies[2]}</p>
-                    <p className="normal-text">4. {Strategies[3]}</p>
-                  </React.Fragment>
-                );
-              })}
-          </div>
+
+      {loading && (
+        <div className="loading-spinner">
+          <div className="spinner"></div>
+          <p>{t("Analyzing soil data...")}</p>
+        </div>
+      )}
+
+      {recommendationSections.length > 0 && (
+        <div className="recommendation-box">
+          <h3>
+            <FaLeaf /> {t("Recommendation Results")}
+          </h3>
+
+          {recommendationSections.map((section, index) => (
+            <div key={index} className="recommendation-section">
+              <div 
+                className="section-header"
+                onClick={() => toggleSection(index)}
+              >
+                <h4>
+                  {section.icon} {section.title}
+                </h4>
+                {expandedSections[index] ? <FaChevronUp /> : <FaChevronDown />}
+              </div>
+
+              {expandedSections[index] && (
+                <ul>
+                  {section.content.map((line, i) => (
+                    <li key={i}>
+                      <FaLeaf className="bullet-icon" /> {line}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          ))}
         </div>
       )}
     </div>
