@@ -29,6 +29,10 @@
       "description2": "Our mission is to empower farmers with cutting-edge technology that simplifies decision-making, reduces resource wastage, and maximizes productivity while promoting sustainable farming practices.",
       "description3": "Founded by a team of agricultural experts and technology enthusiasts, Aggrow combines traditional farming wisdom with modern machine learning algorithms to provide practical solutions to everyday farming challenges."
     },
+    "welcome": {
+      "title": "Welcome to Aggrow",
+      "description": "Your AI-powered agricultural assistant"
+    },
     "services": {
       "title": "Our Services",
       "diseaseDetection": {
@@ -48,6 +52,7 @@
   "cropRecommendation": {
     "title": "Crop Recommendation",
     "subtitle": "Enter the soil and climate details to get a recommended crop.",
+    "subtitle2": "Find optimal crops for your land.",
     "locationButton": "Use My Location",
     "loadingMessage": "Loading location and weather data...",
     "locationError": "Unable to get your location. Please select state and city manually.",
@@ -87,7 +92,9 @@
     }
   },
   "diseaseDetection": {
-    "title": "Please Upload The Image",
+    "title": "Disease Detection",
+    "subtitle2": "Identify plant health issues instantly",
+    "description": "Upload an image of the plant leaf to detect diseases.",
     "noFileError": "Please upload an image before submitting.",
     "result": "Prediction Result:",
     "form": {
@@ -96,7 +103,8 @@
     }
   },
   "fertilizerRecommendation": {
-    "title": "🌱 Fertilizer Recommendation",
+    "title": "Fertilizer Recommendation",
+    "subtitle2": "Get personalized nutrition plans.",
     "noCropError": "Please select a crop before proceeding.",
     "result": "Recommendation Results",
     "description": "Enter soil parameters and crop type for customized recommendation.",
