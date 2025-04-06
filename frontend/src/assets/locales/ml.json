@@ -96,10 +96,395 @@
     "subtitle2": "സസ്യങ്ങളുടെ ആരോഗ്യ പ്രശ്നങ്ങൾ തൽക്ഷണം തിരിച്ചറിയുക.",
     "description": "നിങ്ങളുടെ ചെടിയുടെ രോഗം തിരിച്ചറിയാൻ ചിത്രങ്ങൾ അപ്‌ലോഡ് ചെയ്യുക. AI നിങ്ങളുടെ ചിത്രത്തെ വിശകലനം ചെയ്ത് രോഗം തിരിച്ചറിയുകയും ചികിത്സാ മാർഗങ്ങൾ നൽകുകയും ചെയ്യും.",
     "noFileError": "ചിത്രം അപ്‌ലോഡ് ചെയ്യുന്നതിന് മുമ്പ് ദയവായി ഫയൽ തിരഞ്ഞെടുക്കുക.",
-    "result": "പ്രവചനം ഫലം:",
+    "recommendedTreatment": "ശുപാർശ ചെയ്ത ചികിത്സകൾ",
+    "analysis": "ചിത്രം വിശകലനം ചെയ്യുന്നു...",
+    "diagnose": "രോഗം തിരിച്ചറിയുന്നു...",
     "form": {
-      "fileInput": "ഫയൽ തിരഞ്ഞെടുക്കുക",
-      "preview": "പ്രിവ്യൂ"
+      "imageInput": "ചിത്രം അപ്‌ലോഡ് ചെയ്യുക",
+      "preview": "പ്രിവ്യൂ",
+      "scanning": "ചെടി സ്കാൻ ചെയ്യുന്നു..."
+    },
+    "types": { "organic": "ജൈവ ചികിത്സ", "chemical": "രാസ ചികിത്സ" },
+    "Diseases": {
+      "Apple___Apple_scab": {
+        "name": "ആപ്പിൾ സ്കാബ് (Apple Scab)",
+        "description": "ഇലകളിലും പഴങ്ങളിലും ഇരുണ്ട, ചെതുമ്പൽ പോലെയുള്ള പാടുകൾ ഉണ്ടാക്കുന്ന ഫംഗസ് രോഗം.",
+        "causes": {
+          "1": "വെൻ്റൂറിയ ഇനക്വാലിസ് (Venturia inaequalis) എന്ന ഫംഗസ് മൂലമുണ്ടാകുന്നു",
+          "2": "തണുപ്പുള്ള, നനഞ്ഞ കാലാവസ്ഥയിൽ പടരുന്നു",
+          "3": "വീണു കിടക്കുന്ന ഇലകളിൽ ശീതകാലം കഴിയുന്നു"
+        },
+        "treatments": {
+          "organic": {
+            "1": "നല്ല വായുസഞ്ചാരത്തിനായി മരങ്ങൾ വെട്ടിയൊതുക്കുക",
+            "2": "വസന്തകാലത്ത് 7-10 ദിവസത്തിലൊരിക്കൽ സൾഫർ സ്പ്രേ ചെയ്യുക",
+            "3": "ശരത്കാലത്ത് വീണു കിടക്കുന്ന ഇലകൾ നീക്കം ചെയ്യുക"
+          },
+          "chemical": {
+            "1": "നനഞ്ഞ സമയങ്ങളിൽ മൈക്ലോബ്യൂട്ടാനിൽ (Immunox) ഉപയോഗിക്കുക",
+            "2": "മുകുളം വിരിയുന്ന സമയത്ത് കാപ്റ്റൻ ഫംഗിസൈഡ് ഉപയോഗിക്കുക"
+          }
+        }
+      },
+      "Apple___Black_rot": {
+        "name": "കറുത്ത ചീയൽ (Black Rot)",
+        "description": "വൃത്താകൃതിയിലുള്ള വളയങ്ങളോടും ഇലകളിൽ പുള്ളികളോടും കൂടി പഴങ്ങൾ ചീയാൻ കാരണമാകുന്നു.",
+        "causes": {
+          "1": "ബോട്രിയോസ്ഫേറിയ ഒബ്റ്റൂസ (Botryosphaeria obtusa) എന്ന ഫംഗസ്",
+          "2": "പഴങ്ങളിലെ മുറിവുകളിലൂടെ പ്രവേശിക്കുന്നു"
+        },
+        "treatments": {
+          "organic": {
+            "1": "ബാധിച്ച പഴങ്ങൾ ഉടൻ നീക്കം ചെയ്യുക",
+            "2": "ആദ്യ സീസണിൽ കോപ്പർ സ്പ്രേകൾ ഉപയോഗിക്കുക"
+          },
+          "chemical": { "1": "പൂക്കൾ കൊഴിയുന്ന സമയത്ത് ഫംഗിസൈഡുകൾ ഉപയോഗിക്കുക" }
+        }
+      },
+      "Apple___Cedar_apple_rust": {
+        "name": "സീഡാർ ആപ്പിൾ തുരുമ്പ് (Cedar Apple Rust)",
+        "description": "ഇലകളിൽ ഓറഞ്ച്-മഞ്ഞ പുള്ളികളും അടിയിൽ ഫംഗസ് വളർച്ചയും കാണുന്നു.",
+        "treatments": {
+          "organic": {
+            "1": "സാധ്യമെങ്കിൽ അടുത്തുള്ള ജൂനിപ്പർ/സീഡാർ മരങ്ങൾ നീക്കം ചെയ്യുക",
+            "2": "സൾഫർ അല്ലെങ്കിൽ കോപ്പർ ഫംഗിസൈഡുകൾ ഉപയോഗിക്കുക"
+          },
+          "chemical": ["മൈക്ലോബ്യൂട്ടാനിൽ അല്ലെങ്കിൽ ട്രയാഡിമെഫോൺ ഫംഗിസൈഡുകൾ"]
+        }
+      },
+      "Apple___healthy": {
+        "name": "ആരോഗ്യമുള്ള ആപ്പിൾ മരം (Healthy Apple Tree)",
+        "description": "നിങ്ങളുടെ ആപ്പിൾ മരത്തിൽ രോഗലക്ഷണങ്ങൾ കാണുന്നില്ല!",
+        "treatments": {
+          "prevention": [
+            "വായുസഞ്ചാരം മെച്ചപ്പെടുത്താൻ വർഷം തോറും വെട്ടിയൊതുക്കുക",
+            "ശീതകാലത്തിൻ്റെ അവസാനത്തിൽ ഉറങ്ങുന്ന എണ്ണ സ്പ്രേ ചെയ്യുക",
+            "ശരിയായ മണ്ണ് pH നിലനിർത്തുക (6.0-6.5)"
+          ]
+        }
+      },
+      "Blueberry___healthy": {
+        "name": "ആരോഗ്യമുള്ള ബ്ലൂബെറി (Healthy Blueberry)",
+        "description": "നിങ്ങളുടെ ബ്ലൂബെറി ചെടി തഴച്ചുവളരുന്നു!",
+        "treatments": {
+          "care": [
+            "അസിഡിക് മണ്ണ് നിലനിർത്തുക (pH 4.5-5.5)",
+            "പൈൻ സൂചികൾ ഉപയോഗിച്ച് പുതയിടുക",
+            "പഴയ തണ്ടുകൾ വർഷം തോറും വെട്ടിയൊതുക്കുക"
+          ]
+        }
+      },
+      "Cherry_(including_sour)___Powdery_mildew": {
+        "name": "ചെറി പൂപ്പൽ രോഗം (Cherry Powdery Mildew)",
+        "description": "ഇലകളിലും തണ്ടുകളിലും വെളുത്ത പൊടി പോലുള്ള ആവരണം.",
+        "treatments": {
+          "organic": {
+            "1": "പൊട്ടാസ്യം ബൈകാർബണേറ്റ് ലായനി പ്രയോഗിക്കുക",
+            "2": "വെട്ടിയൊതുക്കി വായുസഞ്ചാരം മെച്ചപ്പെടുത്തുക"
+          },
+          "chemical": { "1": "സൾഫർ അല്ലെങ്കിൽ ട്രൈഫോറിൻ ഫംഗിസൈഡുകൾ" }
+        }
+      },
+      "Cherry_(including_sour)___healthy": {
+        "name": "ആരോഗ്യമുള്ള ചെറി മരം (Healthy Cherry Tree)",
+        "description": "നിങ്ങളുടെ ചെറി മരം മികച്ച അവസ്ഥയിലാണ്!",
+        "treatments": {
+          "prevention": [
+            "മുകളിൽ നിന്ന് നനയ്ക്കുന്നത് ഒഴിവാക്കുക",
+            "വസന്തകാലത്തിൻ്റെ തുടക്കത്തിൽ സമീകൃത വളം പ്രയോഗിക്കുക",
+            "പുഴുക്കളെ നിരീക്ഷിക്കുക"
+          ]
+        }
+      },
+      "Corn_(maize)___Cercospora_leaf_spot Gray_leaf_spot": {
+        "name": "ചോളം ചാര ഇലപ്പുള്ളി (Corn Gray Leaf Spot)",
+        "description": "ഇലകളിൽ മഞ്ഞ വലയങ്ങളുള്ള ചതുരാകൃതിയിലുള്ള തവിട്ടുനിറത്തിലുള്ള പാടുകൾ.",
+        "treatments": {
+          "organic": {
+            "1": "വിളകൾ മാറ്റി നടുക (തുടർച്ചയായി ചോളം ഒഴിവാക്കുക)",
+            "2": "രോഗപ്രതിരോധശേഷിയുള്ള ഇനങ്ങൾ ഉപയോഗിക്കുക"
+          },
+          "chemical": {
+            "1": "അസോക്സിസ്ട്രോബിൻ അല്ലെങ്കിൽ പിറാക്ലോസ്ട്രോബിൻ ഫംഗിസൈഡുകൾ പ്രയോഗിക്കുക"
+          }
+        }
+      },
+      "Corn_(maize)___Common_rust_": {
+        "name": "ചോളം സാധാരണ തുരുമ്പ് (Corn Common Rust)",
+        "description": "ഇലകളുടെ ഇരുവശത്തും ചെറിയ കറുവപ്പട്ട-തവിട്ടുനിറത്തിലുള്ള കുരുക്കൾ.",
+        "treatments": {
+          "organic": {
+            "1": "നേരത്തെ വിളയുന്ന ഇനങ്ങൾ നടുക",
+            "2": "വിളവെടുപ്പിനുശേഷം വിള അവശിഷ്ടങ്ങൾ നീക്കം ചെയ്യുക"
+          },
+          "chemical": { "1": "ക്ലോറോതലോനിൽ അല്ലെങ്കിൽ മാങ്കോസെബ് ഫംഗിസൈഡുകൾ" }
+        }
+      },
+      "Corn_(maize)___Northern_Leaf_Blight": {
+        "name": "വടക്കൻ ചോളം ഇല കരിച്ചിൽ (Northern Corn Leaf Blight)",
+        "description": "നീളമുള്ള, ദീർഘവൃത്താകൃതിയിലുള്ള ചാര-പച്ച പാടുകൾ തവിട്ടുനിറമാകുന്നു.",
+        "treatments": {
+          "organic": {
+            "1": "വിള പരിക്രമണം പരിശീലിക്കുക",
+            "2": "രോഗമില്ലാത്ത വിത്ത് ഉപയോഗിക്കുക"
+          },
+          "chemical": { "1": "ആദ്യ ലക്ഷണത്തിൽ തന്നെ ഫംഗിസൈഡുകൾ പ്രയോഗിക്കുക" }
+        }
+      },
+      "Corn_(maize)___healthy": {
+        "name": "ആരോഗ്യമുള്ള ചോളം (Healthy Corn)",
+        "description": "നിങ്ങളുടെ ചോളം ചെടികൾ നന്നായി വളരുന്നു!",
+        "treatments": {
+          "care": [
+            "ശരിയായ അകലം ഉറപ്പാക്കുക (10-12 ഇഞ്ച് അകലം)",
+            "ചെടികൾ മുട്ടോളം ഉയരത്തിൽ എത്തുമ്പോൾ നൈട്രജൻ നൽകുക",
+            "വരണ്ട കാലാവസ്ഥയിൽ ആഴത്തിൽ നനയ്ക്കുക"
+          ]
+        }
+      },
+      "Grape___Black_rot": {
+        "name": "മുന്തിരി കറുത്ത ചീയൽ (Grape Black Rot)",
+        "description": "ഇലകളിൽ തവിട്ടുനിറത്തിലുള്ള പാടുകളും പഴങ്ങളിൽ കറുത്ത ചീയലും ഉണ്ടാകുന്നു.",
+        "causes": {
+          "1": "അജ്ഞാതം (Unknown)",
+          "2": "അജ്ഞാതം (Unknown)"
+        },
+        "treatments": {
+          "organic": {
+            "1": "ഉണങ്ങിയ കായ്കൾ നീക്കം ചെയ്യുക (Remove mummified berries)",
+            "2": "കോപ്പർ ഫംഗിസൈഡുകൾ പ്രയോഗിക്കുക (Apply copper fungicides)"
+          },
+          "chemical": {
+            "1": "മാങ്കോസെബ് അല്ലെങ്കിൽ കാപ്റ്റൻ ഫംഗിസൈഡുകൾ (Mancozeb or captan fungicides)"
+          }
+        }
+      },
+      "Grape___Esca_(Black_Measles)": {
+        "name": "എസ്ക (കറുത്ത മീസിൽസ്) (Esca (Black Measles))",
+        "description": "ഇലകളിൽ നിറം മാറ്റവും കായ്കളിൽ പുള്ളികളും ഉണ്ടാക്കുന്ന വിട്ടുമാറാത്ത തടി രോഗം.",
+        "causes": {
+          "1": "അജ്ഞാതം (Unknown)",
+          "2": "അജ്ഞാതം (Unknown)"
+        },
+        "treatments": {
+          "management": {
+            "1": "ബാധിച്ച തടി വെട്ടിയൊതുക്കുക (മുറിക്കുന്നതിനിടയിൽ ഉപകരണങ്ങൾ അണുവിമുക്തമാക്കുക) (Prune infected wood (disinfect tools between cuts))",
+            "2": "അമിതമായ വെട്ടിയൊതുക്കൽ ഒഴിവാക്കുക (Avoid excessive pruning)",
+            "3": "വള്ളിയുടെ ബാലൻസ് നിലനിർത്തുക (Maintain vine balance)"
+          }
+        }
+      },
+      "Grape___Leaf_blight_(Isariopsis_Leaf_Spot)": {
+        "name": "മുന്തിരി ഇല കരിച്ചിൽ (Grape Leaf Blight)",
+        "description": "ഇലകളിൽ മഞ്ഞ വലയങ്ങളുള്ള കോണാകൃതിയിലുള്ള തവിട്ടുനിറത്തിലുള്ള പാടുകൾ.",
+        "causes": {
+          "1": "അജ്ഞാതം (Unknown)",
+          "2": "അജ്ഞാതം (Unknown)"
+        },
+        "treatments": {
+          "organic": {
+            "1": "വായുസഞ്ചാരം മെച്ചപ്പെടുത്തുക (Improve air circulation)",
+            "2": "ബാധിച്ച ഇലകൾ നീക്കം ചെയ്യുക (Remove infected leaves)"
+          },
+          "chemical": {
+            "1": "കോപ്പർ അടിസ്ഥാനമാക്കിയുള്ള ഫംഗിസൈഡുകൾ (Copper-based fungicides)"
+          }
+        }
+      },
+      "Grape___healthy": {
+        "name": "ആരോഗ്യമുള്ള മുന്തിരി വള്ളി (Healthy Grape Vine)",
+        "description": "നിങ്ങളുടെ മുന്തിരി വള്ളി രോഗമില്ലാത്തതാണ്! (Your grapevine is disease-free!)",
+        "treatments": {
+          "care": {
+            "1": "നല്ല വായുസഞ്ചാരത്തിനായി വള്ളികൾ പരിശീലിപ്പിക്കുക (Train vines for good air circulation)",
+            "2": "ജപ്പാനീസ് വണ്ടുകൾ പോലുള്ള കീടങ്ങളെ നിരീക്ഷിക്കുക (Monitor for pests like Japanese beetles)",
+            "3": "ഓരോ 3 വർഷത്തിലും മണ്ണ് പരിശോധിക്കുക (Test soil every 3 years)"
+          }
+        }
+      },
+      "Raspberry___healthy": {
+        "name": "ആരോഗ്യമുള്ള റാസ്ബെറി (Healthy Raspberry)",
+        "description": "നിങ്ങളുടെ റാസ്ബെറി കാണ്ഡം കരുത്തുറ്റതാണ്! (Your raspberry canes are vigorous!)",
+        "treatments": {
+          "maintenance": {
+            "1": "കായ്ച്ചതിന് ശേഷം പഴയ കാണ്ഡം മുറിക്കുക (Prune old canes after fruiting)",
+            "2": "ഈർപ്പം നിലനിർത്താൻ പുതയിടുക (Mulch to conserve moisture)",
+            "3": "പന്തലിട്ട് താങ്ങു നൽകുക (Provide trellis support)"
+          }
+        }
+      },
+      "Soybean___healthy": {
+        "name": "ആരോഗ്യമുള്ള സോയാബീൻ (Healthy Soybean)",
+        "description": "നിങ്ങളുടെ സോയാബീൻ വിള മികച്ചതായി കാണുന്നു! (Your soybean crop looks excellent!)",
+        "treatments": {
+          "care": {
+            "1": "ചോളവുമായി അല്ലെങ്കിൽ ചെറിയ ധാന്യങ്ങളുമായി വിള പരിക്രമണം ചെയ്യുക (Rotate with corn or small grains)",
+            "2": "റൈസോബിയം ബാക്ടീരിയ ഉപയോഗിച്ച് വിത്തുകൾ കുത്തിവയ്ക്കുക (Inoculate seeds with rhizobium bacteria)",
+            "3": "ചെPage-കളെ നിരീക്ഷിക്കുക (Monitor for aphids)"
+          }
+        }
+      },
+      "Squash___Powdery_mildew": {
+        "name": "പൂപ്പൽ രോഗം (Powdery Mildew)",
+        "description": "ഇലകളിൽ വെളുത്ത പൊടി പടലം, ഇത് മഞ്ഞളിക്കുകയും നശിക്കുകയും ചെയ്യുന്നു. (White powdery coating on leaves that yellows and dies.)",
+        "treatments": {
+          "organic": {
+            "1": "പാൽ സ്പ്രേ (1 ഭാഗം പാലും 9 ഭാഗം വെള്ളവും) (Milk spray (1 part milk to 9 parts water))",
+            "2": "അപ്പക്കാരം ലായനി (1 ഗാലന് 1 ടേബിൾസ്പൂൺ) (Baking soda solution (1 tbsp per gallon))"
+          },
+          "chemical": {
+            "1": "സൾഫർ അല്ലെങ്കിൽ പൊട്ടാസ്യം ബൈകാർബണേറ്റ് ഫംഗിസൈഡുകൾ (Sulfur or potassium bicarbonate fungicides)"
+          }
+        }
+      },
+      "Strawberry___Leaf_scorch": {
+        "name": "ഇല കരിച്ചിൽ (Leaf Scorch)",
+        "description": "പഴകിയ ഇലകളിൽ വെളുത്ത നടുഭാഗത്തോടുകൂടിയ പർപ്പിൾ പുള്ളികൾ. (Purple spots with white centers on older leaves.)",
+        "treatments": {
+          "organic": {
+            "1": "ബാധിച്ച ഇലകൾ നീക്കം ചെയ്യുക (Remove infected leaves)",
+            "2": "വായുസഞ്ചാരം മെച്ചപ്പെടുത്തുക (Improve air circulation)"
+          },
+          "chemical": {
+            "1": "കാപ്റ്റൻ അല്ലെങ്കിൽ തിയോഫനേറ്റ്-മീഥൈൽ ഫംഗിസൈഡുകൾ (Captan or thiophanate-methyl fungicides)"
+          }
+        }
+      },
+      "Strawberry___healthy": {
+        "name": "ആരോഗ്യമുള്ള സ്ട്രോബെറി (Healthy Strawberry)",
+        "description": "നിങ്ങളുടെ സ്ട്രോബെറി ചെടികൾ നന്നായി കായ്ക്കുന്നു! (Your strawberry plants are producing well!)",
+        "treatments": {
+          "care": {
+            "1": "വിളവെടുപ്പിനു ശേഷം തടം നന്നാക്കുക (Renovate beds after harvest)",
+            "2": "പഴം വൃത്തിയായി സൂക്ഷിക്കാൻ വൈക്കോൽ പുത ഉപയോഗിക്കുക (Use straw mulch to keep fruit clean)",
+            "3": "ഓരോ 3-4 വർഷത്തിലും ചെടികൾ മാറ്റുക (Replace plants every 3-4 years)"
+          }
+        }
+      },
+      "Tomato___Bacterial_spot": {
+        "name": "ബാക്ടീരിയൽ പുള്ളി (Bacterial Spot)",
+        "description": "പഴങ്ങളിൽ തൊലിപ്പുറത്ത് പരുക്കൻ പാടുകളായി മാറുന്ന ചെറിയ നനഞ്ഞ പുള്ളികൾ. (Small water-soaked spots that become scabby on fruit.)",
+        "treatments": {
+          "organic": {
+            "1": "രോഗമില്ലാത്ത വിത്ത് ഉപയോഗിക്കുക (Use disease-free seed)",
+            "2": "മുകളിൽ നിന്ന് നനയ്ക്കുന്നത് ഒഴിവാക്കുക (Avoid overhead watering)"
+          },
+          "chemical": {
+            "1": "സീസണിന്റെ തുടക്കത്തിൽ കോപ്പർ സ്പ്രേകൾ ഉപയോഗിക്കുക (Copper sprays early in season)"
+          }
+        }
+      },
+      "Tomato___Early_blight": {
+        "name": "ഏർലി ബ്ലൈറ്റ് (Early Blight)",
+        "description": "താഴത്തെ ഇലകളിൽ മുകളിലേക്ക് പടരുന്ന ലക്ഷ്യം പോലെയുള്ള വളയങ്ങൾ. (Target-like rings on lower leaves that spread upward.)",
+        "treatments": {
+          "organic": {
+            "1": "ബാധിച്ച ഇലകൾ നീക്കം ചെയ്യുക (Remove infected leaves)",
+            "2": "നല്ല വായുസഞ്ചാരത്തിനായി ചെടികൾക്ക് താങ്ങു നൽകുക (Stake plants for better air flow)"
+          },
+          "chemical": {
+            "1": "ഓരോ 7-10 ദിവസത്തിലും ക്ലോറോതലോനിൽ ഉപയോഗിക്കുക (Chlorothalonil every 7-10 days)"
+          }
+        }
+      },
+      "Tomato___Late_blight": {
+        "name": "ലേറ്റ് ബ്ലൈറ്റ് (Late Blight)",
+        "description": "തണുത്ത, നനഞ്ഞ കാലാവസ്ഥയിൽ അതിവേഗം പടരുന്ന നനഞ്ഞ പാടുകൾ. (Rapidly spreading water-soaked lesions in cool, wet weather.)",
+        "treatments": {
+          "organic": {
+            "1": "ബാധിച്ച ചെടികൾ ഉടൻ നശിപ്പിക്കുക (Destroy infected plants immediately)",
+            "2": "പ്രതിരോധശേഷിയുള്ള ഇനങ്ങൾ നടുക (Plant resistant varieties)"
+          },
+          "chemical": {
+            "1": "പ്രതിരോധത്തിനായി ഫംഗിസൈഡുകൾ പ്രയോഗിക്കുക (Apply fungicides preventatively)"
+          }
+        }
+      },
+      "Tomato___Leaf_Mold": {
+        "name": "ഇല പൂപ്പൽ (Leaf Mold)",
+        "description": "ഇലകളുടെ അടിയിൽ ഒലിവ്-പച്ച പൂപ്പലുള്ള മഞ്ഞ പുള്ളികൾ. (Yellow spots with olive-green mold underneath leaves.)",
+        "treatments": {
+          "organic": {
+            "1": "ഗ്രീൻഹൗസിലെ ഈർപ്പം കുറയ്ക്കുക (Reduce humidity in greenhouse)",
+            "2": "ചെടികൾ കൂടുതൽ അകലത്തിൽ നടുക (Space plants further apart)"
+          },
+          "chemical": {
+            "1": "ക്ലോറോതലോനിൽ അല്ലെങ്കിൽ കോപ്പർ ഫംഗിസൈഡുകൾ (Chlorothalonil or copper fungicides)"
+          }
+        }
+      },
+      "Tomato___Septoria_leaf_spot": {
+        "name": "സെപ്റ്റോറിയ ഇല പുള്ളി (Septoria Leaf Spot)",
+        "description": "കറുത്ത അതിരുകളും ചാരനിറത്തിലുള്ള നടുഭാഗവുമുള്ള ചെറിയ വൃത്താകൃതിയിലുള്ള പുള്ളികൾ. (Small circular spots with dark margins and gray centers.)",
+        "treatments": {
+          "organic": {
+            "1": "12 ഇഞ്ച് വരെ താഴെയുള്ള ഇലകൾ നീക്കം ചെയ്യുക (Remove lower leaves up to 12 inches)",
+            "2": "മണ്ണ് തെറിക്കുന്നത് തടയാൻ പുതയിടുക (Mulch to prevent soil splash)"
+          },
+          "chemical": {
+            "1": "മാങ്കോസെബ് അല്ലെങ്കിൽ കോപ്പർ ഫംഗിസൈഡുകൾ (Mancozeb or copper fungicides)"
+          }
+        }
+      },
+      "Tomato___Spider_mites Two-spotted_spider_mite": {
+        "name": "ചെള്ള് (Spider Mites)",
+        "description": "ഇലകളുടെ അടിയിൽ നേരിയ വലകളുള്ള ചെറിയ മഞ്ഞ പുള്ളികൾ. (Tiny yellow stippling on leaves with fine webbing underneath.)",
+        "treatments": {
+          "organic": {
+            "1": "ചെള്ള് നീക്കം ചെയ്യാൻ വെള്ളം ഉപയോഗിച്ച് സ്പ്രേ ചെയ്യുക (Spray with water to dislodge mites)",
+            "2": "വേട്ടയാടുന്ന ചെള്ള് ഉപയോഗിക്കുക (Release predatory mites)"
+          },
+          "chemical": {
+            "1": "കഠിനമാണെങ്കിൽ മൈറ്റിസൈഡ് സ്പ്രേകൾ ഉപയോഗിക്കുക (Miticide sprays if severe)"
+          }
+        }
+      },
+      "Tomato___Target_Spot": {
+        "name": "ടാർജറ്റ് പുള്ളി (Target Spot)",
+        "description": "ഏകകേന്ദ്ര വളയങ്ങളും മഞ്ഞ വലയങ്ങളുമുള്ള തവിട്ടുനിറത്തിലുള്ള പുള്ളികൾ. (Brown spots with concentric rings and yellow halos.)",
+        "treatments": {
+          "organic": {
+            "1": "ബാധിച്ച സസ്യഭാഗങ്ങൾ നീക്കം ചെയ്യുക (Remove infected plant material)",
+            "2": "വായുസഞ്ചാരം മെച്ചപ്പെടുത്തുക (Improve air circulation)"
+          },
+          "chemical": {
+            "1": "ക്ലോറോതലോനിൽ ഫംഗിസൈഡുകൾ (Chlorothalonil fungicides)"
+          }
+        }
+      },
+      "Tomato___Tomato_Yellow_Leaf_Curl_Virus": {
+        "name": "മഞ്ഞ ഇല ചുരുളൽ വൈറസ് (Yellow Leaf Curl Virus)",
+        "description": "മഞ്ഞ അരികുകളുള്ള മുകളിലേക്ക് ചുരുളുന്ന ഇലകൾ, വളർച്ച മുരടിക്കുന്നു. (Upward curling leaves with yellow margins, stunted growth.)",
+        "treatments": {
+          "management": {
+            "1": "ബാധിച്ച ചെടികൾ നീക്കം ചെയ്യുക (Remove infected plants)",
+            "2": "വെള്ളീച്ചകളെ നിയന്ത്രിക്കുക (Control whitefly vectors)",
+            "3": "പ്രതിരോധശേഷിയുള്ള ഇനങ്ങൾ നടുക (Plant resistant varieties)"
+          }
+        }
+      },
+      "Tomato___Tomato_mosaic_virus": {
+        "name": "ടൊമാറ്റോ മൊസൈക് വൈറസ് (Tomato Mosaic Virus)",
+        "description": "ഇലകളിൽ വെളിച്ചവും കടും പച്ച നിറത്തിലുള്ള പാറ്റേണുകളും. (Mottled light and dark green patterns on leaves.)",
+        "treatments": {
+          "prevention": {
+            "1": "വൈറസ് ഇല്ലാത്ത വിത്ത് ഉപയോഗിക്കുക (Use virus-free seed)",
+            "2": "ഉപകരണങ്ങൾ പതിവായി അണുവിമുക്തമാക്കുക (Disinfect tools regularly)",
+            "3": "ചെPage-കളെ നിയന്ത്രിക്കുക (Control aphid vectors)"
+          }
+        }
+      },
+      "Tomato___healthy": {
+        "name": "ആരോഗ്യമുള്ള തക്കാളി (Healthy Tomato)",
+        "description": "നിങ്ങളുടെ തക്കാളി ചെടി തഴച്ചുവളരുന്നു! (Your tomato plant is thriving!)",
+        "treatments": {
+          "care": {
+            "1": "ആദ്യത്തെ പൂങ്കുലയുടെ താഴെയുള്ള തണ്ടുകൾ മുറിക്കുക (Prune suckers below first flower cluster)",
+            "2": "സ്ഥിരമായി നനയ്ക്കുക (ആഴ്ചയിൽ 1-2 ഇഞ്ച്) (Water consistently (1-2 inches per week))",
+            "3": "മണ്ണിലെ ഈർപ്പം നിലനിർത്താൻ പുതയിടുക (Mulch to maintain soil moisture)"
+          }
+        }
+      }
     }
   },
   "fertilizerRecommendation": {

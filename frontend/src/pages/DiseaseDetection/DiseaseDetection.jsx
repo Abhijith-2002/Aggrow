@@ -50,6 +50,7 @@ const DiseaseDetection = () => {
           confidence: response.data.confidence.toFixed(2),
           ...getDiseaseInfo(response.data.prediction),
         });
+        console.log(response.data);
       } else {
         throw new Error(response.data.error || "Prediction failed");
       }
@@ -68,7 +69,10 @@ const DiseaseDetection = () => {
 
       <div className="upload-box">
         <label>
-          <FaUpload /> {selectedFile ? selectedFile.name : "Choose Image"}
+          <FaUpload />{" "}
+          {selectedFile
+            ? selectedFile.name
+            : t("diseaseDetection.form.imageInput")}
           <input
             type="file"
             onChange={handleFileChange}
@@ -83,11 +87,15 @@ const DiseaseDetection = () => {
 
         <button onClick={handleSubmit} disabled={!selectedFile || loading}>
           {loading ? <FaSpinner className="spin" /> : <FaCheck />}
-          {loading ? "Analyzing..." : "Diagnose"}
+          {loading
+            ? t("diseaseDetection.analysis")
+            : t("diseaseDetection.diagnose")}
         </button>
       </div>
 
-      {loading && <div className="loading">Scanning plant...</div>}
+      {loading && (
+        <div className="loading">{t("diseaseDetection.form.scanning")}</div>
+      )}
 
       {error && (
         <div className="error">
@@ -98,21 +106,33 @@ const DiseaseDetection = () => {
       {result && (
         <div className="result-card">
           <h3>
-            {result.name}
+            {console.log(result)}
+            {t(`diseaseDetection.Diseases.${result.diseaseClass}.name`)}
             <span className="confidence">{result.confidence}% sure</span>
           </h3>
 
-          <p className="description">{result.description}</p>
+          <p className="description">
+            {t(`diseaseDetection.Diseases.${result.diseaseClass}.description`)}
+          </p>
 
           <div className="treatment-section">
-            <h4>Recommended Treatments:</h4>
+            <h4>{t("diseaseDetection.recommendedTreatment")}</h4>
             <ul>
               {Object.entries(result.treatments).map(([type, tips]) => (
                 <div key={type}>
-                  <h5>{type.charAt(0).toUpperCase() + type.slice(1)}:</h5>
-                  {tips.map((tip, i) => (
-                    <li key={i}>{tip}</li>
-                  ))}
+                  <h4>{t(`diseaseDetection.types.${type}`)}:</h4>
+                  {tips.map((tip, i) => {
+                    console.log(i, type);
+                    return (
+                      <li key={i}>
+                        {t(
+                          `diseaseDetection.Diseases.${
+                            result.diseaseClass
+                          }.treatments.${type}.${i + 1}`
+                        )}
+                      </li>
+                    );
+                  })}
                 </div>
               ))}
             </ul>

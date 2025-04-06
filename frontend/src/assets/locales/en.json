@@ -96,10 +96,408 @@
     "subtitle2": "Identify plant health issues instantly",
     "description": "Upload an image of the plant leaf to detect diseases.",
     "noFileError": "Please upload an image before submitting.",
-    "result": "Prediction Result:",
+    "recommendedTreatment": "Recommended Treatments",
+    "analysis": "Analyzing...",
+    "diagnose": "Diagnose",
     "form": {
-      "fileInput": "Choose file",
-      "preview": "Preview"
+      "imageInput": "Choose Image",
+      "preview": "Preview",
+      "scanning": " Scanning plant..."
+    },
+    "types": {
+      "organic": "Organic",
+      "chemical": "Chemical"
+    },
+    "Diseases": {
+      "Apple___Apple_scab": {
+        "name": "Apple Scab",
+        "description": "Fungal disease causing dark, scaly lesions on leaves and fruit.",
+        "causes": {
+          "1": "Caused by fungus Venturia inaequalis",
+          "2": "Spreads in cool, wet weather",
+          "3": "Overwinters in fallen leaves"
+        },
+        "treatments": {
+          "organic": {
+            "1": "Prune trees for better airflow",
+            "2": "Apply sulfur spray every 7-10 days in spring",
+            "3": "Remove fallen leaves in autumn"
+          },
+          "chemical": {
+            "1": "Myclobutanil (Immunox) during wet periods",
+            "2": "Captan fungicide at bud break"
+          }
+        }
+      },
+      "Apple___Black_rot": {
+        "name": "Black Rot",
+        "description": "Causes rotting fruit with concentric rings and leaf spots.",
+        "causes": {
+          "1": "Fungus Botryosphaeria obtusa",
+          "2": "Enters through wounds in fruit"
+        },
+        "treatments": {
+          "organic": {
+            "1": "Remove infected fruit immediately",
+            "2": "Copper sprays in early season"
+          },
+          "chemical": {
+            "1": "Apply fungicides at petal fall"
+          }
+        }
+      },
+      "Apple___Cedar_apple_rust": {
+        "name": "Cedar Apple Rust",
+        "description": "Orange-yellow spots on leaves with fungal growth underneath.",
+        "treatments": {
+          "organic": {
+            "1": "Remove nearby juniper/cedar trees if possible",
+            "2": "Apply sulfur or copper fungicides"
+          },
+          "chemical": {
+            "1": "Myclobutanil or triadimefon fungicides"
+          }
+        }
+      },
+      "Apple___healthy": {
+        "name": "Healthy Apple Tree",
+        "description": "Your apple tree shows no signs of disease!",
+        "treatments": {
+          "prevention": {
+            "1": "Prune annually to improve air circulation",
+            "2": "Apply dormant oil spray in late winter",
+            "3": "Maintain proper soil pH (6.0-6.5)"
+          }
+        }
+      },
+      "Blueberry___healthy": {
+        "name": "Healthy Blueberry",
+        "description": "Your blueberry plant is thriving!",
+        "treatments": {
+          "care": {
+            "1": "Maintain acidic soil (pH 4.5-5.5)",
+            "2": "Mulch with pine needles",
+            "3": "Prune old canes annually"
+          }
+        }
+      },
+      "Cherry_(including_sour)___Powdery_mildew": {
+        "name": "Cherry Powdery Mildew",
+        "description": "White powdery coating on leaves and shoots.",
+        "treatments": {
+          "organic": {
+            "1": "Apply potassium bicarbonate solution",
+            "2": "Improve air circulation through pruning"
+          },
+          "chemical": {
+            "1": "Sulfur or triforine fungicides"
+          }
+        }
+      },
+      "Cherry_(including_sour)___healthy": {
+        "name": "Healthy Cherry Tree",
+        "description": "Your cherry tree is in excellent condition!",
+        "treatments": {
+          "prevention": {
+            "1": "Avoid overhead watering",
+            "2": "Apply balanced fertilizer in early spring",
+            "3": "Monitor for borers"
+          }
+        }
+      },
+      "Corn_(maize)___Cercospora_leaf_spot Gray_leaf_spot": {
+        "name": "Corn Gray Leaf Spot",
+        "description": "Rectangular tan lesions with yellow halos on leaves.",
+        "treatments": {
+          "organic": {
+            "1": "Rotate crops (avoid continuous corn)",
+            "2": "Use resistant varieties"
+          },
+          "chemical": {
+            "1": "Apply azoxystrobin or pyraclostrobin fungicides"
+          }
+        }
+      },
+      "Corn_(maize)___Common_rust_": {
+        "name": "Corn Common Rust",
+        "description": "Small cinnamon-brown pustules on both leaf surfaces.",
+        "treatments": {
+          "organic": {
+            "1": "Plant early-maturing varieties",
+            "2": "Remove crop debris after harvest"
+          },
+          "chemical": {
+            "1": "Chlorothalonil or mancozeb fungicides"
+          }
+        }
+      },
+      "Corn_(maize)___Northern_Leaf_Blight": {
+        "name": "Northern Corn Leaf Blight",
+        "description": "Long, elliptical gray-green lesions that turn tan.",
+        "treatments": {
+          "organic": {
+            "1": "Practice crop rotation",
+            "2": "Use disease-free seed"
+          },
+          "chemical": {
+            "1": "Apply fungicides at first sign"
+          }
+        }
+      },
+      "Corn_(maize)___healthy": {
+        "name": "Healthy Corn",
+        "description": "Your corn plants are growing well!",
+        "treatments": {
+          "care": {
+            "1": "Ensure proper spacing (10-12 inches apart)",
+            "2": "Side-dress with nitrogen when plants are knee-high",
+            "3": "Water deeply during dry spells"
+          }
+        }
+      },
+      "Grape___Black_rot": {
+        "name": "Grape Black Rot",
+        "description": "Brown lesions on leaves with black fruit rot.",
+        "causes": {
+          "1": "Unknown",
+          "2": "Unknown"
+        },
+        "treatments": {
+          "organic": {
+            "1": "Remove mummified berries",
+            "2": "Apply copper fungicides"
+          },
+          "chemical": {
+            "1": "Mancozeb or captan fungicides"
+          }
+        }
+      },
+      "Grape___Esca_(Black_Measles)": {
+        "name": "Esca (Black Measles)",
+        "description": "Chronic wood disease causing leaf discoloration and berry spots.",
+        "causes": {
+          "1": "Unknown",
+          "2": "Unknown"
+        },
+        "treatments": {
+          "management": {
+            "1": "Prune infected wood (disinfect tools between cuts)",
+            "2": "Avoid excessive pruning",
+            "3": "Maintain vine balance"
+          }
+        }
+      },
+      "Grape___Leaf_blight_(Isariopsis_Leaf_Spot)": {
+        "name": "Grape Leaf Blight",
+        "description": "Angular brown spots with yellow halos on leaves.",
+        "causes": {
+          "1": "Unknown",
+          "2": "Unknown"
+        },
+        "treatments": {
+          "organic": {
+            "1": "Improve air circulation",
+            "2": "Remove infected leaves"
+          },
+          "chemical": {
+            "1": "Copper-based fungicides"
+          }
+        }
+      },
+      "Grape___healthy": {
+        "name": "Healthy Grape Vine",
+        "description": "Your grapevine is disease-free!",
+        "treatments": {
+          "care": {
+            "1": "Train vines for good air circulation",
+            "2": "Monitor for pests like Japanese beetles",
+            "3": "Test soil every 3 years"
+          }
+        }
+      },
+      "Raspberry___healthy": {
+        "name": "Healthy Raspberry",
+        "description": "Your raspberry canes are vigorous!",
+        "treatments": {
+          "maintenance": {
+            "1": "Prune old canes after fruiting",
+            "2": "Mulch to conserve moisture",
+            "3": "Provide trellis support"
+          }
+        }
+      },
+      "Soybean___healthy": {
+        "name": "Healthy Soybean",
+        "description": "Your soybean crop looks excellent!",
+        "treatments": {
+          "care": {
+            "1": "Rotate with corn or small grains",
+            "2": "Inoculate seeds with rhizobium bacteria",
+            "3": "Monitor for aphids"
+          }
+        }
+      },
+      "Squash___Powdery_mildew": {
+        "name": "Powdery Mildew",
+        "description": "White powdery coating on leaves that yellows and dies.",
+        "treatments": {
+          "organic": {
+            "1": "Milk spray (1 part milk to 9 parts water)",
+            "2": "Baking soda solution (1 tbsp per gallon)"
+          },
+          "chemical": {
+            "1": "Sulfur or potassium bicarbonate fungicides"
+          }
+        }
+      },
+      "Strawberry___Leaf_scorch": {
+        "name": "Leaf Scorch",
+        "description": "Purple spots with white centers on older leaves.",
+        "treatments": {
+          "organic": {
+            "1": "Remove infected leaves",
+            "2": "Improve air circulation"
+          },
+          "chemical": {
+            "1": "Captan or thiophanate-methyl fungicides"
+          }
+        }
+      },
+      "Strawberry___healthy": {
+        "name": "Healthy Strawberry",
+        "description": "Your strawberry plants are producing well!",
+        "treatments": {
+          "care": {
+            "1": "Renovate beds after harvest",
+            "2": "Use straw mulch to keep fruit clean",
+            "3": "Replace plants every 3-4 years"
+          }
+        }
+      },
+      "Tomato___Bacterial_spot": {
+        "name": "Bacterial Spot",
+        "description": "Small water-soaked spots that become scabby on fruit.",
+        "treatments": {
+          "organic": {
+            "1": "Use disease-free seed",
+            "2": "Avoid overhead watering"
+          },
+          "chemical": {
+            "1": "Copper sprays early in season"
+          }
+        }
+      },
+      "Tomato___Early_blight": {
+        "name": "Early Blight",
+        "description": "Target-like rings on lower leaves that spread upward.",
+        "treatments": {
+          "organic": {
+            "1": "Remove infected leaves",
+            "2": "Stake plants for better air flow"
+          },
+          "chemical": {
+            "1": "Chlorothalonil every 7-10 days"
+          }
+        }
+      },
+      "Tomato___Late_blight": {
+        "name": "Late Blight",
+        "description": "Rapidly spreading water-soaked lesions in cool, wet weather.",
+        "treatments": {
+          "organic": {
+            "1": "Destroy infected plants immediately",
+            "2": "Plant resistant varieties"
+          },
+          "chemical": {
+            "1": "Apply fungicides preventatively"
+          }
+        }
+      },
+      "Tomato___Leaf_Mold": {
+        "name": "Leaf Mold",
+        "description": "Yellow spots with olive-green mold underneath leaves.",
+        "treatments": {
+          "organic": {
+            "1": "Reduce humidity in greenhouse",
+            "2": "Space plants further apart"
+          },
+          "chemical": {
+            "1": "Chlorothalonil or copper fungicides"
+          }
+        }
+      },
+      "Tomato___Septoria_leaf_spot": {
+        "name": "Septoria Leaf Spot",
+        "description": "Small circular spots with dark margins and gray centers.",
+        "treatments": {
+          "organic": {
+            "1": "Remove lower leaves up to 12 inches",
+            "2": "Mulch to prevent soil splash"
+          },
+          "chemical": {
+            "1": "Mancozeb or copper fungicides"
+          }
+        }
+      },
+      "Tomato___Spider_mites Two-spotted_spider_mite": {
+        "name": "Spider Mites",
+        "description": "Tiny yellow stippling on leaves with fine webbing underneath.",
+        "treatments": {
+          "organic": {
+            "1": "Spray with water to dislodge mites",
+            "2": "Release predatory mites"
+          },
+          "chemical": {
+            "1": "Miticide sprays if severe"
+          }
+        }
+      },
+      "Tomato___Target_Spot": {
+        "name": "Target Spot",
+        "description": "Brown spots with concentric rings and yellow halos.",
+        "treatments": {
+          "organic": {
+            "1": "Remove infected plant material",
+            "2": "Improve air circulation"
+          },
+          "chemical": {
+            "1": "Chlorothalonil fungicides"
+          }
+        }
+      },
+      "Tomato___Tomato_Yellow_Leaf_Curl_Virus": {
+        "name": "Yellow Leaf Curl Virus",
+        "description": "Upward curling leaves with yellow margins, stunted growth.",
+        "treatments": {
+          "management": {
+            "1": "Remove infected plants",
+            "2": "Control whitefly vectors",
+            "3": "Plant resistant varieties"
+          }
+        }
+      },
+      "Tomato___Tomato_mosaic_virus": {
+        "name": "Tomato Mosaic Virus",
+        "description": "Mottled light and dark green patterns on leaves.",
+        "treatments": {
+          "prevention": {
+            "1": "Use virus-free seed",
+            "2": "Disinfect tools regularly",
+            "3": "Control aphid vectors"
+          }
+        }
+      },
+      "Tomato___healthy": {
+        "name": "Healthy Tomato",
+        "description": "Your tomato plant is thriving!",
+        "treatments": {
+          "care": {
+            "1": "Prune suckers below first flower cluster",
+            "2": "Water consistently (1-2 inches per week)",
+            "3": "Mulch to maintain soil moisture"
+          }
+        }
+      }
     }
   },
   "fertilizerRecommendation": {
