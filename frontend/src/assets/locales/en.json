@@ -115,6 +115,57 @@
     "recommending": "Recommending...",
     "autofill": "Autofill Data",
     "loading": "Loading...",
+    "FertilizerTypes": {
+      "N_max": {
+        "1": "Composted Manure",
+        "2": "Blood Meal",
+        "3": "Urea",
+        "4": "Ammonium Nitrate"
+      },
+      "N_min": {
+        "1": "Fish Emulsion",
+        "2": "Ammonium Sulfate",
+        "3": "Sulfur-Coated Urea",
+        "4": "Alfalfa Meal",
+        "5": "Green Manure"
+      },
+      "P_max": {
+        "1": "Bone Meal",
+        "2": "Rock Phosphate",
+        "3": "Diammonium Phosphate (DAP)",
+        "4": "Triple Superphosphate (TSP)"
+      },
+      "P_min": {
+        "1": "Fish Bone Meal",
+        "2": "Monoammonium Phosphate (MAP)",
+        "3": "Compost with Balanced Nutrients",
+        "4": "Phosphorus-Solubilizing Bacteria"
+      },
+      "K_max": {
+        "1": "Wood Ash",
+        "2": "Kelp Meal",
+        "3": "Muriate of Potash (MOP)",
+        "4": "Sulfate of Potash (SOP)"
+      },
+      "K_min": {
+        "1": "Greensand",
+        "2": "Potassium Nitrate",
+        "3": "Sulfur-Coated Potassium",
+        "4": "Buckwheat Cover Crop"
+      },
+      "pH_max": {
+        "1": "Elemental Sulfur",
+        "2": "Aluminum Sulfate",
+        "3": "Ammonium Sulfate",
+        "4": "Peat Moss"
+      },
+      "pH_min": {
+        "1": "Agricultural Lime",
+        "2": "Dolomite Lime",
+        "3": "Calcium Nitrate",
+        "4": "Wood Ash"
+      }
+    },
     "recommendation": {
       "N_max": {
         "title": "Nitrogen content is HIGH",

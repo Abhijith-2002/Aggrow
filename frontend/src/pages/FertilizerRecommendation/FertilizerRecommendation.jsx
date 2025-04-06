@@ -13,7 +13,7 @@ import {
   FaChevronDown,
   FaChevronUp,
   FaExclamationTriangle,
-  FaCheck
+  FaCheck,
 } from "react-icons/fa";
 
 const FertilizerRecommendation = () => {
@@ -33,9 +33,9 @@ const FertilizerRecommendation = () => {
   const [expandedSections, setExpandedSections] = useState({});
 
   const toggleSection = (section) => {
-    setExpandedSections(prev => ({
+    setExpandedSections((prev) => ({
       ...prev,
-      [section]: !prev[section]
+      [section]: !prev[section],
     }));
   };
 
@@ -60,8 +60,8 @@ const FertilizerRecommendation = () => {
             `http://localhost:5000/fertilizer/autofill?lat=${latitude}&lon=${longitude}`
           );
 
-          if (res.data?.success) {
-            setFormData(prev => ({
+          if (res.data) {
+            setFormData((prev) => ({
               ...prev,
               nitrogen: res.data.nitrogen || prev.nitrogen,
               phosphorous: res.data.phosphorous || prev.phosphorous,
@@ -88,9 +88,15 @@ const FertilizerRecommendation = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     // Validate form
-    if (!formData.crop_type || !formData.nitrogen || !formData.phosphorous || !formData.potassium || !formData.ph) {
+    if (
+      !formData.crop_type ||
+      !formData.nitrogen ||
+      !formData.phosphorous ||
+      !formData.potassium ||
+      !formData.ph
+    ) {
       setError("Please fill all fields");
       return;
     }
@@ -107,17 +113,18 @@ const FertilizerRecommendation = () => {
           nitrogen: parseFloat(formData.nitrogen),
           phosphorous: parseFloat(formData.phosphorous),
           potassium: parseFloat(formData.potassium),
-          ph: parseFloat(formData.ph)
+          ph: parseFloat(formData.ph),
         }
       );
-
-      if (response.data?.success) {
+      if (response.data) {
         setRecommendation(response.data);
       } else {
         throw new Error(response.data?.error || "Failed to get recommendation");
       }
     } catch (error) {
-      setError(error.response?.data?.error || error.message || "Recommendation failed");
+      setError(
+        error.response?.data?.error || error.message || "Recommendation failed"
+      );
       console.error("API Error:", error);
     } finally {
       setLoading(false);
@@ -126,38 +133,59 @@ const FertilizerRecommendation = () => {
 
   const parseRecommendation = (data) => {
     if (!data) return [];
-    
+    console.log("Parsed recommendation data:", data.organic_fertilizer);
+
+    let result = data.organic_fertilizer;
+    result = result.split("\n").filter((line) => line.trim() !== "");
+    console.log("Parsed recommendation bla:", result);
+
     return [
       {
         title: "Recommended Fertilizer",
         icon: <FaFlask />,
-        content: [data.recommended_fertilizer || "No specific recommendation"]
+        content: result.map((key) => {
+          // Generate a random number between 1 and 5 (adjust range based on your data)
+          const randomIndex = Math.floor(Math.random() * 5) + 1;
+          return (
+            t(
+              `fertilizerRecommendation.FertilizerTypes.${key}.${randomIndex}`
+            ) || "No specific recommendation"
+          );
+        }),
       },
       {
         title: "Organic Treatment",
         icon: <FaLeaf />,
-        content: Array.isArray(data.organic) ? data.organic : 
-               (typeof data.organic === 'string' ? [data.organic] : 
-               ["No organic recommendations available"])
+        content: Array.isArray(data.organic)
+          ? data.organic
+          : typeof data.organic === "string"
+          ? [data.organic]
+          : ["No organic recommendations available"],
       },
       {
         title: "Chemical Treatment",
         icon: <FaFlask />,
-        content: Array.isArray(data.chemical) ? data.chemical : 
-               (typeof data.chemical === 'string' ? [data.chemical] : 
-               ["No chemical recommendations available"])
+        content: Array.isArray(data.chemical)
+          ? data.chemical
+          : typeof data.chemical === "string"
+          ? [data.chemical]
+          : ["No chemical recommendations available"],
       },
       {
         title: "Nutrient Analysis",
         icon: <FaBalanceScale />,
-        content: Array.isArray(data.analysis) ? data.analysis : 
-               (typeof data.analysis === 'string' ? [data.analysis] : 
-               ["No nutrient analysis available"])
-      }
+        content: Array.isArray(data.analysis)
+          ? data.analysis
+          : typeof data.analysis === "string"
+          ? [data.analysis]
+          : ["No nutrient analysis available"],
+      },
     ];
   };
 
-  const recommendationSections = recommendation ? parseRecommendation(recommendation) : [];
+  const recommendationSections = recommendation
+    ? parseRecommendation(recommendation)
+    : [];
 
   return (
     <div className="fertilizer-container">
@@ -165,7 +193,9 @@ const FertilizerRecommendation = () => {
         <FaLeaf /> {t("Fertilizer Recommendation")}
       </h2>
       <p className="subtitle">
-        {t("Enter soil parameters and crop type for customized recommendations")}
+        {t(
+          "Enter soil parameters and crop type for customized recommendations"
+        )}
       </p>
 
       <div className="autofill-container">
@@ -310,7 +340,7 @@ const FertilizerRecommendation = () => {
 
           {recommendationSections.map((section, index) => (
             <div key={index} className="recommendation-section">
-              <div 
+              <div
                 className="section-header"
                 onClick={() => toggleSection(index)}
               >
