@@ -106,7 +106,11 @@
     },
     "types": {
       "organic": "Organic",
-      "chemical": "Chemical"
+      "chemical": "Chemical",
+      "prevention": "Extra Care for Plant Health",
+      "care": "Extra Care for Plant Health",
+      "management": "Care for Plant Health",
+      "maintenance": "Maintenance for Plant Health"
     },
     "Diseases": {
       "Apple___Apple_scab": {
@@ -258,10 +262,6 @@
       "Grape___Black_rot": {
         "name": "Grape Black Rot",
         "description": "Brown lesions on leaves with black fruit rot.",
-        "causes": {
-          "1": "Unknown",
-          "2": "Unknown"
-        },
         "treatments": {
           "organic": {
             "1": "Remove mummified berries",
@@ -275,10 +275,6 @@
       "Grape___Esca_(Black_Measles)": {
         "name": "Esca (Black Measles)",
         "description": "Chronic wood disease causing leaf discoloration and berry spots.",
-        "causes": {
-          "1": "Unknown",
-          "2": "Unknown"
-        },
         "treatments": {
           "management": {
             "1": "Prune infected wood (disinfect tools between cuts)",
@@ -290,10 +286,6 @@
       "Grape___Leaf_blight_(Isariopsis_Leaf_Spot)": {
         "name": "Grape Leaf Blight",
         "description": "Angular brown spots with yellow halos on leaves.",
-        "causes": {
-          "1": "Unknown",
-          "2": "Unknown"
-        },
         "treatments": {
           "organic": {
             "1": "Improve air circulation",
@@ -312,6 +304,94 @@
             "1": "Train vines for good air circulation",
             "2": "Monitor for pests like Japanese beetles",
             "3": "Test soil every 3 years"
+          }
+        }
+      },
+      "Orange___Haunglongbing_(Citrus_greening)": {
+        "name": "Citrus Greening (HLB)",
+        "description": "Yellow shoots, lopsided fruit, and bitter juice.",
+        "treatments": {
+          "management": {
+            "1": "Remove infected trees immediately",
+            "2": "Control psyllid vectors with insecticides",
+            "3": "Use disease-free nursery stock"
+          }
+        }
+      },
+      "Peach___Bacterial_spot": {
+        "name": "Peach Bacterial Spot",
+        "description": "Small dark spots on leaves and fruit that may crack.",
+        "treatments": {
+          "organic": {
+            "1": "Plant resistant varieties",
+            "2": "Avoid overhead irrigation"
+          },
+          "chemical": { "1": "Copper sprays during dormancy" }
+        }
+      },
+      "Peach___healthy": {
+        "name": "Healthy Peach Tree",
+        "description": "Your peach tree is in great condition!",
+        "treatments": {
+          "care": {
+            "1": "Prune to open center shape",
+            "2": "Thin fruit to 6-8 inches apart",
+            "3": "Apply dormant oil spray"
+          }
+        }
+      },
+      "Pepper,_bell___Bacterial_spot": {
+        "name": "Bacterial Leaf Spot",
+        "description": "Small water-soaked spots that turn brown on leaves.",
+        "treatments": {
+          "organic": {
+            "1": "Use pathogen-free seed",
+            "2": "Avoid working with wet plants"
+          },
+          "chemical": { "1": "Copper-based bactericides" }
+        }
+      },
+      "Pepper,_bell___healthy": {
+        "name": "Healthy Bell Pepper",
+        "description": "Your pepper plant is thriving!",
+        "treatments": {
+          "care": {
+            "1": "Provide consistent moisture",
+            "2": "Use balanced fertilizer",
+            "3": "Harvest regularly to promote more fruit"
+          }
+        }
+      },
+      "Potato___Early_blight": {
+        "name": "Early Blight",
+        "description": "Concentric rings on leaves with yellow halos.",
+        "treatments": {
+          "organic": {
+            "1": "Rotate crops (3-year rotation)",
+            "2": "Remove infected foliage"
+          },
+          "chemical": { "1": "Chlorothalonil or mancozeb fungicides" }
+        }
+      },
+      "Potato___Late_blight": {
+        "name": "Late Blight",
+        "description": "Water-soaked lesions that rapidly destroy foliage.",
+        "treatments": {
+          "organic": {
+            "1": "Destroy infected plants immediately",
+            "2": "Plant resistant varieties"
+          },
+          "chemical": { "1": "Apply fungicides preventatively in wet weather" }
+        }
+      },
+      "Potato___healthy": {
+        "name": "Healthy Potato",
+        "description": "Your potato plants are growing well!",
+        "treatments": {
+          "care": {
+            "1": "Hill soil around stems as plants grow",
+            "2": "Water consistently (1-2 inches per week)",
+            "3": "Harvest after vines die back"
           }
         }
       },
@@ -693,124 +773,124 @@
           }
         }
       }
-    },
-    "crops": {
-      "rice": "Rice",
-      "maize": "Maize",
-      "chickpea": "Chickpea",
-      "kidneybeans": "Kidney Beans",
-      "pigeonpeas": "Pigeon Peas",
-      "mothbeans": "Moth Beans",
-      "mungbean": "Mung Bean",
-      "blackgram": "Black Gram",
-      "lentil": "Lentil",
-      "pomegranate": "Pomegranate",
-      "banana": "Banana",
-      "mango": "Mango",
-      "grapes": "Grapes",
-      "watermelon": "Watermelon",
-      "muskmelon": "Muskmelon",
-      "apple": "Apple",
-      "orange": "Orange",
-      "papaya": "Papaya",
-      "coconut": "Coconut",
-      "cotton": "Cotton",
-      "jute": "Jute",
-      "coffee": "Coffee",
-      "wheat": "Wheat",
-      "jowar": "Jowar",
-      "barley": "Barley",
-      "ragi": "Ragi",
-      "chickpeas": "Chickpeas",
-      "french beans": "French beans",
-      "fava beans": "Fava beans",
-      "lima beans": "Lima beans",
-      "cluster beans": "Cluster beans",
-      "soyabean": "Soyabean",
-      "black eyed beans": "Black eyed beans",
-      "kidney beans": "Kidney beans",
-      "pigeon peas": "Pigeon peas",
-      "moth bean": "Moth bean",
-      "mung beans": "Mung beans",
-      "green peas": "Green peas",
-      "horse gram": "Horse gram",
-      "black gram": "Black gram",
-      "rapeseed": "Rapeseed",
-      "coriander seeds": "Coriander seeds",
-      "mustard seeds": "Mustard seeds",
-      "sesame seed": "Sesame seed",
-      "cumin seeds": "Cumin seeds",
-      "lentils": "Lentils",
-      "brinjal": "Brinjal",
-      "beetroot": "Beetroot",
-      "bitter gourd": "Bitter gourd",
-      "bottle gourd": "Bottle gourd",
-      "capsicum": "Capsicum",
-      "cabbage": "Cabbage",
-      "carrot": "Carrot",
-      "cauliflower": "Cauliflower",
-      "cucumber": "Cucumber",
-      "coriander leaves": "Coriander leaves",
-      "curry leaves": "Curry leaves",
-      "drumstick": "Drumstick",
-      "chili": "Chili",
-      "lady finger": "Lady finger",
-      "mushroom": "Mushroom",
-      "onion": "Onion",
-      "potato": "Potato",
-      "pumpkin": "Pumpkin",
-      "radish": "Radish",
-      "olive": "Olive",
-      "sweet potato": "Sweet potato",
-      "fenugreek leaf": "Fenugreek leaf",
-      "spinach": "Spinach",
-      "ridgegourd": "Ridgegourd",
-      "gooseberry": "Gooseberry",
-      "jambun": "Jambun",
-      "ziziphus mauritiana": "Ziziphus mauritiana",
-      "garcinia indica": "Garcinia indica",
-      "tamarind": "Tamarind",
-      "tapioca": "Tapioca",
-      "garlic": "Garlic",
-      "lemon": "Lemon",
-      "tomato": "Tomato",
-      "ash gourd": "Ash gourd",
-      "pineapple": "P",
-      "jackfruit": "Jackfruit",
-      "guava": "Guava",
-      "water melon": "Water melon",
-      "musk melon": "Musk melon",
-      "apricot": "Apricot",
-      "chickoo": "Chickoo",
-      "custard apple": "Custard apple",
-      "dates": "Dates",
-      "figs": "Figs",
-      "aniseed": "Aniseed",
-      "asafoetida": "Asafoetida",
-      "bay leaf": "Bay leaf",
-      "black pepper": "Black pepper",
-      "cardamom": "Cardamom",
-      "cinnamon": "Cinnamon",
-      "cloves": "Cloves",
-      "jaiphal": "Jaiphal",
-      "ginger": "Ginger",
-      "turmeric": "Turmeric",
-      "cashewnuts": "Cashewnuts",
-      "raisins": "Raisins",
-      "almond nut": "Almond nut",
-      "arecanut": "Arecanut",
-      "pistachio nut": "Pistachio nut",
-      "lemon grass": "Lemon grass",
-      "sunflower": "Sunflower"
-    },
-    "errors": {
-      "connectionFailed": "Failed to connect to prediction service. Please try again later.",
-      "predictionFailed": "Failed to get recommendation"
-    },
-    "units": {
-      "celsius": "°C",
-      "percentage": "%",
-      "millimeter": "mm"
     }
+  },
+  "crops": {
+    "rice": "Rice",
+    "maize": "Maize",
+    "chickpea": "Chickpea",
+    "kidneybeans": "Kidney Beans",
+    "pigeonpeas": "Pigeon Peas",
+    "mothbeans": "Moth Beans",
+    "mungbean": "Mung Bean",
+    "blackgram": "Black Gram",
+    "lentil": "Lentil",
+    "pomegranate": "Pomegranate",
+    "banana": "Banana",
+    "mango": "Mango",
+    "grapes": "Grapes",
+    "watermelon": "Watermelon",
+    "muskmelon": "Muskmelon",
+    "apple": "Apple",
+    "orange": "Orange",
+    "papaya": "Papaya",
+    "coconut": "Coconut",
+    "cotton": "Cotton",
+    "jute": "Jute",
+    "coffee": "Coffee",
+    "wheat": "Wheat",
+    "jowar": "Jowar",
+    "barley": "Barley",
+    "ragi": "Ragi",
+    "chickpeas": "Chickpeas",
+    "french beans": "French beans",
+    "fava beans": "Fava beans",
+    "lima beans": "Lima beans",
+    "cluster beans": "Cluster beans",
+    "soyabean": "Soyabean",
+    "black eyed beans": "Black eyed beans",
+    "kidney beans": "Kidney beans",
+    "pigeon peas": "Pigeon peas",
+    "moth bean": "Moth bean",
+    "mung beans": "Mung beans",
+    "green peas": "Green peas",
+    "horse gram": "Horse gram",
+    "black gram": "Black gram",
+    "rapeseed": "Rapeseed",
+    "coriander seeds": "Coriander seeds",
+    "mustard seeds": "Mustard seeds",
+    "sesame seed": "Sesame seed",
+    "cumin seeds": "Cumin seeds",
+    "lentils": "Lentils",
+    "brinjal": "Brinjal",
+    "beetroot": "Beetroot",
+    "bitter gourd": "Bitter gourd",
+    "bottle gourd": "Bottle gourd",
+    "capsicum": "Capsicum",
+    "cabbage": "Cabbage",
+    "carrot": "Carrot",
+    "cauliflower": "Cauliflower",
+    "cucumber": "Cucumber",
+    "coriander leaves": "Coriander leaves",
+    "curry leaves": "Curry leaves",
+    "drumstick": "Drumstick",
+    "chili": "Chili",
+    "lady finger": "Lady finger",
+    "mushroom": "Mushroom",
+    "onion": "Onion",
+    "potato": "Potato",
+    "pumpkin": "Pumpkin",
+    "radish": "Radish",
+    "olive": "Olive",
+    "sweet potato": "Sweet potato",
+    "fenugreek leaf": "Fenugreek leaf",
+    "spinach": "Spinach",
+    "ridgegourd": "Ridgegourd",
+    "gooseberry": "Gooseberry",
+    "jambun": "Jambun",
+    "ziziphus mauritiana": "Ziziphus mauritiana",
+    "garcinia indica": "Garcinia indica",
+    "tamarind": "Tamarind",
+    "tapioca": "Tapioca",
+    "garlic": "Garlic",
+    "lemon": "Lemon",
+    "tomato": "Tomato",
+    "ash gourd": "Ash gourd",
+    "pineapple": "P",
+    "jackfruit": "Jackfruit",
+    "guava": "Guava",
+    "water melon": "Water melon",
+    "musk melon": "Musk melon",
+    "apricot": "Apricot",
+    "chickoo": "Chickoo",
+    "custard apple": "Custard apple",
+    "dates": "Dates",
+    "figs": "Figs",
+    "aniseed": "Aniseed",
+    "asafoetida": "Asafoetida",
+    "bay leaf": "Bay leaf",
+    "black pepper": "Black pepper",
+    "cardamom": "Cardamom",
+    "cinnamon": "Cinnamon",
+    "cloves": "Cloves",
+    "jaiphal": "Jaiphal",
+    "ginger": "Ginger",
+    "turmeric": "Turmeric",
+    "cashewnuts": "Cashewnuts",
+    "raisins": "Raisins",
+    "almond nut": "Almond nut",
+    "arecanut": "Arecanut",
+    "pistachio nut": "Pistachio nut",
+    "lemon grass": "Lemon grass",
+    "sunflower": "Sunflower"
+  },
+  "errors": {
+    "connectionFailed": "Failed to connect to prediction service. Please try again later.",
+    "predictionFailed": "Failed to get recommendation"
+  },
+  "units": {
+    "celsius": "°C",
+    "percentage": "%",
+    "millimeter": "mm"
   }
 }

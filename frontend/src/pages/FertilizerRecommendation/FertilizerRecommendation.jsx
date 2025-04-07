@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import cropList from "./crops.json";
+import Header from "../Dashboard/Header";
 import "./FertilizerRecommendation.css";
 import { useTranslation } from "react-i18next";
 import {
@@ -214,181 +215,188 @@ const FertilizerRecommendation = () => {
     : [];
 
   return (
-    <div className="fertilizer-container">
-      <h2>
-        <FaLeaf /> {t("fertilizerRecommendation.title")}
-      </h2>
-      <p className="subtitle">{t("fertilizerRecommendation.description")}</p>
+    <div className="fertilizer-recommendation-page">
+      <Header />
+      <div className="fertilizer-container">
+        <h2>
+          <FaLeaf /> {t("fertilizerRecommendation.title")}
+        </h2>
+        <p className="subtitle">{t("fertilizerRecommendation.description")}</p>
 
-      <div className="autofill-container">
-        <button
-          className="autofill-btn"
-          onClick={handleAutofill}
-          disabled={autoFillLoading}
-        >
-          {autoFillLoading ? (
-            <>
-              <FaSpinner className="spinner-icon" />{" "}
-              {t("fertilizerRecommendation.loading")}
-            </>
-          ) : (
-            <>
-              <FaMapMarkerAlt /> {t("fertilizerRecommendation.autofill")}
-            </>
-          )}
-        </button>
-      </div>
-
-      {error && (
-        <div className="error-message">
-          <FaExclamationTriangle /> {error}
-        </div>
-      )}
-
-      <form onSubmit={handleSubmit} className="fertilizer-form">
-        <div className="form-group">
-          <label htmlFor="crop_type">
-            <FaSeedling /> {t("fertilizerRecommendation.form.cropType")}
-          </label>
-          <select
-            id="crop_type"
-            name="crop_type"
-            onChange={handleChange}
-            value={formData.crop_type}
-            required
+        <div className="autofill-container">
+          <button
+            className="autofill-btn"
+            onClick={handleAutofill}
+            disabled={autoFillLoading}
           >
-            <option value="">
-              {t("fertilizerRecommendation.form.selectCrop")}
-            </option>
-            {cropList.map((crop, index) => (
-              <option key={index} value={crop}>
-                {t(`crops.${crop.toLowerCase()}`) || crop}
+            {autoFillLoading ? (
+              <>
+                <FaSpinner className="spinner-icon" />{" "}
+                {t("fertilizerRecommendation.loading")}
+              </>
+            ) : (
+              <>
+                <FaMapMarkerAlt /> {t("fertilizerRecommendation.autofill")}
+              </>
+            )}
+          </button>
+        </div>
+
+        {error && (
+          <div className="error-message">
+            <FaExclamationTriangle /> {error}
+          </div>
+        )}
+
+        <form onSubmit={handleSubmit} className="fertilizer-form">
+          <div className="form-group">
+            <label htmlFor="crop_type">
+              <FaSeedling /> {t("fertilizerRecommendation.form.cropType")}
+            </label>
+            <select
+              id="crop_type"
+              name="crop_type"
+              onChange={handleChange}
+              value={formData.crop_type}
+              required
+            >
+              <option value="">
+                {t("fertilizerRecommendation.form.selectCrop")}
               </option>
-            ))}
-          </select>
-        </div>
+              {cropList.map((crop, index) => (
+                <option key={index} value={crop}>
+                  {t(`crops.${crop.toLowerCase()}`) || crop}
+                </option>
+              ))}
+            </select>
+          </div>
 
-        <div className="form-group">
-          <label htmlFor="nitrogen">
-            <FaFlask /> {t("fertilizerRecommendation.form.nitrogen")}
-          </label>
-          <input
-            type="number"
-            id="nitrogen"
-            name="nitrogen"
-            min="0"
-            step="1"
-            placeholder="40"
-            onChange={handleChange}
-            required
-            value={formData.nitrogen}
-          />
-        </div>
+          <div className="form-group">
+            <label htmlFor="nitrogen">
+              <FaFlask /> {t("fertilizerRecommendation.form.nitrogen")}
+            </label>
+            <input
+              type="number"
+              id="nitrogen"
+              name="nitrogen"
+              min="0"
+              step="1"
+              placeholder="40"
+              onChange={handleChange}
+              required
+              value={formData.nitrogen}
+            />
+          </div>
 
-        <div className="form-group">
-          <label htmlFor="phosphorous">
-            <FaFlask /> {t("fertilizerRecommendation.form.phosphorous")}
-          </label>
-          <input
-            type="number"
-            id="phosphorous"
-            name="phosphorous"
-            min="0"
-            step="1"
-            placeholder="125"
-            onChange={handleChange}
-            required
-            value={formData.phosphorous}
-          />
-        </div>
+          <div className="form-group">
+            <label htmlFor="phosphorous">
+              <FaFlask /> {t("fertilizerRecommendation.form.phosphorous")}
+            </label>
+            <input
+              type="number"
+              id="phosphorous"
+              name="phosphorous"
+              min="0"
+              step="1"
+              placeholder="125"
+              onChange={handleChange}
+              required
+              value={formData.phosphorous}
+            />
+          </div>
 
-        <div className="form-group">
-          <label htmlFor="potassium">
-            <FaFlask /> {t("fertilizerRecommendation.form.pottasium")}
-          </label>
-          <input
-            type="number"
-            id="potassium"
-            name="potassium"
-            min="0"
-            step="1"
-            placeholder="50"
-            onChange={handleChange}
-            required
-            value={formData.potassium}
-          />
-        </div>
+          <div className="form-group">
+            <label htmlFor="potassium">
+              <FaFlask /> {t("fertilizerRecommendation.form.pottasium")}
+            </label>
+            <input
+              type="number"
+              id="potassium"
+              name="potassium"
+              min="0"
+              step="1"
+              placeholder="50"
+              onChange={handleChange}
+              required
+              value={formData.potassium}
+            />
+          </div>
 
-        <div className="form-group">
-          <label htmlFor="ph">
-            <FaBalanceScale /> {t("fertilizerRecommendation.form.phLevel")}
-          </label>
-          <input
-            type="number"
-            id="ph"
-            name="ph"
-            min="0"
-            max="14"
-            step="0.1"
-            placeholder="6.5"
-            onChange={handleChange}
-            required
-            value={formData.ph}
-          />
-        </div>
+          <div className="form-group">
+            <label htmlFor="ph">
+              <FaBalanceScale /> {t("fertilizerRecommendation.form.phLevel")}
+            </label>
+            <input
+              type="number"
+              id="ph"
+              name="ph"
+              min="0"
+              max="14"
+              step="0.1"
+              placeholder="6.5"
+              onChange={handleChange}
+              required
+              value={formData.ph}
+            />
+          </div>
 
-        <button type="submit" className="predict-btn" disabled={loading}>
-          {loading ? (
-            <>
-              <FaSpinner className="spinner-icon" />{" "}
-              {t("fertilizerRecommendation.recommending")}
-            </>
-          ) : (
-            <>
-              <FaCheck /> {t("fertilizerRecommendation.recommend")}
-            </>
-          )}
-        </button>
-      </form>
+          <button type="submit" className="predict-btn" disabled={loading}>
+            {loading ? (
+              <>
+                <FaSpinner className="spinner-icon" />{" "}
+                {t("fertilizerRecommendation.recommending")}
+              </>
+            ) : (
+              <>
+                <FaCheck /> {t("fertilizerRecommendation.recommend")}
+              </>
+            )}
+          </button>
+        </form>
 
-      {loading && (
-        <div className="loading-spinner">
-          <div className="spinner"></div>
-          <p>{t("Analyzing soil data...")}</p>
-        </div>
-      )}
+        {loading && (
+          <div className="loading-spinner">
+            <div className="spinner"></div>
+            <p>{t("Analyzing soil data...")}</p>
+          </div>
+        )}
 
-      {recommendationSections.length > 0 && (
-        <div className="recommendation-box">
-          <h3>
-            <FaLeaf /> {t("fertilizerRecommendation.result")}
-          </h3>
+        {recommendationSections.length > 0 && (
+          <div className="recommendation-box">
+            <h3>
+              <FaLeaf /> {t("fertilizerRecommendation.result")}
+            </h3>
 
-          {recommendationSections.map((section, index) => (
-            <div key={index} className="recommendation-section">
-              <div
-                className="section-header"
-                onClick={() => toggleSection(index)}
-              >
-                <h4>
-                  {section.icon} {section.title}
-                </h4>
-                {expandedSections[index] ? <FaChevronUp /> : <FaChevronDown />}
+            {recommendationSections.map((section, index) => (
+              <div key={index} className="recommendation-section">
+                <div
+                  className="section-header"
+                  onClick={() => toggleSection(index)}
+                >
+                  <h4>
+                    {section.icon} {section.title}
+                  </h4>
+                  {expandedSections[index] ? (
+                    <FaChevronUp />
+                  ) : (
+                    <FaChevronDown />
+                  )}
+                </div>
+
+                {expandedSections[index] && (
+                  <ul>
+                    {section.content.map((line, i) => (
+                      <li key={i}>
+                        <FaLeaf className="bullet-icon" /> {line}
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </div>
-
-              {expandedSections[index] && (
-                <ul>
-                  {section.content.map((line, i) => (
-                    <li key={i}>
-                      <FaLeaf className="bullet-icon" /> {line}
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </div>
-          ))}
-        </div>
-      )}
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 };

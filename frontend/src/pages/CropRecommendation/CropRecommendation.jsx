@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./CropRecommendation.css";
+import Header from "../Dashboard/Header";
 import { useTranslation } from "react-i18next";
 import {
   FaLocationArrow,
@@ -15,7 +16,7 @@ import {
   FaCloudRain,
   FaMapMarkerAlt,
   FaCity,
-  FaExclamationTriangle
+  FaExclamationTriangle,
 } from "react-icons/fa";
 
 const CropRecommendation = () => {
@@ -42,11 +43,11 @@ const CropRecommendation = () => {
   const [predictionError, setPredictionError] = useState("");
 
   useEffect(() => {
-    const script = document.createElement('script');
-    script.src = '/cities.js';
+    const script = document.createElement("script");
+    script.src = "/cities.js";
     script.async = true;
     script.onload = () => {
-      if (typeof window.state_arr !== 'undefined') {
+      if (typeof window.state_arr !== "undefined") {
         setStatesList(window.state_arr);
         getUserLocation();
       }
@@ -83,7 +84,9 @@ const CropRecommendation = () => {
   const getLocationDetails = async (latitude, longitude) => {
     try {
       const response = await fetch(
-        `https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=${import.meta.env.VITE_OPENCAGE_API_KEY}`
+        `https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=${
+          import.meta.env.VITE_OPENCAGE_API_KEY
+        }`
       );
       const data = await response.json();
 
@@ -95,19 +98,20 @@ const CropRecommendation = () => {
         if (state && city) {
           setIsLocationFetched(true);
           const stateIndex = window.state_arr.findIndex(
-            s => s.toLowerCase() === state.toLowerCase()
+            (s) => s.toLowerCase() === state.toLowerCase()
           );
-        
+
           if (stateIndex !== -1) {
             const selectedState = window.state_arr[stateIndex];
-            setFormData(prev => ({ ...prev, state: selectedState }));
+            setFormData((prev) => ({ ...prev, state: selectedState }));
             updateCities(selectedState);
 
             setTimeout(() => {
               const cityMatch = citiesList.find(
-                c => c.toLowerCase() === city.toLowerCase()
+                (c) => c.toLowerCase() === city.toLowerCase()
               );
-              if (cityMatch) setFormData(prev => ({ ...prev, city: cityMatch }));
+              if (cityMatch)
+                setFormData((prev) => ({ ...prev, city: cityMatch }));
               getWeatherData(latitude, longitude);
             }, 500);
           } else {
@@ -127,12 +131,14 @@ const CropRecommendation = () => {
   const getWeatherData = async (latitude, longitude) => {
     try {
       const response = await fetch(
-        `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=metric&appid=${import.meta.env.VITE_OPENWEATHERMAP_API_KEY}`
+        `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=metric&appid=${
+          import.meta.env.VITE_OPENWEATHERMAP_API_KEY
+        }`
       );
       const data = await response.json();
 
       if (data) {
-        setFormData(prev => ({
+        setFormData((prev) => ({
           ...prev,
           temperature: data.main.temp.toFixed(1),
           humidity: data.main.humidity,
@@ -149,12 +155,14 @@ const CropRecommendation = () => {
     try {
       setIsLoading(true);
       const response = await fetch(
-        `https://api.openweathermap.org/data/2.5/weather?q=${city},${state},IN&units=metric&appid=${import.meta.env.VITE_OPENWEATHERMAP_API_KEY}`
+        `https://api.openweathermap.org/data/2.5/weather?q=${city},${state},IN&units=metric&appid=${
+          import.meta.env.VITE_OPENWEATHERMAP_API_KEY
+        }`
       );
       const data = await response.json();
 
       if (data) {
-        setFormData(prev => ({
+        setFormData((prev) => ({
           ...prev,
           temperature: data.main.temp.toFixed(1),
           humidity: data.main.humidity,
@@ -173,7 +181,12 @@ const CropRecommendation = () => {
 
     if (name === "state") {
       updateCities(value);
-      setFormData(prev => ({ ...prev, city: "", temperature: "", humidity: "" }));
+      setFormData((prev) => ({
+        ...prev,
+        city: "",
+        temperature: "",
+        humidity: "",
+      }));
     }
 
     if (name === "city" && value && formData.state) {
@@ -182,8 +195,10 @@ const CropRecommendation = () => {
   };
 
   const updateCities = (selectedState) => {
-    if (typeof window.s_a !== 'undefined') {
-      const stateIndex = window.state_arr.findIndex(state => state === selectedState);
+    if (typeof window.s_a !== "undefined") {
+      const stateIndex = window.state_arr.findIndex(
+        (state) => state === selectedState
+      );
       if (stateIndex !== -1) {
         const citiesString = window.s_a[stateIndex + 1];
         const cities = citiesString.split("|").slice(1);
@@ -199,13 +214,16 @@ const CropRecommendation = () => {
     setPredictionLoading(true);
 
     try {
-      const response = await fetch("http://localhost:5000/api/crop-recommendation", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
+      const response = await fetch(
+        "http://localhost:5000/api/crop-recommendation",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(formData),
+        }
+      );
       const data = await response.json();
-      
+
       if (data.success) {
         setPrediction(data.recommendedCrop);
       } else {
@@ -222,41 +240,45 @@ const CropRecommendation = () => {
   const renderPredictionResults = () => (
     <div className="prediction-result">
       <h2>
-        <FaLeaf className="icon" /> {t("cropRecommendation.prediction.recommendedCrop")}
+        <FaLeaf className="icon" />{" "}
+        {t("cropRecommendation.prediction.recommendedCrop")}
       </h2>
       <div className="crop-name">{t(`crops.${prediction.toLowerCase()}`)}</div>
-      
+
       <div className="crop-details">
         <h3>{t("cropRecommendation.prediction.inputDetails")}:</h3>
         <ul>
           <li>
-            <span className="detail-label">N-P-K:</span> 
+            <span className="detail-label">N-P-K:</span>
             {formData.nitrogen} - {formData.phosphorous} - {formData.pottasium}
           </li>
           <li>
             <span className="detail-label">pH:</span> {formData.ph}
           </li>
           <li>
-            <span className="detail-label">{t("cropRecommendation.prediction.rainfall")}:</span> 
+            <span className="detail-label">
+              {t("cropRecommendation.prediction.rainfall")}:
+            </span>
             {formData.rainfall} mm
           </li>
           <li>
             <span className="detail-label">
-              <FaTemperatureLow /> {t("cropRecommendation.prediction.temperature")}:
-            </span> 
+              <FaTemperatureLow />{" "}
+              {t("cropRecommendation.prediction.temperature")}:
+            </span>
             {formData.temperature}°C
           </li>
           <li>
             <span className="detail-label">
               <FaTint /> {t("cropRecommendation.prediction.humidity")}:
-            </span> 
+            </span>
             {formData.humidity}%
           </li>
         </ul>
       </div>
-      
-      <button 
-        className="new-prediction-button" 
+
+      <button
+        className="new-prediction-button"
         onClick={() => setPrediction(null)}
       >
         <FaRedo /> {t("cropRecommendation.prediction.newPrediction")}
@@ -265,228 +287,236 @@ const CropRecommendation = () => {
   );
 
   return (
-    <div className="crop-recommendation-container">
-      <h1>{t("cropRecommendation.title")}</h1>
-      <p className="subtitle">{t("cropRecommendation.subtitle")}</p>
+    <div className="crop-recommendation-app">
+      <Header />
+      <div className="crop-recommendation-container">
+        <h1>{t("cropRecommendation.title")}</h1>
+        <p className="subtitle">{t("cropRecommendation.subtitle")}</p>
 
-      {isLoading && (
-        <div className="loading-spinner">
-          <div className="spinner"></div>
-          <p>{t("cropRecommendation.loadingMessage")}</p>
-        </div>
-      )}
-      
-      {locationError && (
-        <div className="error-message">
-          <FaExclamationTriangle /> {locationError}
-        </div>
-      )}
-
-      {prediction ? (
-        renderPredictionResults()
-      ) : (
-        <>
-          <div className="location-controls">
-            <button
-              type="button"
-              onClick={getUserLocation}
-              disabled={isLoading}
-              className="location-button"
-            >
-              <FaLocationArrow /> {t("cropRecommendation.locationButton")}
-            </button>
+        {isLoading && (
+          <div className="loading-spinner">
+            <div className="spinner"></div>
+            <p>{t("cropRecommendation.loadingMessage")}</p>
           </div>
+        )}
 
-          <form onSubmit={handleSubmit} className="crop-form">
-            <div className="form-group">
-              <label htmlFor="nitrogen">
-                <FaAtom /> {t("cropRecommendation.form.nitrogen")} (kg/ha)
-              </label>
-              <input
-                type="number"
-                id="nitrogen"
-                name="nitrogen"
-                className="form-control"
-                value={formData.nitrogen}
-                onChange={handleChange}
-                placeholder="50"
-                min="0"
-                required
-              />
+        {locationError && (
+          <div className="error-message">
+            <FaExclamationTriangle /> {locationError}
+          </div>
+        )}
+
+        {prediction ? (
+          renderPredictionResults()
+        ) : (
+          <>
+            <div className="location-controls">
+              <button
+                type="button"
+                onClick={getUserLocation}
+                disabled={isLoading}
+                className="location-button"
+              >
+                <FaLocationArrow /> {t("cropRecommendation.locationButton")}
+              </button>
             </div>
 
-            <div className="form-group">
-              <label htmlFor="phosphorous">
-                <FaFire /> {t("cropRecommendation.form.phosphorous")} (kg/ha)
-              </label>
-              <input
-                type="number"
-                id="phosphorous"
-                name="phosphorous"
-                className="form-control"
-                value={formData.phosphorous}
-                onChange={handleChange}
-                placeholder="50"
-                min="0"
-                required
-              />
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="pottasium">
-                <FaBolt /> {t("cropRecommendation.form.pottasium")} (kg/ha)
-              </label>
-              <input
-                type="number"
-                id="pottasium"
-                name="pottasium"
-                className="form-control"
-                value={formData.pottasium}
-                onChange={handleChange}
-                placeholder="50"
-                min="0"
-                required
-              />
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="ph">
-                <FaBalanceScale /> {t("cropRecommendation.form.ph")}
-              </label>
-              <input
-                type="number"
-                id="ph"
-                name="ph"
-                className="form-control"
-                value={formData.ph}
-                onChange={handleChange}
-                step="0.1"
-                placeholder="6.5"
-                min="0"
-                max="14"
-                required
-              />
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="rainfall">
-                <FaCloudRain /> {t("cropRecommendation.form.rainfall")} (mm)
-              </label>
-              <input
-                type="number"
-                id="rainfall"
-                name="rainfall"
-                className="form-control"
-                value={formData.rainfall}
-                onChange={handleChange}
-                step="0.1"
-                placeholder="150"
-                min="0"
-                required
-              />
-            </div>
-
-            {!isLocationFetched && (
-              <>
-                <div className="form-group">
-                  <label htmlFor="state">
-                    <FaMapMarkerAlt /> {t("cropRecommendation.form.state")}
-                  </label>
-                  <select
-                    id="state"
-                    name="state"
-                    className="form-control"
-                    value={formData.state}
-                    onChange={handleChange}
-                    required
-                  >
-                    <option value="">{t("cropRecommendation.form.selectState")}</option>
-                    {statesList.map((state, index) => (
-                      <option key={index} value={state}>
-                        {state}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                <div className="form-group">
-                  <label htmlFor="city">
-                    <FaCity /> {t("cropRecommendation.form.city")}
-                  </label>
-                  <select
-                    id="city"
-                    name="city"
-                    className="form-control"
-                    value={formData.city}
-                    onChange={handleChange}
-                    required
-                    disabled={!formData.state}
-                  >
-                    <option value="">{t("cropRecommendation.form.selectCity")}</option>
-                    {citiesList.map((city, index) => (
-                      <option key={index} value={city}>
-                        {city}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              </>
-            )}
-
-            <div className="weather-info">
+            <form onSubmit={handleSubmit} className="crop-form">
               <div className="form-group">
-                <label htmlFor="temperature">
-                  <FaTemperatureLow /> {t("cropRecommendation.form.temperature")} (°C)
+                <label htmlFor="nitrogen">
+                  <FaAtom /> {t("cropRecommendation.form.nitrogen")} (kg/ha)
                 </label>
                 <input
                   type="number"
-                  id="temperature"
-                  name="temperature"
+                  id="nitrogen"
+                  name="nitrogen"
                   className="form-control"
-                  value={formData.temperature}
+                  value={formData.nitrogen}
+                  onChange={handleChange}
+                  placeholder="50"
+                  min="0"
+                  required
+                />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="phosphorous">
+                  <FaFire /> {t("cropRecommendation.form.phosphorous")} (kg/ha)
+                </label>
+                <input
+                  type="number"
+                  id="phosphorous"
+                  name="phosphorous"
+                  className="form-control"
+                  value={formData.phosphorous}
+                  onChange={handleChange}
+                  placeholder="50"
+                  min="0"
+                  required
+                />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="pottasium">
+                  <FaBolt /> {t("cropRecommendation.form.pottasium")} (kg/ha)
+                </label>
+                <input
+                  type="number"
+                  id="pottasium"
+                  name="pottasium"
+                  className="form-control"
+                  value={formData.pottasium}
+                  onChange={handleChange}
+                  placeholder="50"
+                  min="0"
+                  required
+                />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="ph">
+                  <FaBalanceScale /> {t("cropRecommendation.form.ph")}
+                </label>
+                <input
+                  type="number"
+                  id="ph"
+                  name="ph"
+                  className="form-control"
+                  value={formData.ph}
                   onChange={handleChange}
                   step="0.1"
-                  placeholder="25.5"
+                  placeholder="6.5"
+                  min="0"
+                  max="14"
                   required
                 />
               </div>
 
               <div className="form-group">
-                <label htmlFor="humidity">
-                  <FaTint /> {t("cropRecommendation.form.humidity")} (%)
+                <label htmlFor="rainfall">
+                  <FaCloudRain /> {t("cropRecommendation.form.rainfall")} (mm)
                 </label>
                 <input
                   type="number"
-                  id="humidity"
-                  name="humidity"
+                  id="rainfall"
+                  name="rainfall"
                   className="form-control"
-                  value={formData.humidity}
+                  value={formData.rainfall}
                   onChange={handleChange}
-                  placeholder="80"
+                  step="0.1"
+                  placeholder="150"
                   min="0"
-                  max="100"
                   required
                 />
               </div>
-            </div>
 
-            <button 
-              type="submit" 
-              className="predict-btn"
-              disabled={predictionLoading || isLoading}
-            >
-              {predictionLoading ? (
+              {!isLocationFetched && (
                 <>
-                  <FaSpinner className="spinner-icon" /> 
-                  {t("common.predicting")}
+                  <div className="form-group">
+                    <label htmlFor="state">
+                      <FaMapMarkerAlt /> {t("cropRecommendation.form.state")}
+                    </label>
+                    <select
+                      id="state"
+                      name="state"
+                      className="form-control"
+                      value={formData.state}
+                      onChange={handleChange}
+                      required
+                    >
+                      <option value="">
+                        {t("cropRecommendation.form.selectState")}
+                      </option>
+                      {statesList.map((state, index) => (
+                        <option key={index} value={state}>
+                          {state}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div className="form-group">
+                    <label htmlFor="city">
+                      <FaCity /> {t("cropRecommendation.form.city")}
+                    </label>
+                    <select
+                      id="city"
+                      name="city"
+                      className="form-control"
+                      value={formData.city}
+                      onChange={handleChange}
+                      required
+                      disabled={!formData.state}
+                    >
+                      <option value="">
+                        {t("cropRecommendation.form.selectCity")}
+                      </option>
+                      {citiesList.map((city, index) => (
+                        <option key={index} value={city}>
+                          {city}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
                 </>
-              ) : (
-                t("common.predict")
               )}
-            </button>
-          </form>
-        </>
-      )}
+
+              <div className="weather-info">
+                <div className="form-group">
+                  <label htmlFor="temperature">
+                    <FaTemperatureLow />{" "}
+                    {t("cropRecommendation.form.temperature")} (°C)
+                  </label>
+                  <input
+                    type="number"
+                    id="temperature"
+                    name="temperature"
+                    className="form-control"
+                    value={formData.temperature}
+                    onChange={handleChange}
+                    step="0.1"
+                    placeholder="25.5"
+                    required
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="humidity">
+                    <FaTint /> {t("cropRecommendation.form.humidity")} (%)
+                  </label>
+                  <input
+                    type="number"
+                    id="humidity"
+                    name="humidity"
+                    className="form-control"
+                    value={formData.humidity}
+                    onChange={handleChange}
+                    placeholder="80"
+                    min="0"
+                    max="100"
+                    required
+                  />
+                </div>
+              </div>
+
+              <button
+                type="submit"
+                className="predict-btn"
+                disabled={predictionLoading || isLoading}
+              >
+                {predictionLoading ? (
+                  <>
+                    <FaSpinner className="spinner-icon" />
+                    {t("common.predicting")}
+                  </>
+                ) : (
+                  t("common.predict")
+                )}
+              </button>
+            </form>
+          </>
+        )}
+      </div>
     </div>
   );
 };
