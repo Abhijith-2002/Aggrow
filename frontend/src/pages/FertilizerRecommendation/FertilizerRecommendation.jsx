@@ -157,12 +157,18 @@ const FertilizerRecommendation = () => {
             `fertilizerRecommendation.recommendation.${key}.Type`,
             { returnObjects: true }
           );
-          const length = Object.keys(typeObject || {}).length; // Get the length of the JSON object
-          const randomIndex = Math.floor(Math.random() * length) + 1; // Generate a random number based on the length
+          const entries = Object.entries(typeObject || {}).slice(0, 3); // Get the first 3 entries
           return (
-            t(
-              `fertilizerRecommendation.recommendation.${key}.Type.${randomIndex}`
-            ) || "No specific recommendation"
+            <div>
+              <strong>
+                {t(`fertilizerRecommendation.recommendation.${key}.balance`)}
+              </strong>
+              {entries.map(([index, value]) => (
+                <p key={index}>
+                  <strong>{index}.</strong> {value}
+                </p>
+              ))}
+            </div>
           );
         },
       },
@@ -174,12 +180,18 @@ const FertilizerRecommendation = () => {
             `fertilizerRecommendation.recommendation.${key}.result.organicTreatment`,
             { returnObjects: true }
           );
-          const length = Object.keys(organicObject || {}).length; // Get the length of the JSON object
-          const randomIndex = Math.floor(Math.random() * length) + 1; // Generate a random number based on the length
+          const entries = Object.entries(organicObject || {}).slice(0, 3); // Get the first 3 entries
           return (
-            t(
-              `fertilizerRecommendation.recommendation.${key}.result.organicTreatment.${randomIndex}`
-            ) || "No specific recommendation"
+            <div>
+              <strong>
+                {t(`fertilizerRecommendation.recommendation.${key}.balance`)}
+              </strong>
+              {entries.map(([index, value]) => (
+                <p key={index}>
+                  <strong>{index}.</strong> {value}
+                </p>
+              ))}
+            </div>
           );
         },
       },
@@ -191,12 +203,18 @@ const FertilizerRecommendation = () => {
             `fertilizerRecommendation.recommendation.${key}.result.inorganicTreatment`,
             { returnObjects: true }
           );
-          const length = Object.keys(inorganicObject || {}).length; // Get the length of the JSON object
-          const randomIndex = Math.floor(Math.random() * length) + 1; // Generate a random number based on the length
+          const entries = Object.entries(inorganicObject || {}).slice(0, 3); // Get the first 3 entries
           return (
-            t(
-              `fertilizerRecommendation.recommendation.${key}.result.inorganicTreatment.${randomIndex}`
-            ) || "No specific recommendation"
+            <div>
+              <strong>
+                {t(`fertilizerRecommendation.recommendation.${key}.balance`)}
+              </strong>
+              {entries.map(([index, value]) => (
+                <p key={index}>
+                  <strong>{index}.</strong> {value}
+                </p>
+              ))}
+            </div>
           );
         },
       },

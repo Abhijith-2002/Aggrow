@@ -1,5 +1,5 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
 import "./Dashboard.css";
 import Header from "./Header";
 import ContentSection from "./ContentSection";
@@ -8,6 +8,21 @@ import { FaLeaf, FaSeedling, FaDiagnoses } from "react-icons/fa";
 
 const Dashboard = () => {
   const { t } = useTranslation();
+  const location = useLocation(); // Get the current route
+
+  useEffect(() => {
+    // Scroll to the corresponding section based on the route
+    if (location.hash === "#about") {
+      document
+        .getElementById("about-section")
+        ?.scrollIntoView({ behavior: "smooth" });
+    } else if (location.hash === "#services") {
+      document
+        .getElementById("services-section")
+        ?.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [location]); // Run this effect whenever the route changes
+
   return (
     <div className="dashboard-app">
       <Header />
@@ -46,6 +61,7 @@ const Dashboard = () => {
         </div>
       </main>
 
+      {/* ContentSection remains part of the Dashboard */}
       <ContentSection />
     </div>
   );

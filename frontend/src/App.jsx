@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Routes, Route } from "react-router-dom";
 import { I18nextProvider } from "react-i18next";
 import i18n from "./i18n"; // Make sure this path points to your i18n.js file
@@ -11,7 +11,8 @@ function App() {
   return (
     <I18nextProvider i18n={i18n}>
       <Routes>
-        <Route path="/" element={<Dashboard />} />
+        {/* Dashboard handles all hash-based navigation */}
+        <Route path="/*" element={<Dashboard />} />
         <Route path="/crop-recommendation" element={<CropRecommendation />} />
         <Route
           path="/fertilizer-recommendation"

@@ -8,7 +8,7 @@ import {
   FaLeaf,
   FaChevronDown,
   FaChevronUp,
-  FaGlobe
+  FaGlobe,
 } from "react-icons/fa";
 import { MdAgriculture } from "react-icons/md";
 
@@ -36,7 +36,7 @@ const Header = () => {
           <FaHome className="nav-icon" />
           {t("header.home")}
         </a>
-        <a href="/about" className="nav-link">
+        <a href="/#about" className="nav-link">
           <FaInfoCircle className="nav-icon" />
           {t("header.about")}
         </a>
@@ -66,8 +66,8 @@ const Header = () => {
 
         <div className="language-selector">
           <FaGlobe className="language-icon" />
-          <select 
-            onChange={(e) => changeLanguage(e.target.value)} 
+          <select
+            onChange={(e) => changeLanguage(e.target.value)}
             value={language}
             className="language-select"
           >

@@ -610,6 +610,7 @@
       "Inorganic": "Inorganic Treatment",
       "N_max": {
         "title": "Nitrogen content is HIGH",
+        "balance": "To balance the nitrogen levels in the soil:",
         "Type": {
           "1": "Straw",
           "2": "SawDust"
@@ -629,6 +630,7 @@
       },
       "N_min": {
         "title": "Nitrogen content is LOW",
+        "balance": "To balance the nitrogen levels in the soil:",
         "Type": {
           "1": "Fish Emulsion",
           "2": "Ammonium Sulfate",
@@ -650,6 +652,7 @@
       },
       "P_max": {
         "title": "Phosphorus content is HIGH",
+        "balance": "To balance the phosphorus levels in the soil:",
         "Type": {
           "1": "Rice Husk Ash",
           "2": "Biochar",
@@ -671,6 +674,7 @@
       },
       "P_min": {
         "title": "Phosphorus content is LOW",
+        "balance": "To balance the phosphorus levels in the soil:",
         "Type": {
           "1": "Fish Bone Meal",
           "2": "Di-Ammonium Phosphate (DAP)",
@@ -691,6 +695,7 @@
       },
       "K_max": {
         "title": "Potassium content is HIGH",
+        "balance": "To balance the potassium levels in the soil:",
         "Type": {
           "1": "Gypsum",
           "2": "Epsom Salt (MgSO₄)",
@@ -711,6 +716,7 @@
       },
       "K_min": {
         "title": "Potassium content is LOW",
+        "balance": "To balance the potassium levels in the soil:",
         "Type": {
           "1": "Greensand",
           "2": "Muriate of potash (MOP, 0:0:60)",
@@ -732,6 +738,7 @@
       },
       "pH_max": {
         "title": "pH Level is HIGH",
+        "balance": "To balance the pH levels in the soil:",
         "Type": {
           "1": "Elemental Sulfur",
           "2": "Aluminum Sulfate",
@@ -753,6 +760,7 @@
       },
       "pH_min": {
         "title": "pH Level is LOW",
+        "balance": "To balance the pH levels in the soil:",
         "Type": {
           "1": "Agricultural Lime",
           "2": "Dolomite Lime",
